@@ -35,8 +35,10 @@ filetype indent on
 ""----------------------
 syntax enable
 set background=dark
-colorscheme solarized
 let g:solarized_termtrans=1
+let g:solarized_visibility = "high"
+let g:solarized_contrast = "high"
+colorscheme solarized
 
 ""----------------------
 ""  vim-powerlineの設定
@@ -62,7 +64,7 @@ set cursorline
 ""-------------
 set termencoding=utf-8
 set encoding=utf-8
-set fileencodings=iso-2022-jp,utf-8,cp932,euc-jp
+"set fileencodings=iso-2022-jp,utf-8,cp932,euc-jp
 
 set smartindent ""オートインデント
 set wildmenu ""コマンドライン補完を便利に

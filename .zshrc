@@ -1,3 +1,7 @@
+# PYTHONPATH設定
+PYTHONPATH=/usr/local/bin/python2.7/site-packages
+export PYTHONPATH
+
 # Android NDK 設定用
 NDK_ROOT=/Applications/android-ndk
 export NDK_ROOT
