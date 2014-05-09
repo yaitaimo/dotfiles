@@ -15,10 +15,8 @@ colors
 
 alias safari="open -a Safari"
 
-alias pyenv=". /Library/WebServer/Documents/myproject/env/bin/activate"
-
 # tmuxのセット
-#alias tmux='tmuxx.sh'
+alias tmux='bin/tmuxx.sh'
 
 alias localhost="cd /Library/WebServer/Documents"
 
@@ -29,3 +27,7 @@ export PATH
 
 # javaの環境変数にutf-8を設定
 # export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
+
+# localhostコマンドを追加
+alias inet="ifconfig | grep en0 -A 4 | grep 'inet ' | cut -f 2,2 -d ' '"
+
