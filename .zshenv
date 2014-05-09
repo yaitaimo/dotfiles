@@ -27,7 +27,6 @@ setopt share_history    # 他のシェルのヒストリをリアルタイムで
 ### Set Alias ###
 # フォルダ,ファイル消去に関しては一度確認を
 
-alias rr="rm -rf"
 alias rm="rm -i"
 alias cp="cp -i"
 alias mv="mv -i"
