@@ -16,7 +16,7 @@ colors
 alias safari="open -a Safari"
 
 # tmuxのセット
-alias tmux='bin/tmuxx.sh'
+alias tmux='~/bin/tmuxx.sh'
 
 alias localhost="cd /Library/WebServer/Documents"
 

@@ -58,7 +58,7 @@ bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end
 
 # 全てのヒストリを表示する
-function history-all { history -# 1 }
+function history-all { history -E 1 }
 
 # ${fg[...]} や $reset_color をロード
 autoload -U colors; colors
