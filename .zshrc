@@ -6,10 +6,6 @@ export NDK_ROOT
 # nvm
 source $HOME/.nvm/nvm.sh
 
-# 色使い
-autoload colors
-colors
-
 alias safari="open -a Safari"
 
 # tmuxのセット
