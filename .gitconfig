@@ -1,11 +1,6 @@
 [user]
 	name = AUTHER
 	email = EMAIL
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-[mergetool "sourcetree"]
-	trustExitCode = true
 [color]
 	ui = true
 [alias]
