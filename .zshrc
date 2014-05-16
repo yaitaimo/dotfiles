@@ -24,3 +24,10 @@ export PATH
 # localhostコマンドを追加
 alias inet="ifconfig | grep en0 -A 4 | grep 'inet ' | cut -f 2,2 -d ' '"
 
+proxy="proxy.kuins.net:8080"
+switch_trigger="lab"
+
+if [ "`networksetup -getcurrentlocation`" = "$switch_trigger" ];then
+  export http_proxy=$proxy
+  export ftp_proxy=$proxy
+fi
