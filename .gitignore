@@ -9,7 +9,7 @@
 ##### Gitで管理するファイルリスト #####
 !/.vimrc
 !/.vim
-!/.gitignore
+!.gitignore
 !/.gitconfig
 !/.gitmodules
 !/.gitignore_global
