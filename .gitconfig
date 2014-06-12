@@ -1,7 +1,7 @@
 [include]
   path = ~/.gitconfig.local
 [color]
-	ui = true
+  ui = true
 [alias]
   lg = log --oneline --graph --decorate
   co = checkout
@@ -12,6 +12,6 @@
   ft = fetch
   fp = fetch -p
 [core]
-	excludesfile = /Users/yuuair/.gitignore_global
+  excludesfile = /Users/yuuair/.gitignore_global
 [push]
-	default = simple
+  default = simple
