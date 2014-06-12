@@ -14,7 +14,8 @@ alias tmux='~/bin/tmuxx.sh'
 alias localhost="cd /Library/WebServer/Documents"
 
 # パス通し
-PATH=/usr/local/bin:$PATH:/Applications/gnuplot.app:$HOME/bin:/Applications/android-sdk-macosx/tools:/Applications/Xcode.app/Contents/developer/Platforms/iPhoneSimulator.platform/Developer/Applications:~/bin
+PATH=/usr/local/bin:$PATH:$HOME/bin
+#:/Applications/android-sdk-macosx/tools:/Applications/Xcode.app/Contents/developer/Platforms/iPhoneSimulator.platform/Developer/Applications:
 
 export PATH
 
@@ -31,3 +32,5 @@ if [ "`networksetup -getcurrentlocation`" = "$switch_trigger" ];then
   export http_proxy=$proxy
   export ftp_proxy=$proxy
 fi
+
+alias wifi_changer='python ~/MyCode/python/gem/wifi_changer.py'
