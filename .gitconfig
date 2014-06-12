@@ -1,6 +1,5 @@
-[user]
-	name = AUTHER
-	email = EMAIL
+[include]
+  path = ~/.gitconfig.local
 [color]
 	ui = true
 [alias]
@@ -14,3 +13,5 @@
   fp = fetch -p
 [core]
 	excludesfile = /Users/yuuair/.gitignore_global
+[push]
+	default = simple
