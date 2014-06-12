@@ -22,18 +22,20 @@ endif
 " プラグインのリスト
 "--------------------
 NeoBundle 'Shougo/neobundle.vim'
-NeoBundle 'https://github.com/Shougo/vimshell.git'
-NeoBundle 'https://github.com/Shougo/vimproc'
+NeoBundle 'Shougo/unite.vim'
 NeoBundle 'git://github.com/Lokaltog/vim-powerline.git'
 NeoBundle 'git://github.com/altercation/vim-colors-solarized.git'
+NeoBundle 'Shougo/vimshell.vim'
+NeoBundle 'Shougo/vimproc.vim'
+NeoBundle 'git@github.com:jcf/vim-latex.git'
+NeoBundle 'Shougo/neocomplete.vim'
 
-filetype plugin on
-filetype indent on
+filetype indent plugin on
 
 ""---------------------
 ""  カラーテーマの変更
 ""----------------------
-syntax enable
+syntax on
 set background=dark
 let g:solarized_termtrans=1
 let g:solarized_visibility = "high"
@@ -49,6 +51,7 @@ let g:Powerline_symbols='fancy'
 ""------------
 ""  表示設定
 ""------------
+set modeline
 set title ""編集中のファイル名を表示
 set showmatch ""括弧入力時の対応する括弧を表示
 set matchtime=3             "" 対応括弧の瞬間強調時間
@@ -60,6 +63,13 @@ set cursorline
 "highlight CursorLine cterm=none ctermbg=Black
 
 ""-------------
+""  Python
+""-------------
+autocmd FileType python setl autoindent
+autocmd FileType python setl smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
+autocmd FileType python setl tabstop=8 expandtab shiftwidth=2 softtabstop=2
+
+""-------------
 ""  編集設定
 ""-------------
 set termencoding=utf-8
@@ -68,12 +78,11 @@ set encoding=utf-8
 
 set smartindent ""オートインデント
 set wildmenu ""コマンドライン補完を便利に
-set autoindent
 ""タブをスペースで挿入(2スペース)
 set expandtab
 set tabstop=2
 set shiftwidth=2
-set softtabstop=0
+set softtabstop=2
 ""jsは2スペース
 autocmd BufNewFile,BufRead *.js set tabstop=2
 autocmd BufNewFile,BufRead *.js set shiftwidth=2
@@ -95,6 +104,7 @@ nmap k gk
 
 ""-----------------------------
 ""  insert_modeでのカーソル操作
+""  結局macバインドを使わなくなってきた気がするのできってみる
 ""------------------------------
 ""移動
 imap <C-a> <Home>
@@ -105,8 +115,8 @@ imap <C-n> <Down>
 imap <C-p> <UP>
 ""消去
 imap <C-h> <BS>
-imap <C-k> <ESC>ld$a
-imap <C-y> <ESC>pi
+" imap <C-k> <ESC>ld$a
+" imap <C-y> <ESC>pi
 imap <C-d> <delete>
 set whichwrap=h,l,<,>
 set backspace=start,eol,indent
@@ -118,3 +128,43 @@ set backspace=start,eol,indent
 imap <Leader>date <C-R>=strftime('%Y/%m/%d (%a) %H:%M')<CR>
 ""perl debug用コマンド
 imap <Leader>dump <C-R> Trace(Data::Dumper::Dumper );<Left><Left>
+
+""-----------------------------
+""  neocomplcache.vim設定
+""  Shougoさんのvim補完機能
+""-----------------------------
+" Use neocomplcache.
+let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+let g:neocomplcache_enable_smart_case = 1
+" _(アンダースコア)区切りの補完を有効化
+let g:neocomplcache_enable_underbar_completion = 1
+let g:neocomplcache_enable_camel_case_completion  =  1
+" ポップアップメニューで表示される候補の数
+" Set minimum syntax keyword length.
+let g:neocomplcache_min_syntax_length = 3
+" let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
+" 
+" " Define dictionary.
+" let g:neocomplcache_dictionary_filetype_lists = {
+"     \ 'default' : ''
+"         \ }
+" 
+" " Plugin key-mappings.
+" inoremap <expr><C-g>     neocomplcache#undo_completion()
+" inoremap <expr><C-l>     neocomplcache#complete_common_string()
+" 
+" " Recommended key-mappings.
+" " <CR>: close popup and save indent.
+" inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+" function! s:my_cr_function()
+"   return neocomplcache#smart_close_popup() . "\<CR>"
+" endfunction
+" " <TAB>: completion.
+" inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" " <C-h>, <BS>: close popup and delete backword char.
+" inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
+" inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+" inoremap <expr><C-y>  neocomplcache#close_popup()
+" inoremap <expr><C-e>  neocomplcache#cancel_popup()
+" 
