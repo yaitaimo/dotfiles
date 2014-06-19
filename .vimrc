@@ -27,15 +27,22 @@ endif
 "--------------------
 " プラグインのリスト
 "--------------------
-NeoBundle 'Shougo/neobundle.vim'
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/vimfiler.vim'
+NeoBundle 'Shougo/neobundle'
+NeoBundle 'Shougo/unite'
+NeoBundle 'Shougo/vimfiler'
 NeoBundle 'git://github.com/Lokaltog/vim-powerline.git'
 NeoBundle 'git://github.com/altercation/vim-colors-solarized.git'
-NeoBundle 'Shougo/vimshell.vim'
-NeoBundle 'Shougo/vimproc.vim'
+NeoBundle 'Shougo/vimshell'
+NeoBundle 'Shougo/vimproc', {
+      \ 'build' : {
+      \   'windows' : 'make -f make_mingw32.mak',
+      \   'cygwin' : 'make -f make_cygwin.mak',
+      \   'mac' : 'make -f make_mac.mak',
+      \   'unix' : 'make -f make_uix.mak',
+      \   }
+      \ }
 NeoBundle 'git@github.com:jcf/vim-latex.git'
-NeoBundle 'Shougo/neocomplete.vim'
+NeoBundle 'Shougo/neocomplete'
 
 filetype indent plugin on
 
@@ -84,17 +91,16 @@ autocmd FileType python setl formatoptions+=tcqwa
 set termencoding=utf-8
 set encoding=utf-8
 set fileencodings=utf-8,cp932,euc-jp,iso-2022-jp
-
 set smartindent ""オートインデント
 set wildmenu ""コマンドライン補完を便利に
-""タブをスペースで挿入(2スペース)
+
+""タブをスペースで挿入
 set expandtab
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
-""jsは2スペース
-autocmd BufNewFile,BufRead *.js set tabstop=2
-autocmd BufNewFile,BufRead *.js set shiftwidth=2
+set tabstop=8
+set expandtab
+set shiftwidth=4
+set softtabstop=4
+
 ""クリップボード設定
 set clipboard=unnamed,autoselect
 
