@@ -1,21 +1,27 @@
-"
-"Last Changed
-"2013/02/01 (金) 15:53
-"2013/07/05 (金) 14:15
-"
-
-""--------------
-""  Vundle設定
-""--------------
+" Vi互換モードをオフ
 set nocompatible
+
+" スワップ設定
+" スワップファイルを作成
+set swapfile
+" スワップファイルの生成先を選択
+set directory=.,~/tmp,/var/tmp,/tmp
+
+" バックアップ設定
+" 上書きに失敗した場合のみバックアップをとる
+set nobackup
+set writebackup
+" バックアップファイルの保存先を設定
+set backupdir=.,~/tmp,~/
+
 filetype off
 
-"---------------
-" neobundle設定
-"---------------
-if has('vim_starting')
-  set runtimepath+=~/.vim/bundle/neobundle.vim
-  call neobundle#rc(expand('~/.vim/bundle'))
+"--------------- 
+" neobundle設定 
+"--------------- 
+if has('vim_starting') 
+  set runtimepath+=~/.vim/bundle/neobundle.vim 
+  call neobundle#rc(expand('~/.vim/bundle')) 
 endif
 
 "--------------------
@@ -23,6 +29,7 @@ endif
 "--------------------
 NeoBundle 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/vimfiler.vim'
 NeoBundle 'git://github.com/Lokaltog/vim-powerline.git'
 NeoBundle 'git://github.com/altercation/vim-colors-solarized.git'
 NeoBundle 'Shougo/vimshell.vim'
@@ -67,14 +74,16 @@ set cursorline
 ""-------------
 autocmd FileType python setl autoindent
 autocmd FileType python setl smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
-autocmd FileType python setl tabstop=8 expandtab shiftwidth=2 softtabstop=2
+autocmd FileType python setl tabstop=8 expandtab shiftwidth=4 softtabstop=4
+autocmd FileType python setl textwidth=79
+autocmd FileType python setl formatoptions+=tcqwa
 
 ""-------------
 ""  編集設定
 ""-------------
 set termencoding=utf-8
 set encoding=utf-8
-"set fileencodings=iso-2022-jp,utf-8,cp932,euc-jp
+set fileencodings=utf-8,cp932,euc-jp,iso-2022-jp
 
 set smartindent ""オートインデント
 set wildmenu ""コマンドライン補完を便利に
@@ -167,4 +176,26 @@ let g:neocomplcache_min_syntax_length = 3
 " inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
 " inoremap <expr><C-y>  neocomplcache#close_popup()
 " inoremap <expr><C-e>  neocomplcache#cancel_popup()
-" 
+
+" Vim-LaTeX settings
+let s:bundle = neobundle#get("vim-latex")
+function! s:bundle.hooks.on_source(bundle)
+  let OSTYPE = system('uname')
+  if OSTYPE == "Darwin\n"
+    set shellslash
+    set grepprg=grep\ -nH\ $*
+    let g:tex_flavor='latex'
+    let g:Imap_UsePlaceHolders = 1
+    let g:Imap_DeleteEmptyPlaceHolders = 1
+    let g:Imap_StickyPlaceHolders = 0
+    let g:Tex_DefaultTargetFormat = 'pdf'
+    let g:Tex_FormatDependency_pdf = 'dvi,pdf'
+    let g:Tex_FormatDependency_ps = 'dvi,ps'
+    let g:Tex_CompileRule_dvi = '/usr/texbin/platex -shell-escape -interaction=nonstopmode $*'
+    let g:Tex_CompileRule_pdf = '/usr/texbin/dvipdfmx $*.dvi'
+    let g:Tex_BibtexFlavor = '/usr/texbin/pbibtex'
+    let g:Tex_ViewRule_dvi = '/usr/bin/open -a Preview'
+    let g:Tex_ViewRule_pdf = '/usr/bin/open -a Preview'
+  endif
+endfunction
+unlet s:bundle
