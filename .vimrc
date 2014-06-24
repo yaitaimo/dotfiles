@@ -27,12 +27,12 @@ endif
 "--------------------
 " プラグインのリスト
 "--------------------
-NeoBundle 'Shougo/neobundle'
-NeoBundle 'Shougo/unite'
-NeoBundle 'Shougo/vimfiler'
-NeoBundle 'git://github.com/Lokaltog/vim-powerline.git'
-NeoBundle 'git://github.com/altercation/vim-colors-solarized.git'
-NeoBundle 'Shougo/vimshell'
+NeoBundle 'git@github.com:Shougo/neobundle.vim.git'
+NeoBundle 'git@github.com:Shougo/unite.vim.git'
+NeoBundle 'git@github.com:Shougo/vimfiler.vim.git'
+NeoBundle 'git@github.com:Lokaltog/vim-powerline.git'
+NeoBundle 'git@github.com:altercation/vim-colors-solarized.git'
+NeoBundle 'git@github.com:Shougo/vimshell.vim.git'
 NeoBundle 'Shougo/vimproc', {
       \ 'build' : {
       \   'windows' : 'make -f make_mingw32.mak',
@@ -42,7 +42,7 @@ NeoBundle 'Shougo/vimproc', {
       \   }
       \ }
 NeoBundle 'git@github.com:jcf/vim-latex.git'
-NeoBundle 'Shougo/neocomplete'
+NeoBundle 'git@github.com:Shougo/neocomplete.vim.git'
 
 filetype indent plugin on
 
@@ -143,6 +143,12 @@ set backspace=start,eol,indent
 imap <Leader>date <C-R>=strftime('%Y/%m/%d (%a) %H:%M')<CR>
 ""perl debug用コマンド
 imap <Leader>dump <C-R> Trace(Data::Dumper::Dumper );<Left><Left>
+
+""-----------------------------
+""  Unite設定
+""-----------------------------
+nnoremap <Leader>f :<C-u>Unite file<CR>
+nnoremap <Leader>b :<C-u>Unite buffer<CR>
 
 ""-----------------------------
 ""  neocomplcache.vim設定
