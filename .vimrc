@@ -28,7 +28,7 @@ endif
 " プラグインのリスト
 "--------------------
 NeoBundle 'Shougo/neobundle'
-NeoBundle 'Shougo/unite'
+NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimfiler'
 NeoBundle 'git://github.com/Lokaltog/vim-powerline.git'
 NeoBundle 'git://github.com/altercation/vim-colors-solarized.git'
@@ -83,7 +83,7 @@ autocmd FileType python setl autoindent
 autocmd FileType python setl smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
 autocmd FileType python setl tabstop=8 expandtab shiftwidth=4 softtabstop=4
 autocmd FileType python setl textwidth=79
-autocmd FileType python setl formatoptions+=tcqwa
+autocmd FileType python setl formatoptions+=tcqw
 
 ""-------------
 ""  編集設定
