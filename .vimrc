@@ -147,8 +147,11 @@ imap <Leader>dump <C-R> Trace(Data::Dumper::Dumper );<Left><Left>
 ""-----------------------------
 ""  Unite設定
 ""-----------------------------
-nnoremap <Leader>f :<C-u>Unite file<CR>
+nnoremap <Leader>f :<C-u>VimFilerCurrentDir<CR>
 nnoremap <Leader>b :<C-u>Unite buffer<CR>
+nnoremap <Leader>e :<C-u>VimFiler -buffer-name=explorer 
+            \-split -simple -winwidth=35 -toggle -no-quit<CR>
+nnoremap <Leader>s :<C-u>VimShell<CR>
 
 ""-----------------------------
 ""  neocomplcache.vim設定
