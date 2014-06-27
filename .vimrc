@@ -140,18 +140,45 @@ set backspace=start,eol,indent
 ""  キーボードコマンド設定
 ""-----------------------------
 ""insert_modeで \date タイムスタンプを挿入する
-imap <Leader>date <C-R>=strftime('%Y/%m/%d (%a) %H:%M')<CR>
+"imap <Leader>date <C-R>=strftime('%Y/%m/%d (%a) %H:%M')<CR>
 ""perl debug用コマンド
-imap <Leader>dump <C-R> Trace(Data::Dumper::Dumper );<Left><Left>
+"imap <Leader>dump <C-R> Trace(Data::Dumper::Dumper );<Left><Left>
 
 ""-----------------------------
 ""  Unite設定
 ""-----------------------------
-nnoremap <Leader>f :<C-u>VimFilerCurrentDir<CR>
-nnoremap <Leader>b :<C-u>Unite buffer<CR>
-nnoremap <Leader>e :<C-u>VimFiler -buffer-name=explorer 
+nnoremap [unite] <Nop>
+nmap ; [unite]
+"開いていない場合はカレントディレクトリ
+nnoremap <silent> [unite]f :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+nnoremap <silent> [unite]b :<C-u>Unite buffer<CR>
+nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=register register<CR>
+nnoremap <silent> [unite]m :<C-u>Unite file_mru<CR>
+nnoremap <silent> [unite]c :<C-u>Unite bookmark<CR>
+autocmd FileType unite call s:unite_my_settings()
+function! s:unite_my_settings()"{{{
+    "ESCでuniteを終了
+    nmap <buffer> <ESC> <Plug>(unite_exit)
+    map <C-a> <Home>
+    map <C-e> <End>
+    map <C-b> <Left>
+    map <C-f> <Right>
+    map <C-n> <Down>
+    map <C-p> <UP>
+    map <C-h> <BS>
+    "ctrl+sで縦に分割して開く
+    nnoremap <silent><buffer><expr> <C-j> unite#do_action('split')
+    inoremap <silent><buffer><expr> <C-j> unite#do_action('split')
+    "ctrl+vで横に分割して開く
+    nnoremap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
+    inoremap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
+endfunction"}}}
+
+nnoremap -sf :<C-u>VimFilerCurrentDir -split<CR>
+nnoremap ;e :<C-u>VimFiler -buffer-name=explorer 
             \-split -simple -winwidth=35 -toggle -no-quit<CR>
-nnoremap <Leader>s :<C-u>VimShell<CR>
+nnoremap ;s :<C-u>VimShell<CR>
+nnoremap ;r :<C-u>source ~/.vimrc<CR>
 
 ""-----------------------------
 ""  neocomplcache.vim設定
