@@ -42,7 +42,9 @@ NeoBundle 'Shougo/vimproc', {
       \   }
       \ }
 NeoBundle 'git@github.com:jcf/vim-latex.git'
-NeoBundle 'git@github.com:Shougo/neocomplete.vim.git'
+if has('lua')
+    NeoBundle 'git@github.com:Shougo/neocomplete.vim.git'
+endif
 
 filetype indent plugin on
 
