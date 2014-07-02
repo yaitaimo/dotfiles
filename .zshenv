@@ -104,3 +104,11 @@ export CLICOLOR=true
 PROMPT="%{${fg[white]}%}${HOST%%.*} ${PROMPT}"
 ;
 
+# for mac
+if [[ $(uname) == Darwin  ]]; then
+    # Add alias for ctags in Vim
+    alias ctags="/usr/local/bin/ctags"
+fi
+
+
+

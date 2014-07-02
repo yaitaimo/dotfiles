@@ -29,10 +29,12 @@ endif
 "--------------------
 NeoBundle 'git@github.com:Shougo/neobundle.vim.git'
 NeoBundle 'git@github.com:Shougo/unite.vim.git'
+NeoBundle 'git@github.com:Shougo/neomru.vim.git'
 NeoBundle 'git@github.com:Shougo/vimfiler.vim.git'
 NeoBundle 'git@github.com:Lokaltog/vim-powerline.git'
 NeoBundle 'git@github.com:altercation/vim-colors-solarized.git'
 NeoBundle 'git@github.com:Shougo/vimshell.vim.git'
+
 NeoBundle 'Shougo/vimproc', {
       \ 'build' : {
       \   'windows' : 'make -f make_mingw32.mak',
@@ -42,6 +44,7 @@ NeoBundle 'Shougo/vimproc', {
       \   }
       \ }
 NeoBundle 'git@github.com:jcf/vim-latex.git'
+
 if has('lua')
     NeoBundle 'git@github.com:Shougo/neocomplete.vim.git'
 endif
@@ -132,7 +135,7 @@ imap <C-n> <Down>
 imap <C-p> <UP>
 ""消去
 imap <C-h> <BS>
-" imap <C-k> <ESC>ld$a
+imap <C-k> <ESC>d$i
 " imap <C-y> <ESC>pi
 imap <C-d> <delete>
 set whichwrap=h,l,<,>
@@ -181,45 +184,46 @@ nnoremap ;e :<C-u>VimFiler -buffer-name=explorer
             \-split -simple -winwidth=35 -toggle -no-quit<CR>
 nnoremap ;s :<C-u>VimShell<CR>
 nnoremap ;r :<C-u>source ~/.vimrc<CR>
+nnoremap ;h :<C-u>Unite file_mru<CR>
 
 ""-----------------------------
 ""  neocomplcache.vim設定
 ""  Shougoさんのvim補完機能
 ""-----------------------------
 " Use neocomplcache.
-let g:neocomplete#enable_at_startup = 1
+" let g:neocomplete#enable_at_startup = 1
 " Use smartcase.
-let g:neocomplcache_enable_smart_case = 1
+" let g:neocomplcache_enable_smart_case = 1
 " _(アンダースコア)区切りの補完を有効化
-let g:neocomplcache_enable_underbar_completion = 1
-let g:neocomplcache_enable_camel_case_completion  =  1
+" let g:neocomplcache_enable_underbar_completion = 1
+" let g:neocomplcache_enable_camel_case_completion  =  1
 " ポップアップメニューで表示される候補の数
 " Set minimum syntax keyword length.
-let g:neocomplcache_min_syntax_length = 3
+" let g:neocomplcache_min_syntax_length = 3
 " let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
 " 
-" " Define dictionary.
-" let g:neocomplcache_dictionary_filetype_lists = {
-"     \ 'default' : ''
-"         \ }
-" 
-" " Plugin key-mappings.
-" inoremap <expr><C-g>     neocomplcache#undo_completion()
-" inoremap <expr><C-l>     neocomplcache#complete_common_string()
-" 
-" " Recommended key-mappings.
-" " <CR>: close popup and save indent.
-" inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-" function! s:my_cr_function()
-"   return neocomplcache#smart_close_popup() . "\<CR>"
-" endfunction
-" " <TAB>: completion.
-" inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" " <C-h>, <BS>: close popup and delete backword char.
-" inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-" inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-" inoremap <expr><C-y>  neocomplcache#close_popup()
-" inoremap <expr><C-e>  neocomplcache#cancel_popup()
+" Define dictionary.
+let g:neocomplcache_dictionary_filetype_lists = {
+    \ 'default' : ''
+        \ }
+
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplcache#undo_completion()
+inoremap <expr><C-l>     neocomplcache#complete_common_string()
+
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return neocomplcache#smart_close_popup() . "\<CR>"
+endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y>  neocomplcache#close_popup()
+inoremap <expr><C-e>  neocomplcache#cancel_popup()
 
 " Vim-LaTeX settings
 let s:bundle = neobundle#get("vim-latex")
