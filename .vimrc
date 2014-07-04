@@ -165,7 +165,7 @@ function! s:unite_my_settings()"{{{
     "ESCでuniteを終了
     nmap <buffer> <ESC> <Plug>(unite_exit)
     map <C-a> <Home>
-    map <C-e> <End>
+    imap <C-e> <End>
     map <C-b> <Left>
     map <C-f> <Right>
     map <C-n> <Down>
@@ -178,13 +178,15 @@ function! s:unite_my_settings()"{{{
     nnoremap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
     inoremap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
 endfunction"}}}
-
+let g:unite_source_history_yank_enable =1
 nnoremap -sf :<C-u>VimFilerCurrentDir -split<CR>
 nnoremap ;e :<C-u>VimFiler -buffer-name=explorer 
             \-split -simple -winwidth=35 -toggle -no-quit<CR>
 nnoremap ;s :<C-u>VimShell<CR>
 nnoremap ;r :<C-u>source ~/.vimrc<CR>
-nnoremap ;h :<C-u>Unite file_mru<CR>
+nnoremap ;hf :<C-u>Unite file_mru<CR>
+nnoremap ;hy :<C-u>Unite history/yank<CR>
+
 
 ""-----------------------------
 ""  neocomplcache.vim設定
@@ -203,27 +205,27 @@ nnoremap ;h :<C-u>Unite file_mru<CR>
 " let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
 " 
 " Define dictionary.
-let g:neocomplcache_dictionary_filetype_lists = {
-    \ 'default' : ''
-        \ }
+" let g:neocomplcache_dictionary_filetype_lists = {
+" 'default' : ''
+" }
 
 " Plugin key-mappings.
-inoremap <expr><C-g>     neocomplcache#undo_completion()
-inoremap <expr><C-l>     neocomplcache#complete_common_string()
+" inoremap <expr><C-g>     neocomplcache#undo_completion()
+" inoremap <expr><C-l>     neocomplcache#complete_common_string()
 
 " Recommended key-mappings.
 " <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return neocomplcache#smart_close_popup() . "\<CR>"
-endfunction
+" inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+" function! s:my_cr_function()
+"   return neocomplcache#smart_close_popup() . "\<CR>"
+" endfunction
 " <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y>  neocomplcache#close_popup()
-inoremap <expr><C-e>  neocomplcache#cancel_popup()
+" inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" " <C-h>, <BS>: close popup and delete backword char.
+" inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
+" inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+" inoremap <expr><C-y>  neocomplcache#close_popup()
+" inoremap <expr><C-e>  neocomplcache#cancel_popup()
 
 " Vim-LaTeX settings
 let s:bundle = neobundle#get("vim-latex")
@@ -247,3 +249,16 @@ function! s:bundle.hooks.on_source(bundle)
   endif
 endfunction
 unlet s:bundle
+
+" VimShell
+let g:vimshell_right_prompt='Get_git_detail()'
+let g:vimshell_user_prompt = 'getcwd()'
+
+function! Get_git_detail()
+    let s:branch = substitute(system("git rev-parse --abbrev-ref HEAD 2> /dev/null"), '\n', '', 'g')
+    if s:branch == ''
+        return ''
+    else
+        return '[= ' . s:branch . ']'
+    endif
+endfunction
