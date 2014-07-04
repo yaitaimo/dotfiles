@@ -64,8 +64,10 @@ colorscheme solarized
 ""----------------------
 ""  vim-powerlineの設定
 ""----------------------
+"powerlineで矢印を使う
 set guifont=Inconsolata_for_Powerline:h11:cANSI
 let g:Powerline_symbols='fancy'
+set t_Co=256  "色数設定
 
 ""------------
 ""  表示設定
@@ -79,7 +81,6 @@ set laststatus=2
 set visualbell
 "" カーソル行をハイライト
 set cursorline
-"highlight CursorLine cterm=none ctermbg=Black
 
 ""-------------
 ""  Python
@@ -124,7 +125,6 @@ nmap k gk
 
 ""-----------------------------
 ""  insert_modeでのカーソル操作
-""  結局macバインドを使わなくなってきた気がするのできってみる
 ""------------------------------
 ""移動
 imap <C-a> <Home>
@@ -140,14 +140,6 @@ imap <C-k> <ESC>d$i
 imap <C-d> <delete>
 set whichwrap=h,l,<,>
 set backspace=start,eol,indent
-
-""-----------------------------
-""  キーボードコマンド設定
-""-----------------------------
-""insert_modeで \date タイムスタンプを挿入する
-"imap <Leader>date <C-R>=strftime('%Y/%m/%d (%a) %H:%M')<CR>
-""perl debug用コマンド
-"imap <Leader>dump <C-R> Trace(Data::Dumper::Dumper );<Left><Left>
 
 ""-----------------------------
 ""  Unite設定
@@ -186,46 +178,6 @@ nnoremap ;s :<C-u>VimShell<CR>
 nnoremap ;r :<C-u>source ~/.vimrc<CR>
 nnoremap ;hf :<C-u>Unite file_mru<CR>
 nnoremap ;hy :<C-u>Unite history/yank<CR>
-
-
-""-----------------------------
-""  neocomplcache.vim設定
-""  Shougoさんのvim補完機能
-""-----------------------------
-" Use neocomplcache.
-" let g:neocomplete#enable_at_startup = 1
-" Use smartcase.
-" let g:neocomplcache_enable_smart_case = 1
-" _(アンダースコア)区切りの補完を有効化
-" let g:neocomplcache_enable_underbar_completion = 1
-" let g:neocomplcache_enable_camel_case_completion  =  1
-" ポップアップメニューで表示される候補の数
-" Set minimum syntax keyword length.
-" let g:neocomplcache_min_syntax_length = 3
-" let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
-" 
-" Define dictionary.
-" let g:neocomplcache_dictionary_filetype_lists = {
-" 'default' : ''
-" }
-
-" Plugin key-mappings.
-" inoremap <expr><C-g>     neocomplcache#undo_completion()
-" inoremap <expr><C-l>     neocomplcache#complete_common_string()
-
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-" inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-" function! s:my_cr_function()
-"   return neocomplcache#smart_close_popup() . "\<CR>"
-" endfunction
-" <TAB>: completion.
-" inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" " <C-h>, <BS>: close popup and delete backword char.
-" inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-" inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-" inoremap <expr><C-y>  neocomplcache#close_popup()
-" inoremap <expr><C-e>  neocomplcache#cancel_popup()
 
 " Vim-LaTeX settings
 let s:bundle = neobundle#get("vim-latex")
