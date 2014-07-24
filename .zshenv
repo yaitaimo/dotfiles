@@ -41,6 +41,9 @@ alias po="popd"
 autoload -Uz zmv
 alias zmv='noglob zmv -W'
 
+# forward-word
+bindkey ^W forward-word
+
 
 ### Complement ###
 autoload -U compinit
@@ -109,6 +112,4 @@ if [[ $(uname) == Darwin  ]]; then
     # Add alias for ctags in Vim
     alias ctags="/usr/local/bin/ctags"
 fi
-
-
 

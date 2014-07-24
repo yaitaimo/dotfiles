@@ -1,17 +1,17 @@
 [include]
-  path = ~/.gitconfig.local
+    path = ~/.gitconfig.local
 [color]
-  ui = true
+    ui = true
 [alias]
-  lg = log --oneline --graph --decorate
-  co = checkout
-  cm = commit -am
-  st = status
-  br = branch
-  ba = branch -a
-  ft = fetch
-  fp = fetch -p
-[core]
-  excludesfile = /Users/yuuair/.gitignore_global
+    ls = list-files
+    lg = log --oneline --graph --decorate
+    co = checkout
+    cm = commit -am
+    st = status
+    br = branch
+    ba = branch -a
+    ft = fetch
+    fp = fetch -p
+    ig  = "!gi() { curl http://www.gitignore.io/api/$@ ;}; gi"
 [push]
-  default = simple
+    default = simple

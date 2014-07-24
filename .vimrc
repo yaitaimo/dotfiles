@@ -34,6 +34,7 @@ NeoBundle 'git@github.com:Shougo/vimfiler.vim.git'
 NeoBundle 'git@github.com:Lokaltog/vim-powerline.git'
 NeoBundle 'git@github.com:altercation/vim-colors-solarized.git'
 NeoBundle 'git@github.com:Shougo/vimshell.vim.git'
+NeoBundle 'git@github.com:mitsuhiko/vim-jinja.git'
 
 NeoBundle 'Shougo/vimproc', {
       \ 'build' : {
@@ -64,8 +65,7 @@ colorscheme solarized
 ""----------------------
 ""  vim-powerlineの設定
 ""----------------------
-"powerlineで矢印を使う
-set guifont=Inconsolata_for_Powerline:h11:cANSI
+"powerlineで矢印を使う iTremでfontはpowerline用の物を指定
 let g:Powerline_symbols='fancy'
 set t_Co=256  "色数設定
 
@@ -79,6 +79,7 @@ set matchtime=3             "" 対応括弧の瞬間強調時間
 set ruler
 set laststatus=2
 set visualbell
+set mouse=a
 "" カーソル行をハイライト
 set cursorline
 
@@ -90,7 +91,6 @@ autocmd FileType python setl smartindent cinwords=if,elif,else,for,while,try,exc
 autocmd FileType python setl tabstop=8 expandtab shiftwidth=4 softtabstop=4
 autocmd FileType python setl textwidth=79
 autocmd FileType python setl formatoptions+=tcqw
-
 ""-------------
 ""  編集設定
 ""-------------
@@ -123,9 +123,9 @@ set wrapscan ""検索時に最後までいったら最初に戻る
 nmap j gj
 nmap k gk
 
-""-----------------------------
-""  insert_modeでのカーソル操作
-""------------------------------
+""--------------------------------
+""  Key Bindings for Insert Mode
+""--------------------------------
 ""移動
 imap <C-a> <Home>
 imap <C-e> <End>
@@ -135,11 +135,26 @@ imap <C-n> <Down>
 imap <C-p> <UP>
 ""消去
 imap <C-h> <BS>
-imap <C-k> <ESC>d$i
+imap <C-k> <C-\>e getcmdpos() == 1 ?
+      \ '' : getcmdline()[:getcmdpos()-2]<CR>
 " imap <C-y> <ESC>pi
-imap <C-d> <delete>
+imap <C-d> <Del>
 set whichwrap=h,l,<,>
 set backspace=start,eol,indent
+
+""--------------------------------------
+""  Key Bindings for Command-line Mode
+""--------------------------------------
+cnoremap <C-a>  <Home>
+cnoremap <C-e>  <End>
+cnoremap <C-b>  <Left>
+cnoremap <C-f>  <Right>
+cnoremap <C-h>  <BS>
+cnoremap <C-d>  <Del>
+cnoremap <C-p>  <Up>
+cnoremap <C-n>  <Down>
+cnoremap <C-k> <C-\>e getcmdpos() == 1 ?
+      \ '' : getcmdline()[:getcmdpos()-2]<CR>
 
 ""-----------------------------
 ""  Unite設定
@@ -175,11 +190,14 @@ nnoremap -sf :<C-u>VimFilerCurrentDir -split<CR>
 nnoremap ;e :<C-u>VimFiler -buffer-name=explorer 
             \-split -simple -winwidth=35 -toggle -no-quit<CR>
 nnoremap ;s :<C-u>VimShell<CR>
+nnoremap ;S :<C-u>VimShell -split<CR>
 nnoremap ;r :<C-u>source ~/.vimrc<CR>
 nnoremap ;hf :<C-u>Unite file_mru<CR>
 nnoremap ;hy :<C-u>Unite history/yank<CR>
 
-" Vim-LaTeX settings
+""-----------------------------
+""  Vim-LaTeX settings
+""-----------------------------
 let s:bundle = neobundle#get("vim-latex")
 function! s:bundle.hooks.on_source(bundle)
   let OSTYPE = system('uname')
@@ -202,7 +220,35 @@ function! s:bundle.hooks.on_source(bundle)
 endfunction
 unlet s:bundle
 
-" VimShell
+""-----------------------------
+""  NeoComplete
+""-----------------------------
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+
+" Define dictionary.
+let g:neocomplete#sources#dictionary#dictionaries = {
+    \ 'default' : '',
+    \ 'vimshell' : $HOME.'/.vimshell_hist',
+    \ 'scheme' : $HOME.'/.gosh_completions'
+        \ }
+
+" Define keyword.
+if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+""-----------------------------
+""  VimShell
+""-----------------------------
 let g:vimshell_right_prompt='Get_git_detail()'
 let g:vimshell_user_prompt = 'getcwd()'
 

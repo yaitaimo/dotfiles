@@ -25,16 +25,22 @@ export PATH
 # localhostコマンドを追加
 alias inet="ifconfig | grep en0 -A 4 | grep 'inet ' | cut -f 2,2 -d ' '"
 
-proxy="proxy.kuins.net:8080"
-switch_trigger="lab"
+# for lab
+function change_proxy(){
+    proxy="proxy.kuins.net:8080"
+    switch_trigger="lab"
 
-if [ "`networksetup -getcurrentlocation`" = "$switch_trigger" ];then
-    export http_proxy=$proxy
-    export ftp_proxy=$proxy
-else
-    unset http_proxy
-    unset ftp_proxy
-fi
+    if [ "`networksetup -getcurrentlocation`" = "$switch_trigger" ];then
+        export http_proxy=$proxy
+        export ftp_proxy=$proxy
+    else
+        unset http_proxy
+        unset ftp_proxy
+    fi
+}
+
+# lab proxy setting
+change_proxy
 
 alias wifi_changer='python ~/MyCode/python/gem/wifi_changer.py'
 
