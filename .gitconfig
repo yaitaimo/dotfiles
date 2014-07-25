@@ -15,3 +15,6 @@
     ig  = "!gi() { curl http://www.gitignore.io/api/$@ ;}; gi"
 [push]
     default = simple
+[diff "applescript"]
+    textconv = osadecompile
+    
