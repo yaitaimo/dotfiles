@@ -1,48 +1,112 @@
+## General Setting ##
 
-# Android NDK 設定用
-NDK_ROOT=/Applications/android-ndk
-export NDK_ROOT
+export EDITOR=vim       # エディタをvimに設定
+export LANG=ja_JP.UTF-8 # 文字コードをUTF-8に設定
+export KCODE=u          # KCODEにUTF-8を設定
 
-# nvm
-source $HOME/.nvm/nvm.sh
+bindkey -e              # emacsキーバインド(mac default)
 
-alias safari="open -a Safari"
+setopt no_beep          # ビープ音なし
+setopt auto_cd          # ディレクトリ名の入力のみで移動する
+setopt auto_pushd       # cdをpushdとして扱う
+setopt correct
 
-# tmuxのセット
-alias tmux='~/bin/tmuxx.sh'
+### Move ###
+setopt pushd_ignore_dups # 重複するディレクトリは記録しないようにする
+function chpwd(){ls -F} # 移動した後は'ls'する
 
-alias localhost="cd /Library/WebServer/Documents"
+### History ###
+HISTFILE=~/.zsh_history # ヒストリーを保存するファイル
+HISTSIZE=100000          # メモリに保存されるヒストリの件数
+SAVEHIST=100000          # 保存されるヒストリの件数
+setopt extended_history # ヒストリに実行時間も保存する
+setopt hist_ignore_dups # 直前と同じコマンドはヒストリに追加しない
+setopt share_history    # 他のシェルのヒストリをリアルタイムで共有する
 
-# パス通し
-PATH=/usr/local/bin:$PATH:$HOME/bin
-#:/Applications/android-sdk-macosx/tools:/Applications/Xcode.app/Contents/developer/Platforms/iPhoneSimulator.platform/Developer/Applications:
+### Set Alias ###
+# フォルダ,ファイル消去に関しては一度確認を
+alias rm="rm -i"
+alias cp="cp -i"
+alias mv="mv -i"
+alias ll="ls -lA"
+alias lf="ls -FA"
+alias la="ls -a"
+alias p="popd"
+alias ]="open"
+alias v="vim"
+# lsコマンド時、自動で色がつく(ls -Gのようなもの？）
+export CLICOLOR=true
+# forward-word
+bindkey ^W forward-word
 
-export PATH
+### Complement ###
+autoload -U compinit
+compinit
 
-# javaの環境変数にutf-8を設定
-# export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
+# 補完候補を一覧表示
+setopt auto_list
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # 補完時の大文字小文字を区別しない
 
-# localhostコマンドを追加
-alias inet="ifconfig | grep en0 -A 4 | grep 'inet ' | cut -f 2,2 -d ' '"
+# マッチしたコマンドのヒストリを表示できるようにする
+autoload history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+bindkey "^P" history-beginning-search-backward-end
+bindkey "^N" history-beginning-search-forward-end
 
-# for lab
-function change_proxy(){
-    proxy="proxy.kuins.net:8080"
-    switch_trigger="lab"
+# 全てのヒストリを表示する
+function history-all { history -E 1 | less }
 
-    if [ "`networksetup -getcurrentlocation`" = "$switch_trigger" ];then
-        export http_proxy=$proxy
-        export ftp_proxy=$proxy
-    else
-        unset http_proxy
-        unset ftp_proxy
-    fi
+# ${fg[...]} や $reset_color をロード
+autoload -U colors; colors
+
+function prompt-git-current-branch {
+  local name st color
+  if [[ "$PWD" =~ '/\.git(/.*)?$' ]]; then
+    return
+  fi
+  name=$(basename "`git symbolic-ref HEAD 2> /dev/null`")
+  if [[ -z $name ]]; then
+    return
+  fi
+  st=`git status 2> /dev/null`
+  if [[ -n `echo "$st" | grep "^nothing to"` ]]; then
+    color=${fg[cyan]}
+  elif [[ -n `echo "$st" | grep "^nothing added"` ]]; then
+    color=${fg[yellow]}
+  elif [[ -n `echo "$st" | grep "^# Untracked"` ]]; then
+    color=${fg_bold[red]}
+  else
+    color=${fg[red]}
+  fi
+  echo "%{${fg[cyan]}%}|%{$reset_color%}%{$color%}$name%{$reset_color%}"
 }
+# %{...%} は囲まれた文字列がエスケープシーケンスであることを明示する
+# これをしないと右プロンプトの位置がずれる
 
-# lab proxy setting
-change_proxy
+# プロンプト 表示
+setopt prompt_subst
+PROMPT='%{${fg[cyan]}%}[%n%{$reset_color%}`prompt-git-current-branch`%{${fg[cyan]}%}]%{${reset_color}%} %{${fg[yellow]}%}%~%{${reset_color}%}
+$'
+# SSHログイン時のプロンプト
+[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
+PROMPT="%{${fg[white]}%}${HOST%%.*} ${PROMPT}"
+;
 
-alias wifi_changer='python ~/MyCode/python/gem/wifi_changer.py'
+# for mac
+if [[ $(uname) == Darwin  ]]; then
 
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
+    # Add alias for ctags in Vim
+    alias ctags="/usr/local/bin/ctags"
+
+    # zmvのセット
+    autoload -Uz zmv
+    alias zmv='noglob zmv -W'
+
+    alias chrome='open -a Google\ Chrome'
+
+fi
+
+# Load the local configuration.
+[ -f $HOME/.zshrc.local ] && source $HOME/.zshrc.local
+
