@@ -91,6 +91,7 @@ autocmd FileType python setl smartindent cinwords=if,elif,else,for,while,try,exc
 autocmd FileType python setl tabstop=8 expandtab shiftwidth=4 softtabstop=4
 autocmd FileType python setl textwidth=79
 autocmd FileType python setl formatoptions+=tcqw
+
 ""-------------
 ""  編集設定
 ""-------------
@@ -120,25 +121,25 @@ set wrapscan ""検索時に最後までいったら最初に戻る
 ""----------
 "" 移動設定
 ""----------
-nmap j gj
-nmap k gk
+nnoremap j gj
+nnoremap k gk
 
 ""--------------------------------
 ""  Key Bindings for Insert Mode
 ""--------------------------------
 ""移動
-imap <C-a> <Home>
-imap <C-e> <End>
-imap <C-b> <Left>
-imap <C-f> <Right>
-imap <C-n> <Down>
-imap <C-p> <UP>
+inoremap <C-a> <Home>
+inoremap <C-e> <End>
+inoremap <C-b> <Left>
+inoremap <C-f> <Right>
+inoremap <C-n> <Down>
+inoremap <C-p> <UP>
 ""消去
-imap <C-h> <BS>
-imap <C-k> <C-\>e getcmdpos() == 1 ?
+inoremap <C-h> <BS>
+inoremap <C-k> <C-\>e getcmdpos() == 1 ?
       \ '' : getcmdline()[:getcmdpos()-2]<CR>
-" imap <C-y> <ESC>pi
-imap <C-d> <Del>
+" inoremap <C-y> <ESC>pi
+inoremap <C-d> <Del>
 set whichwrap=h,l,<,>
 set backspace=start,eol,indent
 
@@ -157,6 +158,17 @@ cnoremap <C-k> <C-\>e getcmdpos() == 1 ?
       \ '' : getcmdline()[:getcmdpos()-2]<CR>
 
 ""-----------------------------
+""  ショートカット
+""-----------------------------
+nnoremap ;e :<C-u>VimFiler -buffer-name=explorer 
+            \-split -simple -winwidth=35 -toggle -no-quit<CR>
+nnoremap ;s :<C-u>VimShell<CR>
+nnoremap ;S :<C-u>VimShell -split<CR>
+nnoremap ;r :<C-u>source ~/.vimrc<CR>
+" tagsジャンプの際に複数ある場合を考慮
+nnoremap <C-]> g<C-]>
+
+""-----------------------------
 ""  Unite設定
 ""-----------------------------
 nnoremap [unite] <Nop>
@@ -164,21 +176,22 @@ nmap ; [unite]
 "開いていない場合はカレントディレクトリ
 nnoremap <silent> [unite]f :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
 nnoremap <silent> [unite]b :<C-u>Unite buffer<CR>
-nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=register register<CR>
 nnoremap <silent> [unite]m :<C-u>Unite file_mru<CR>
 nnoremap <silent> [unite]c :<C-u>Unite bookmark<CR>
 nnoremap <silent> [unite]a :<C-u>UniteBookmarkAdd<CR>
+nnoremap <silent> [unite]hf:<C-u>Unite file_mru<CR>
+nnoremap <silent> [unite]hy:<C-u>Unite history/yank<CR>
 autocmd FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()"{{{
     "ESCでuniteを終了
-    nmap <buffer> <ESC> <Plug>(unite_exit)
-    map <C-a> <Home>
-    imap <C-e> <End>
-    map <C-b> <Left>
-    map <C-f> <Right>
-    map <C-n> <Down>
-    map <C-p> <UP>
-    map <C-h> <BS>
+    nnoremap <buffer> <ESC> <Plug>(unite_exit)
+    inoremap <C-a> <Home>
+    inoremap <C-e> <End>
+    inoremap <C-b> <Left>
+    inoremap <C-f> <Right>
+    inoremap <C-n> <Down>
+    inoremap <C-p> <UP>
+    inoremap <C-h> <BS>
     "ctrl+sで縦に分割して開く
     nnoremap <silent><buffer><expr> <C-j> unite#do_action('split')
     inoremap <silent><buffer><expr> <C-j> unite#do_action('split')
@@ -187,14 +200,6 @@ function! s:unite_my_settings()"{{{
     inoremap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
 endfunction"}}}
 let g:unite_source_history_yank_enable =1
-nnoremap -sf :<C-u>VimFilerCurrentDir -split<CR>
-nnoremap ;e :<C-u>VimFiler -buffer-name=explorer 
-            \-split -simple -winwidth=35 -toggle -no-quit<CR>
-nnoremap ;s :<C-u>VimShell<CR>
-nnoremap ;S :<C-u>VimShell -split<CR>
-nnoremap ;r :<C-u>source ~/.vimrc<CR>
-nnoremap ;hf :<C-u>Unite file_mru<CR>
-nnoremap ;hy :<C-u>Unite history/yank<CR>
 
 ""-----------------------------
 ""  Vim-LaTeX settings
@@ -261,3 +266,23 @@ function! Get_git_detail()
         return '[= ' . s:branch . ']'
     endif
 endfunction
+
+""-----------------------------
+""  Ctags
+""-----------------------------
+function! UpdateTagsFile()
+    let current_filetype = &filetype
+    let venv_directory_names = ['env', 'venv']
+    let 
+    if current_filetype!='' && current_filetype=='py'
+        for name in venv_directory_names
+            if isdirectory(name)
+            endif
+        endfor
+    endif
+   " もしpythonでかつvirtualenvがあれば、それを含む物にする 
+endfunction 
+
+""-----------------------------
+""  vim-tags
+""-----------------------------
