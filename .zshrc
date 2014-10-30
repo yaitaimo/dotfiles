@@ -39,6 +39,10 @@ export CLICOLOR=true
 # forward-word
 bindkey ^W forward-word
 
+# sttyを使わない設定
+stty stop undef
+stty start undef
+
 ### Complement ###
 autoload -U compinit
 compinit
