@@ -50,7 +50,8 @@ if has('lua')
     NeoBundle 'git://github.com/Shougo/neocomplete.vim.git'
 endif
 
-filetype indent plugin on
+filetype indent on
+filetype plugin on
 
 ""---------------------
 ""  カラーテーマの変更
@@ -86,8 +87,7 @@ set cursorline
 ""-------------
 ""  Python
 ""-------------
-autocmd FileType python setl autoindent
-autocmd FileType python setl smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
+autocmd FileType python setl cinwords=if,elif,else,for,while,try,except,finally,def,class
 autocmd FileType python setl tabstop=8 expandtab shiftwidth=4 softtabstop=4
 autocmd FileType python setl textwidth=79
 autocmd FileType python setl formatoptions+=tcqw
@@ -98,7 +98,7 @@ autocmd FileType python setl formatoptions+=tcqw
 set termencoding=utf-8
 set encoding=utf-8
 set fileencodings=utf-8,cp932,euc-jp,iso-2022-jp
-set smartindent ""オートインデント
+"set smartindent スマートインデントはいらない。filetype indent onが正解。
 set wildmenu ""コマンドライン補完を便利に
 set hidden ""undoの履歴をbufferでも有効に
 
