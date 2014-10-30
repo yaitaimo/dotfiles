@@ -12,7 +12,7 @@
     ba = branch -a
     ft = fetch
     fp = fetch -p
-    ig  = "!gi() { curl http://www.gitignore.io/api/$@ ;}; gi"
+    ig  = "!gi() { curl https://www.gitignore.io/api/$@ ;}; gi"
 [push]
     default = simple
 [diff "applescript"]
