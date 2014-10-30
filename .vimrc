@@ -100,6 +100,7 @@ set encoding=utf-8
 set fileencodings=utf-8,cp932,euc-jp,iso-2022-jp
 set smartindent ""オートインデント
 set wildmenu ""コマンドライン補完を便利に
+set hidden ""undoの履歴をbufferでも有効に
 
 ""タブをスペースで挿入
 set expandtab
@@ -134,11 +135,10 @@ inoremap <C-b> <Left>
 inoremap <C-f> <Right>
 inoremap <C-n> <Down>
 inoremap <C-p> <UP>
+inoremap <C-k> <C-o>d$
+
 ""消去
 inoremap <C-h> <BS>
-inoremap <C-k> <C-\>e getcmdpos() == 1 ?
-      \ '' : getcmdline()[:getcmdpos()-2]<CR>
-" inoremap <C-y> <ESC>pi
 inoremap <C-d> <Del>
 set whichwrap=h,l,<,>
 set backspace=start,eol,indent
@@ -167,6 +167,8 @@ nnoremap ;S :<C-u>VimShell -split<CR>
 nnoremap ;r :<C-u>source ~/.vimrc<CR>
 " tagsジャンプの際に複数ある場合を考慮
 nnoremap <C-]> g<C-]>
+" 選択部分を入力として検索
+vnoremap * "zy:let @/ = @z<CR>n
 
 ""-----------------------------
 ""  Unite設定
@@ -174,12 +176,11 @@ nnoremap <C-]> g<C-]>
 nnoremap [unite] <Nop>
 nmap ; [unite]
 "開いていない場合はカレントディレクトリ
-nnoremap <silent> [unite]f :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+nnoremap <silent> [unite]f :<C-u>UniteWithBufferDir -buffer-name=files file file/new<CR>
 nnoremap <silent> [unite]b :<C-u>Unite buffer<CR>
 nnoremap <silent> [unite]m :<C-u>Unite file_mru<CR>
 nnoremap <silent> [unite]c :<C-u>Unite bookmark<CR>
 nnoremap <silent> [unite]a :<C-u>UniteBookmarkAdd<CR>
-nnoremap <silent> [unite]hf:<C-u>Unite file_mru<CR>
 nnoremap <silent> [unite]hy:<C-u>Unite history/yank<CR>
 autocmd FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()"{{{
@@ -286,3 +287,16 @@ endfunction
 ""-----------------------------
 ""  vim-tags
 ""-----------------------------
+
+""-----------------------------
+""  Clear undo history
+""-----------------------------
+" A function to clear the undo history
+function! <SID>ForgetUndo()
+    let old_undolevels = &undolevels
+    set undolevels=-1
+    exe "normal a \<BS>\<Esc>"
+    let &undolevels = old_undolevels
+    unlet old_undolevels
+endfunction
+command! -nargs=0 ClearUndo call <SID>ForgetUndo()
