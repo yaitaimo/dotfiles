@@ -27,14 +27,14 @@ endif
 "--------------------
 " プラグインのリスト
 "--------------------
-NeoBundle 'git://github.com/Shougo/neobundle.vim.git'
-NeoBundle 'git://github.com/Shougo/unite.vim.git'
-NeoBundle 'git://github.com/Shougo/neomru.vim.git'
-NeoBundle 'git://github.com/Shougo/vimfiler.vim.git'
-NeoBundle 'git://github.com/Lokaltog/vim-powerline.git'
-NeoBundle 'git://github.com/altercation/vim-colors-solarized.git'
-NeoBundle 'git://github.com/Shougo/vimshell.vim.git'
-NeoBundle 'git://github.com/mitsuhiko/vim-jinja.git'
+NeoBundle 'Shougo/neobundle.vim'
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/neomru.vim'
+NeoBundle 'Shougo/vimfiler.vim'
+NeoBundle 'Lokaltog/vim-powerline'
+NeoBundle 'altercation/vim-colors-solarized'
+NeoBundle 'Shougo/vimshell.vim'
+NeoBundle 'mitsuhiko/vim-jinja'
 
 NeoBundle 'Shougo/vimproc', {
       \ 'build' : {
@@ -44,10 +44,10 @@ NeoBundle 'Shougo/vimproc', {
       \   'unix' : 'make -f make_uix.mak',
       \   }
       \ }
-NeoBundle 'git://github.com/jcf/vim-latex.git'
+NeoBundle 'jcf/vim-latex'
 
 if has('lua')
-    NeoBundle 'git://github.com/Shougo/neocomplete.vim.git'
+    NeoBundle 'Shougo/neocomplete.vim'
 endif
 
 filetype indent on
