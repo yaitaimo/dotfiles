@@ -98,7 +98,7 @@ autocmd FileType python setl formatoptions+=tcqw
 ""-------------
 set termencoding=utf-8
 set encoding=utf-8
-set fileencodings=utf-8,cp932,euc-jp,iso-2022-jp
+set fileencodings=cp932,euc-jp,iso-2022-jp,utf-8
 "set smartindent スマートインデントはいらない。filetype indent onが正解。
 set wildmenu ""コマンドライン補完を便利に
 set hidden ""undoの履歴をbufferでも有効に
