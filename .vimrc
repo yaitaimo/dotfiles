@@ -68,6 +68,7 @@ colorscheme solarized
 ""----------------------
 "powerlineで矢印を使う iTremでfontはpowerline用の物を指定
 let g:Powerline_symbols='fancy'
+let g:Powerline_stl_path_style='short'
 set t_Co=256  "色数設定
 
 ""------------
