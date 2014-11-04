@@ -24,6 +24,7 @@ brew install heroku-toolbelt
 brew install sl
 brew install reattach-to-user-namespace
 brew install nkf
+brew install tmux
 brew install mysql
 brew install ctags
 brew install hub
@@ -37,6 +38,7 @@ brew cask install evernote
 brew cask install google-chrome
 brew cask install google-japanese-ime
 brew cask install gyazo
+brew cask install karabiner
 brew cask install iterm2
 brew cask install minecraft
 brew cask install macwinzipper
@@ -48,6 +50,7 @@ brew cask install slack
 brew cask install torbrowser
 brew cask install virtualbox
 brew cask install vagrant
+brew cask install xquartz
 
 brew cleanup
 brew cask cleanup
