@@ -27,6 +27,7 @@ brew install nkf
 brew install mysql
 brew install ctags
 brew install hub
+brew install fontforge
 
 brew cask install alfred
 brew cask install appcleaner
@@ -56,3 +57,15 @@ brew cask alfred link
 # LINE
 # brew opencv
 # PlainCalc
+
+# dotfiles
+ln -s ~/dotfiles/.zshrc ~/
+ln -s ~/dotfiles/.vimrc ~/
+ln -s ~/dotfiles/.vim ~/
+ln -s ~/dotfiles/.tmux.conf ~/
+ln -s ~/dotfiles/.gitconfig ~/
+
+git submodule update --init --recursive
+
+sudo sh -c "echo '/usr/local/bin/zsh' >> /etc/shells"
+chsh -s /usr/local/bin/zsh
