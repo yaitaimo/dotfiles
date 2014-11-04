@@ -44,6 +44,7 @@ brew cask install minecraft
 brew cask install macwinzipper
 brew cask install openoffice
 brew cask install onepassword
+brew cask install pycharm
 brew cask install sitesucker
 brew cask install skype
 brew cask install slack
