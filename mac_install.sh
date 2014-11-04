@@ -1,8 +1,8 @@
-xcode-select --install
-
-ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
-
-brew doctor
+# xcode-select --install
+ 
+# ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+ 
+# brew doctor
 
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
@@ -30,7 +30,7 @@ brew install hub
 
 brew cask install alfred
 brew cask install appcleaner
-brew cask install bettertouhtool
+brew cask install bettertouchtool
 brew cask install dropbox
 brew cask install evernote
 brew cask install google-chrome
@@ -40,6 +40,7 @@ brew cask install iterm2
 brew cask install minecraft
 brew cask install macwinzipper
 brew cask install openoffice
+brew cask install onepassword
 brew cask install sitesucker
 brew cask install skype
 brew cask install slack
