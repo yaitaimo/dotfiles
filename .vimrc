@@ -31,7 +31,8 @@ NeoBundle 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/vimfiler.vim'
-NeoBundle 'Lokaltog/vim-powerline'
+" NeoBundle 'Lokaltog/vim-powerline'
+NeoBundle 'Lokaltog/powerline'
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'Shougo/vimshell.vim'
 NeoBundle 'mitsuhiko/vim-jinja'
@@ -67,9 +68,14 @@ colorscheme solarized
 ""  vim-powerlineの設定
 ""----------------------
 "powerlineで矢印を使う iTremでfontはpowerline用の物を指定
-let g:Powerline_symbols='fancy'
-let g:Powerline_stl_path_style='short'
-set t_Co=256  "色数設定
+" let g:Powerline_symbols='fancy'
+" let g:Powerline_stl_path_style='short'
+" set t_Co=256  "色数設定
+
+set laststatus=2
+set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
+let g:Powerline_symbols = 'fancy'
+set noshowmode
 
 ""------------
 ""  表示設定
@@ -284,10 +290,6 @@ function! UpdateTagsFile()
     endif
    " もしpythonでかつvirtualenvがあれば、それを含む物にする 
 endfunction 
-
-""-----------------------------
-""  vim-tags
-""-----------------------------
 
 ""-----------------------------
 ""  Clear undo history
