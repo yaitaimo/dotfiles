@@ -44,11 +44,13 @@ brew cask install minecraft
 brew cask install macwinzipper
 brew cask install openoffice
 brew cask install onepassword
+brew cask install plain-clip
 brew cask install pycharm
 brew cask install sitesucker
 brew cask install skype
 brew cask install slack
 brew cask install torbrowser
+brew cask install tunnelblick
 brew cask install virtualbox
 brew cask install vagrant
 brew cask install xquartz
@@ -73,3 +75,11 @@ git submodule update --init --recursive
 
 sudo sh -c "echo '/usr/local/bin/zsh' >> /etc/shells"
 chsh -s /usr/local/bin/zsh
+
+# pip install git+git://github.com/Lokaltog/powerline
+# pip install psutil
+
+# pip install markdown
+
+# vim swap & backup directory
+mkdir ~/tmp

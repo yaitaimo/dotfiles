@@ -14,7 +14,7 @@ setopt correct
 
 ### Move ###
 setopt pushd_ignore_dups # 重複するディレクトリは記録しないようにする
-function chpwd(){ls -F} # 移動した後は'ls'する
+#function chpwd(){ls -F} # 移動した後は'ls'する
 
 ### History ###
 HISTFILE=~/.zsh_history # ヒストリーを保存するファイル
@@ -108,7 +108,7 @@ if [[ $(uname) == Darwin  ]]; then
     autoload -Uz zmv
     alias zmv='noglob zmv -W'
 
-    alias chrome='open -a Google\ Chrome'
+    # alias chrome='open -a Google\ Chrome'
 
 fi
 
