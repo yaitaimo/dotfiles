@@ -320,10 +320,12 @@ let g:vimshell_user_prompt = 'getcwd()'
 function! GetGitDetail()
     let s:branch = substitute(
                 \ system("git rev-parse --abbrev-ref HEAD 2> /dev/null"),
-                \ '\n', '', 'g') if s:branch == '' return ''
-else
-    return '[= ' . s:branch . ']'
-endif
+                \ '\n', '', 'g') 
+    if s:branch == '' 
+        return ''
+    else
+        return '[= ' . s:branch . ']'
+    endif
 endfunction
 
 ""-----------------------------
