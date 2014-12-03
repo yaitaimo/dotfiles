@@ -19,18 +19,9 @@ NeoBundle 'Lokaltog/powerline'
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neomru.vim'
+NeoBundle 'Shougo/vimshell.vim'
 
-NeoBundleLazy 'Shougo/vimfiler.vim', {
-            \   'autoload' : { 'commands' : [ "VimFilerTab", "VimFiler",
-            \   "VimFilerExplorer" ] } 
-            \ }
-
-NeoBundleLazy 'Shougo/vimshell.vim', {
-            \   'autoload' : { 'commands' : [ 'VimShell', "VimShellPop",
-            \   "VimShellInteractive" ] } 
-            \ }
-
-NeoBundleLazy 'Shougo/vimproc', {
+NeoBundle 'Shougo/vimproc', {
             \ 'build' : {
             \   'windows' : 'make -f make_mingw32.mak',
             \   'cygwin' : 'make -f make_cygwin.mak',
@@ -39,21 +30,23 @@ NeoBundleLazy 'Shougo/vimproc', {
             \   }
             \ }
 
+NeoBundleLazy 'Shougo/vimfiler.vim', {
+            \   'autoload' : { 'commands' : [ "VimFilerTab", "VimFiler",
+            \   "VimFilerExplorer" ] } 
+            \ }
+
+
 NeoBundleLazy 'jcf/vim-latex', {
             \ "autoload": {"filetypes": ["tex"]}}
 
 if has('clientserver')
-    NeoBundleLazy "thinca/vim-quickrun"
-    nmap ;r <Plug>(quickrun)
+    NeoBundle "thinca/vim-quickrun"
     let g:quickrun_config = {
                 \   '*': {'runmode': 'async:remote:vimproc'},
                 \ }
 endif
 
-NeoBundleLazy 'majutsushi/tagbar', {
-            \ "build": {
-            \   "mac": "brew install ctags",
-            \ }}
+NeoBundle 'majutsushi/tagbar'
 
 " For flask develop
 NeoBundleLazy 'mitsuhiko/vim-jinja', {
@@ -217,6 +210,7 @@ nnoremap ;e :<C-u>VimFiler -buffer-name=explorer
 nnoremap ;s :<C-u>VimShell<CR>
 nnoremap ;S :<C-u>VimShell -split<CR>
 nnoremap .r :<C-u>source ~/.vimrc<CR>
+nnoremap ;r <Plug>(quickrun)
 " tagsジャンプの際に複数ある場合を考慮
 nnoremap <C-]> g<C-]>
 nnoremap ;t :TagbarToggle<CR>
