@@ -11,9 +11,7 @@ endif
 " Let NeoBundle manage NeoBundle
 NeoBundleFetch 'Shougo/neobundle.vim'
 
-"--------------------
-" プラグインのリスト
-"--------------------
+" Plugins {{{
 " NeoBundleLazy 'Lokaltog/vim-powerline'
 NeoBundle 'Lokaltog/powerline'
 NeoBundle 'altercation/vim-colors-solarized'
@@ -40,12 +38,9 @@ NeoBundleLazy 'Shougo/vimfiler.vim', {
 NeoBundleLazy 'jcf/vim-latex', {
             \ "autoload": {"filetypes": ["tex"]}}
 
-if has('clientserver')
-    NeoBundle "thinca/vim-quickrun"
-    let g:quickrun_config = {
-                \   '*': {'runmode': 'async:remote:vimproc'},
-                \ }
-endif
+" QuickRun
+NeoBundle 'tyru/open-browser.vim'
+NeoBundle "thinca/vim-quickrun"
 
 NeoBundle 'majutsushi/tagbar'
 
@@ -55,6 +50,10 @@ NeoBundleLazy 'mitsuhiko/vim-jinja', {
             \   "filetypes": ["python", "python3", "djangohtml"],
             \ }}
 
+NeoBundleLazy "vim-scripts/python_fold", {
+            \ "autoload": {
+            \   "filetypes": ["python", "python3", "djangohtml"],
+            \ }}
 NeoBundleLazy "davidhalter/jedi-vim", {
             \ "autoload": {
             \   "filetypes": ["python", "python3", "djangohtml"],
@@ -69,25 +68,23 @@ if has('lua') && v:version >= 703 && has('patch885')
 else
     NeoBundleLazy 'Shougo/neocomplcache.vim'
 endif
+"}}}
 
 " インストールされてないプラグインのチェック及びダウンロード
 NeoBundleCheck 
 
 filetype plugin indent on
 
-""---------------------
-""  カラーテーマの変更
-""----------------------
+" カラーテーマの変更 {{{
 syntax on
 set background=dark
 let g:solarized_termtrans=1
 let g:solarized_visibility = "high"
 let g:solarized_contrast = "high"
 colorscheme solarized
+"}}}
 
-""----------------------
-""  vim-powerlineの設定
-""----------------------
+" vim-powerlineの設定 {{{
 "powerlineで矢印を使う iTremでfontはpowerline用の物を指定
 " let g:Powerline_symbols='fancy'
 " let g:Powerline_stl_path_style='short'
@@ -97,10 +94,9 @@ set laststatus=2
 set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
 let g:Powerline_symbols = 'fancy'
 set noshowmode
+"}}}
 
-""------------
-""  表示設定
-""------------
+" Display {{{
 set modeline
 set title ""編集中のファイル名を表示
 set showmatch ""括弧入力時の対応する括弧を表示
@@ -112,19 +108,23 @@ set visualbell
 set mouse=a
 "" カーソル行をハイライト
 "set cursorline
+"}}}
 
-""-------------
-""  Python
-""-------------
+" Folding {{{
+set foldenable
+set foldmethod=marker
+set commentstring=%s
+"}}}
+
+" Python {{{
 autocmd FileType python setl 
             \ cinwords=if,elif,else,for,while,try,except,finally,def,class
 autocmd FileType python setl tabstop=8 expandtab shiftwidth=4 softtabstop=4
 autocmd FileType python setl textwidth=79
 autocmd FileType python setl formatoptions+=tcqw
+"}}}
 
-""-----------------
-""  swap & backup
-""-----------------
+" swap & backup {{{
 " スワップ設定
 " スワップファイルを作成
 set swapfile
@@ -137,10 +137,9 @@ set nobackup
 set writebackup
 " バックアップファイルの保存先を設定
 set backupdir=~/tmp,~/
+"}}}
 
-""-------------
-""  編集設定
-""-------------
+" 編集設定 {{{
 set termencoding=utf-8
 set encoding=utf-8
 set fileencodings=utf-8,cp932,euc-jp,iso-2022-jp
@@ -157,24 +156,21 @@ set softtabstop=4
 
 ""クリップボード設定
 set clipboard=unnamed
+"}}}
 
-""-----------
-""  検索設定
-""-----------
+" 検索設定 {{{
 set ignorecase ""大文字小文字の区別なく検索
 set smartcase ""検索文字列に大文字が含まれている場合は区別して検索する
 set wrapscan ""検索時に最後までいったら最初に戻る
+"}}}
 
-""----------
-"" 移動設定
-""----------
+" Key Bindings for Normal Mode {{{
 nnoremap j gj
 nnoremap k gk
+"}}}
 
-""--------------------------------
-""  Key Bindings for Insert Mode
-""--------------------------------
-""移動
+" Key Bindings for Insert Mode {{{
+" 移動
 inoremap <C-a> <Home>
 inoremap <C-e> <End>
 inoremap <C-b> <Left>
@@ -183,16 +179,15 @@ inoremap <C-n> <Down>
 inoremap <C-p> <UP>
 inoremap <C-k> <C-o>d$
 
-""消去
+" 消去
 inoremap <C-h> <BS>
 inoremap <C-d> <Del>
 set whichwrap=h,l,<,>
 set backspace=start,eol,indent
 inoremap <F5> <C-r>=strftime('%Y-%m-%d %H:%M:%S')<Return>
+"}}}
 
-""--------------------------------------
-""  Key Bindings for Command-line Mode
-""--------------------------------------
+" Key Bindings for Command-line Mode {{{
 cnoremap <C-a>  <Home>
 cnoremap <C-e>  <End>
 cnoremap <C-b>  <Left>
@@ -203,10 +198,9 @@ cnoremap <C-p>  <Up>
 cnoremap <C-n>  <Down>
 cnoremap <C-k> <C-\>e getcmdpos() == 1 ?
             \ '' : getcmdline()[:getcmdpos()-2]<CR>
+"}}}
 
-""-----------------------------
-""  ショートカット
-""-----------------------------
+" ショートカット {{{
 nnoremap ;e :<C-u>VimFiler -buffer-name=explorer 
             \ -split -simple -winwidth=35 -toggle -no-quit<CR>
 nnoremap ;s :<C-u>VimShell<CR>
@@ -218,10 +212,9 @@ nnoremap <C-]> g<C-]>
 nnoremap ;t :TagbarToggle<CR>
 " 選択部分を入力として検索
 vnoremap * "zy:let @/ = @z<CR>n
+"}}}
 
-""-----------------------------
-""  Unite設定
-""-----------------------------
+" Unite設定 {{{
 nnoremap [unite] <Nop>
 nmap ; [unite]
 "開いていない場合はカレントディレクトリ
@@ -251,10 +244,9 @@ function! s:unite_my_settings()"{{{
     inoremap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
 endfunction"}}}
 let g:unite_source_history_yank_enable =1
+"}}}
 
-""-----------------------------
-""  Vim-LaTeX settings
-""-----------------------------
+" Vim-LaTeX settings {{{
 let s:bundle = neobundle#get("vim-latex")
 function! s:bundle.hooks.on_source(bundle)
     let OSTYPE = system('uname')
@@ -277,10 +269,9 @@ function! s:bundle.hooks.on_source(bundle)
     endif
 endfunction
 unlet s:bundle
+"}}}
 
-""--------------------------------
-""  NeoComplete & NeoComplCache
-""--------------------------------
+" NeoComplete & NeoComplCache {{{
 if neobundle#is_installed('neocomplete')
     " Disable AutoComplPop.
     let g:acp_enableAtStartup = 0
@@ -313,10 +304,9 @@ elseif neobundle#is_installed('neocomplcache')
         " NeoComplCacheEnable 
     endfunction
 endif
+"}}}
 
-""-----------------------------
-""  VimShell
-""-----------------------------
+" VimShell {{{
 let g:vimshell_right_prompt='GetGitDetail()'
 let g:vimshell_user_prompt = 'getcwd()'
 
@@ -330,10 +320,9 @@ function! GetGitDetail()
         return '[= ' . s:branch . ']'
     endif
 endfunction
+"}}}
 
-""-----------------------------
-""  Ctags
-""-----------------------------
+" Ctags {{{
 function! UpdateTagsFile()
     let current_filetype = &filetype
     let venv_directory_names = ['env', 'venv']
@@ -345,11 +334,9 @@ function! UpdateTagsFile()
     endif
     " もしpythonでかつvirtualenvがあれば、それを含む物にする 
 endfunction 
+"}}}
 
-
-""-----------------------------
-""  Clear undo history
-""-----------------------------
+" Clear undo history {{{
 " A function to clear the undo history
 function! <SID>ForgetUndo()
     let old_undolevels = &undolevels
@@ -359,20 +346,28 @@ function! <SID>ForgetUndo()
     unlet old_undolevels
 endfunction
 command! -nargs=0 ClearUndo call <SID>ForgetUndo()
+"}}}
 
-""-----------------------------
-""  Evervim
-""-----------------------------
+" Evervim {{{
 nnoremap [evervim] <Nop>
 nmap @ [evervim]
 "開いていない場合はカレントディレクトリ
 nnoremap [evervim]s :<C-u>EvervimSearchByQuery 
 nnoremap <silent> [evervim]n :<C-u>EvervimCreateNote<CR>
 nnoremap <silent> [evervim]l :<C-u>EvervimNotebookList<CR>
+"}}}
 
-""-----------------------------
-""  local config
-""-----------------------------
+" QuickRun {{{
+let g:quickrun_config = {}
+let g:quickrun_config['markdown'] = {
+      \ 'type' : 'markdown/pandoc',
+      \ 'outputter': 'browser',
+      \ 'args' : '-f markdown+definition_lists --standalone --mathjax'
+      \ }
+"}}}
+
+" Local config {{{
 if filereadable($HOME."/.vimrc.local")
     so $HOME/.vimrc.local"
 endif
+"}}}
