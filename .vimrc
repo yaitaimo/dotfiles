@@ -1,8 +1,8 @@
-filetype off
-
 "--------------- 
 " neobundle設定 
 "--------------- 
+filetype off
+
 if has('vim_starting') 
     set runtimepath+=~/.vim/bundle/neobundle.vim 
     call neobundle#rc(expand('~/.vim/bundle')) 
@@ -20,6 +20,7 @@ NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/vimshell.vim'
+NeoBundle 'kakkyz81/evervim'
 
 NeoBundle 'Shougo/vimproc', {
             \ 'build' : {
@@ -106,6 +107,7 @@ set showmatch ""括弧入力時の対応する括弧を表示
 set matchtime=3             "" 対応括弧の瞬間強調時間
 set ruler
 set laststatus=2
+set number
 set visualbell
 set mouse=a
 "" カーソル行をハイライト
@@ -154,7 +156,7 @@ set shiftwidth=4
 set softtabstop=4
 
 ""クリップボード設定
-set clipboard=unnamed,autoselect
+set clipboard=unnamed
 
 ""-----------
 ""  検索設定
@@ -186,7 +188,7 @@ inoremap <C-h> <BS>
 inoremap <C-d> <Del>
 set whichwrap=h,l,<,>
 set backspace=start,eol,indent
-map <F5> :r! date "+\%Y-\%m-\%d \%H:\%M:\%S"<cr>kdd
+inoremap <F5> <C-r>=strftime('%Y-%m-%d %H:%M:%S')<Return>
 
 ""--------------------------------------
 ""  Key Bindings for Command-line Mode
@@ -210,7 +212,7 @@ nnoremap ;e :<C-u>VimFiler -buffer-name=explorer
 nnoremap ;s :<C-u>VimShell<CR>
 nnoremap ;S :<C-u>VimShell -split<CR>
 nnoremap .r :<C-u>source ~/.vimrc<CR>
-nnoremap ;r <Plug>(quickrun)
+nnoremap ;r :<C-u>QuickRun<CR>
 " tagsジャンプの際に複数ある場合を考慮
 nnoremap <C-]> g<C-]>
 nnoremap ;t :TagbarToggle<CR>
@@ -224,11 +226,12 @@ nnoremap [unite] <Nop>
 nmap ; [unite]
 "開いていない場合はカレントディレクトリ
 nnoremap <silent> [unite]f :<C-u>UniteWithBufferDir -buffer-name=files file 
-            \ file/new<CR> nnoremap <silent> [unite]b :<C-u>Unite buffer<CR>
+            \ file/new<CR> 
+nnoremap <silent> [unite]b :<C-u>Unite buffer<CR>
 nnoremap <silent> [unite]m :<C-u>Unite file_mru<CR>
 nnoremap <silent> [unite]c :<C-u>Unite bookmark<CR>
 nnoremap <silent> [unite]a :<C-u>UniteBookmarkAdd<CR>
-nnoremap <silent> [unite]hy:<C-u>Unite history/yank<CR>
+nnoremap <silent> [unite]hy :<C-u>Unite history/yank<CR>
 autocmd FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()"{{{
     "ESCでuniteを終了
@@ -356,3 +359,20 @@ function! <SID>ForgetUndo()
     unlet old_undolevels
 endfunction
 command! -nargs=0 ClearUndo call <SID>ForgetUndo()
+
+""-----------------------------
+""  Evervim
+""-----------------------------
+nnoremap [evervim] <Nop>
+nmap @ [evervim]
+"開いていない場合はカレントディレクトリ
+nnoremap [evervim]s :<C-u>EvervimSearchByQuery 
+nnoremap <silent> [evervim]n :<C-u>EvervimCreateNote<CR>
+nnoremap <silent> [evervim]l :<C-u>EvervimNotebookList<CR>
+
+""-----------------------------
+""  local config
+""-----------------------------
+if filereadable($HOME."/.vimrc.local")
+    so $HOME/.vimrc.local"
+endif
