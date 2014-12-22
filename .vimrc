@@ -146,6 +146,8 @@ set fileencodings=utf-8,cp932,euc-jp,iso-2022-jp
 "set smartindent スマートインデントはいらない。filetype indent onが正解。
 set wildmenu ""コマンドライン補完を便利に
 set hidden ""undoの履歴をbufferでも有効に
+set whichwrap=<,>
+set backspace=start,eol,indent
 
 ""タブをスペースで挿入
 set expandtab
@@ -167,6 +169,19 @@ set wrapscan ""検索時に最後までいったら最初に戻る
 " Key Bindings for Normal Mode {{{
 nnoremap j gj
 nnoremap k gk
+
+nnoremap ;e :<C-u>VimFiler -buffer-name=explorer 
+            \ -split -simple -winwidth=35 -toggle -no-quit<CR>
+nnoremap ;s :<C-u>VimShell<CR>
+nnoremap ;S :<C-u>VimShell -split<CR>
+nnoremap .r :<C-u>source ~/.vimrc<CR>
+nnoremap ;r :<C-u>QuickRun<CR>
+" tagsジャンプの際に複数ある場合を考慮
+nnoremap <C-]> g<C-]>
+nnoremap ;t :TagbarToggle<CR>
+
+nnoremap <expr> l foldclosed(line('.')) != -1 ? 'zo0zz' : 'l'
+nnoremap <expr> h col('.') == 1 && foldlevel(line('.')) > 0 ? 'zczz' : 'h'
 "}}}
 
 " Key Bindings for Insert Mode {{{
@@ -182,8 +197,6 @@ inoremap <C-k> <C-o>d$
 " 消去
 inoremap <C-h> <BS>
 inoremap <C-d> <Del>
-set whichwrap=h,l,<,>
-set backspace=start,eol,indent
 inoremap <F5> <C-r>=strftime('%Y-%m-%d %H:%M:%S')<Return>
 "}}}
 
@@ -200,19 +213,8 @@ cnoremap <C-k> <C-\>e getcmdpos() == 1 ?
             \ '' : getcmdline()[:getcmdpos()-2]<CR>
 "}}}
 
-" ショートカット {{{
-nnoremap ;e :<C-u>VimFiler -buffer-name=explorer 
-            \ -split -simple -winwidth=35 -toggle -no-quit<CR>
-nnoremap ;s :<C-u>VimShell<CR>
-nnoremap ;S :<C-u>VimShell -split<CR>
-nnoremap .r :<C-u>source ~/.vimrc<CR>
-nnoremap ;r :<C-u>QuickRun<CR>
-" tagsジャンプの際に複数ある場合を考慮
-nnoremap <C-]> g<C-]>
-nnoremap ;t :TagbarToggle<CR>
 " 選択部分を入力として検索
 vnoremap * "zy:let @/ = @z<CR>n
-"}}}
 
 " Unite設定 {{{
 nnoremap [unite] <Nop>
@@ -350,7 +352,7 @@ command! -nargs=0 ClearUndo call <SID>ForgetUndo()
 
 " Evervim {{{
 nnoremap [evervim] <Nop>
-nmap @ [evervim]
+nmap <Space>e [evervim]
 "開いていない場合はカレントディレクトリ
 nnoremap [evervim]s :<C-u>EvervimSearchByQuery 
 nnoremap <silent> [evervim]n :<C-u>EvervimCreateNote<CR>
