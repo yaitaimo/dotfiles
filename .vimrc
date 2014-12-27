@@ -4,9 +4,13 @@
 filetype off
 
 if has('vim_starting') 
-    set runtimepath+=~/.vim/bundle/neobundle.vim 
-    call neobundle#rc(expand('~/.vim/bundle')) 
+    if &compatible
+        set nocompatible
+    endif
+    set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
+
+call neobundle#begin(expand('~/.vim/bundle')) 
 
 " Let NeoBundle manage NeoBundle
 NeoBundleFetch 'Shougo/neobundle.vim'
@@ -70,10 +74,12 @@ else
 endif
 "}}}
 
-" インストールされてないプラグインのチェック及びダウンロード
-NeoBundleCheck 
+call neobundle#end()
 
 filetype plugin indent on
+
+" インストールされてないプラグインのチェック及びダウンロード
+NeoBundleCheck 
 
 " カラーテーマの変更 {{{
 syntax on
