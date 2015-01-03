@@ -23,6 +23,7 @@ NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/vimshell.vim'
 NeoBundle 'kakkyz81/evervim'
+NeoBundle 'tpope/vim-fugitive'
 
 NeoBundle 'Shougo/vimproc', {
             \ 'build' : {
@@ -148,7 +149,8 @@ set backupdir=~/tmp,~/
 " 編集設定 {{{
 set termencoding=utf-8
 set encoding=utf-8
-set fileencodings=utf-8,cp932,euc-jp,iso-2022-jp
+set fileencodings=iso-2022-jp,cp932,euc-jp
+set fileformats=unix,dos,mac
 "set smartindent スマートインデントはいらない。filetype indent onが正解。
 set wildmenu ""コマンドライン補完を便利に
 set hidden ""undoの履歴をbufferでも有効に
@@ -173,18 +175,21 @@ set wrapscan ""検索時に最後までいったら最初に戻る
 "}}}
 
 " Key Bindings for Normal Mode {{{
+nnoremap [start] <Nop>
+nmap ; [start]
+
 nnoremap j gj
 nnoremap k gk
 
-nnoremap ;e :<C-u>VimFiler -buffer-name=explorer 
+nnoremap [start]e :<C-u>VimFiler -buffer-name=explorer 
             \ -split -simple -winwidth=35 -toggle -no-quit<CR>
-nnoremap ;s :<C-u>VimShell<CR>
-nnoremap ;S :<C-u>VimShell -split<CR>
+nnoremap [start]s :<C-u>VimShell<CR>
+nnoremap [start]S :<C-u>VimShell -split<CR>
 nnoremap .r :<C-u>source ~/.vimrc<CR>
-nnoremap ;r :<C-u>QuickRun<CR>
+nnoremap [start]r :<C-u>QuickRun<CR>
 " tagsジャンプの際に複数ある場合を考慮
 nnoremap <C-]> g<C-]>
-nnoremap ;t :TagbarToggle<CR>
+nnoremap [start]t :TagbarToggle<CR>
 
 nnoremap <expr> l foldclosed(line('.')) != -1 ? 'zo0zz' : 'l'
 nnoremap <expr> h col('.') == 1 && foldlevel(line('.')) > 0 ? 'zczz' : 'h'
@@ -223,16 +228,14 @@ cnoremap <C-k> <C-\>e getcmdpos() == 1 ?
 vnoremap * "zy:let @/ = @z<CR>n
 
 " Unite設定 {{{
-nnoremap [unite] <Nop>
-nmap ; [unite]
 "開いていない場合はカレントディレクトリ
-nnoremap <silent> [unite]f :<C-u>UniteWithBufferDir -buffer-name=files file 
+nnoremap <silent> [start]f :<C-u>UniteWithBufferDir -buffer-name=files file 
             \ file/new<CR> 
-nnoremap <silent> [unite]b :<C-u>Unite buffer<CR>
-nnoremap <silent> [unite]m :<C-u>Unite file_mru<CR>
-nnoremap <silent> [unite]c :<C-u>Unite bookmark<CR>
-nnoremap <silent> [unite]a :<C-u>UniteBookmarkAdd<CR>
-nnoremap <silent> [unite]hy :<C-u>Unite history/yank<CR>
+nnoremap <silent> [start]b :<C-u>Unite buffer<CR>
+nnoremap <silent> [start]m :<C-u>Unite file_mru<CR>
+nnoremap <silent> [start]c :<C-u>Unite bookmark<CR>
+nnoremap <silent> [start]a :<C-u>UniteBookmarkAdd<CR>
+nnoremap <silent> [start]hy :<C-u>Unite history/yank<CR>
 autocmd FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()"{{{
     "ESCでuniteを終了
@@ -372,6 +375,19 @@ let g:quickrun_config['markdown'] = {
       \ 'outputter': 'browser',
       \ 'args' : '-f markdown+definition_lists --standalone --mathjax'
       \ }
+"}}}
+
+" Vim-fugitive {{{
+nnoremap [git] <Nop>
+nmap [start]g [git]
+
+nnoremap [git]m :<C-u>Gmove 
+nnoremap [git]r :<C-u>Gread
+nnoremap <silent> [git]d :<C-u>Gdiff<CR>
+nnoremap <silent> [git]c :<C-u>Gcommit<CR>
+nnoremap <silent> [git]s :<C-u>Gstatus<CR>
+nnoremap <silent> [git]bl :<C-u>Gblame<CR>
+nnoremap <silent> [git]br :<C-u>Gbrowse<CR>
 "}}}
 
 " Local config {{{
