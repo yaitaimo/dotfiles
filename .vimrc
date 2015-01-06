@@ -388,6 +388,7 @@ nnoremap <silent> [git]a :<C-u>Gwrite<CR>
 nnoremap <silent> [git]C :<C-u>Gcommit<CR>
 nnoremap <silent> [git]d :<C-u>Gdiff<CR>
 nnoremap <silent> [git]l :<C-u>Glog<CR>
+nnoremap <silent> [git]p :<C-u>Gpush<CR>
 nnoremap <silent> [git]s :<C-u>Gstatus<CR>
 nnoremap <silent> [git]bl :<C-u>Gblame<CR>
 nnoremap <silent> [git]br :<C-u>Gbrowse<CR>
