@@ -151,7 +151,7 @@ set termencoding=utf-8
 set encoding=utf-8
 set fileencodings=iso-2022-jp,cp932,sjis,euc-jp,utf-8
 au BufReadPost * if search("[^\x01-\x7E]", 'n') == 0 |
-                        \ set fenc=utf-8 | endif
+                        \ set fenc= | endif
 set fileformats=unix,dos,mac
 "set smartindent スマートインデントはいらない。filetype indent onが正解。
 set wildmenu ""コマンドライン補完を便利に
