@@ -1,6 +1,5 @@
-"--------------- 
-" neobundle設定 
-"--------------- 
+" neobundle設定 {{{
+
 filetype off
 
 if has('vim_starting') 
@@ -73,7 +72,7 @@ if has('lua') && v:version >= 703 && has('patch885')
 else
     NeoBundleLazy 'Shougo/neocomplcache.vim'
 endif
-"}}}
+" }}}
 
 call neobundle#end()
 
@@ -81,6 +80,7 @@ filetype plugin indent on
 
 " インストールされてないプラグインのチェック及びダウンロード
 NeoBundleCheck 
+" }}}
 
 " カラーテーマの変更 {{{
 syntax on
@@ -118,9 +118,7 @@ set mouse=a
 "}}}
 
 " Folding {{{
-set foldenable
 set foldmethod=marker
-set commentstring=%s
 "}}}
 
 " Python {{{
@@ -131,7 +129,7 @@ autocmd FileType python setl textwidth=79
 autocmd FileType python setl formatoptions+=tcqw
 "}}}
 
-" swap & backup {{{
+" Swap & Backup {{{
 " スワップ設定
 " スワップファイルを作成
 set swapfile
