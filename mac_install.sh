@@ -12,6 +12,7 @@ brew upgrade
 
 brew install caskroom/cask/brew-cask
 
+brew brew-any-tap
 brew install python
 brew install python3
 brew install zsh
@@ -19,6 +20,9 @@ brew install lua
 brew install vim --devel --with-lua
 brew install w3m
 brew install git
+brew install git-extras
+brew install sqlite
+brew install termshare
 brew install wget
 brew install heroku-toolbelt
 brew install sl
@@ -43,9 +47,10 @@ brew cask install iterm2
 brew cask install minecraft
 brew cask install macwinzipper
 brew cask install openoffice
-brew cask install onepassword
+brew cask install 1password
 brew cask install plain-clip
-brew cask install pycharm
+brew cask install xquartz
+# brew cask install pycharm
 brew cask install sitesucker
 brew cask install skype
 brew cask install slack
@@ -75,6 +80,8 @@ git submodule update --init --recursive
 
 sudo sh -c "echo '/usr/local/bin/zsh' >> /etc/shells"
 chsh -s /usr/local/bin/zsh
+
+echo "export PATH=/usr/local/bin:$PATH" > ~/.zshrc.local
 
 # pip install git+git://github.com/Lokaltog/powerline
 # pip install psutil

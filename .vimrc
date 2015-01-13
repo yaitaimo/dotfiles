@@ -15,7 +15,6 @@ call neobundle#begin(expand('~/.vim/bundle'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 
 " Plugins {{{
-" NeoBundleLazy 'Lokaltog/vim-powerline'
 NeoBundle 'Lokaltog/powerline'
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'Shougo/unite.vim'
@@ -89,19 +88,16 @@ let g:solarized_termtrans=1
 let g:solarized_visibility = "high"
 let g:solarized_contrast = "high"
 colorscheme solarized
-"}}}
+" }}}
 
-" vim-powerlineの設定 {{{
+" powerlineの設定 {{{
 "powerlineで矢印を使う iTremでfontはpowerline用の物を指定
-" let g:Powerline_symbols='fancy'
-" let g:Powerline_stl_path_style='short'
-" set t_Co=256  "色数設定
-
 set laststatus=2
 set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
 let g:Powerline_symbols = 'fancy'
+set t_Co=256  "色数設定
 set noshowmode
-"}}}
+" }}}
 
 " Display {{{
 set modeline
