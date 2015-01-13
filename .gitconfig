@@ -6,7 +6,7 @@
     ls = list-files
     lg = log --oneline --graph --decorate
     co = checkout
-    cm = commit -am
+    cm = commit -m
     st = status
     br = branch
     ba = branch -a
