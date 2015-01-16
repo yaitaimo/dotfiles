@@ -244,8 +244,8 @@ function! s:unite_my_settings()"{{{
     inoremap <C-p> <UP>
     inoremap <C-h> <BS>
     "ctrl+sで縦に分割して開く
-    nnoremap <silent><buffer><expr> <C-j> unite#do_action('split')
-    inoremap <silent><buffer><expr> <C-j> unite#do_action('split')
+    nnoremap <silent><buffer><expr> <C-s> unite#do_action('split')
+    inoremap <silent><buffer><expr> <C-s> unite#do_action('split')
     "ctrl+vで横に分割して開く
     nnoremap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
     inoremap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
