@@ -3,16 +3,37 @@
 [color]
     ui = true
 [alias]
-    ls = list-files
-    lg = log --oneline --graph --decorate
+    ec = config --global -e
+    ps = push
+    up = !git pull --rebase --prune $@ && git submodule update --init --recursive
+    pl = pull
+    # diff
+    dm = diff master
+    dc = diff --cached
+    dl = diff --stat -r
+    d1 = diff HEAD~
+    d2 = diff HEAD~~
+    d3 = diff HEAD~~~
+    ls = ls-files
     co = checkout
-    cm = commit -m
+    cob = checkout -b
+    # commit
+    cm = commit -am
+    ci = commit
+    amend = commit -a --amend
     st = status
     br = branch
     ba = branch -a
     ft = fetch
     fp = fetch -p
+    save = !git add -A && git commit -m 'SAVEPOINT'
+    who = shortlog -s --
+    # log
+    lg = log --oneline --graph --decorate
+    lg3 = log --oneline --graph --decorate -3
+    last = log -1 HEAD
     ig  = "!gi() { curl https://www.gitignore.io/api/$@ ;}; gi"
+    new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
 [push]
     default = simple
 [diff "applescript"]
