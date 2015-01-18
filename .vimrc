@@ -264,6 +264,13 @@ let g:unite_source_history_yank_enable =1
 " }}}
 
 " Vim-LaTeX {{{
+nnoremap <silent> [start]ll :<C-u>call Tex_StartTex()<CR>
+function! Tex_StartTex()
+    call Tex_RunLaTeX()
+    call Tex_ViewLaTeX()
+endfunction
+nnoremap <silent> [start]lr :<C-u>call Tex_RunLaTeX()<CR>
+nnoremap <silent> [start]lv :<C-u>call Tex_ViewLaTeX()<CR>
 let s:bundle = neobundle#get("vim-latex")
 function! s:bundle.hooks.on_source(bundle)
     let OSTYPE = system('uname')
