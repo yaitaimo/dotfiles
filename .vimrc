@@ -211,6 +211,11 @@ inoremap <C-d> <Del>
 inoremap <F5> <C-r>=strftime('%Y-%m-%d %H:%M:%S')<Return>
 "}}}
 
+" Key Bindings for Visual Mode {{{
+" 選択部分を入力として検索
+vnoremap * "zy:let @/ = @z<CR>n
+" }}}
+
 " Key Bindings for Command-line Mode {{{
 cnoremap <C-a>  <Home>
 cnoremap <C-e>  <End>
@@ -223,9 +228,6 @@ cnoremap <C-n>  <Down>
 cnoremap <C-k> <C-\>e getcmdpos() == 1 ?
             \ '' : getcmdline()[:getcmdpos()-2]<CR>
 "}}}
-
-" 選択部分を入力として検索
-vnoremap * "zy:let @/ = @z<CR>n
 
 " Unite設定 {{{
 "開いていない場合はカレントディレクトリ
