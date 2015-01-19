@@ -111,11 +111,11 @@ set visualbell
 set mouse=a
 "" カーソル行をハイライト
 "set cursorline
-"}}}
+" }}}
 
 " Folding {{{
 set foldmethod=marker
-"}}}
+" }}}
 
 " Python {{{
 autocmd FileType python setl 
@@ -123,7 +123,7 @@ autocmd FileType python setl
 autocmd FileType python setl tabstop=8 expandtab shiftwidth=4 softtabstop=4
 autocmd FileType python setl textwidth=79
 autocmd FileType python setl formatoptions+=tcqw
-"}}}
+" }}}
 
 " Swap & Backup {{{
 " スワップ設定
@@ -138,7 +138,7 @@ set nobackup
 set writebackup
 " バックアップファイルの保存先を設定
 set backupdir=~/tmp,~/
-"}}}
+" }}}
 
 " 編集設定 {{{
 set termencoding=utf-8
@@ -162,13 +162,15 @@ set softtabstop=4
 
 ""クリップボード設定
 set clipboard=unnamed
-"}}}
+" }}}
 
 " 検索設定 {{{
 set ignorecase ""大文字小文字の区別なく検索
 set smartcase ""検索文字列に大文字が含まれている場合は区別して検索する
 set wrapscan ""検索時に最後までいったら最初に戻る
-"}}}
+" }}}
+
+" Key Bindings {{{
 
 " Key Bindings for Normal Mode {{{
 nnoremap [start] <Nop>
@@ -189,7 +191,7 @@ nnoremap [start]t :TagbarToggle<CR>
 
 nnoremap <expr> l foldclosed(line('.')) != -1 ? 'zo0zz' : 'l'
 nnoremap <expr> h col('.') == 1 && foldlevel(line('.')) > 0 ? 'zczz' : 'h'
-"}}}
+" }}}
 
 " Key Bindings for Insert Mode {{{
 " 移動
@@ -205,7 +207,12 @@ inoremap <C-k> <C-o>d$
 inoremap <C-h> <BS>
 inoremap <C-d> <Del>
 inoremap <F5> <C-r>=strftime('%Y-%m-%d %H:%M:%S')<Return>
-"}}}
+" }}}
+
+" Key Bindings for Visual Mode {{{
+" 選択部分を入力として検索
+vnoremap * "zy:let @/ = @z<CR>n
+" }}}
 
 " Key Bindings for Command-line Mode {{{
 cnoremap <C-a>  <Home>
@@ -218,12 +225,11 @@ cnoremap <C-p>  <Up>
 cnoremap <C-n>  <Down>
 cnoremap <C-k> <C-\>e getcmdpos() == 1 ?
             \ '' : getcmdline()[:getcmdpos()-2]<CR>
-"}}}
+" }}}
 
-" 選択部分を入力として検索
-vnoremap * "zy:let @/ = @z<CR>n
+" }}}
 
-" Unite設定 {{{
+" Unite {{{
 "開いていない場合はカレントディレクトリ
 nnoremap <silent> [start]f :<C-u>UniteWithBufferDir -buffer-name=files file 
             \ file/new<CR> 
@@ -249,11 +255,18 @@ function! s:unite_my_settings()"{{{
     "ctrl+vで横に分割して開く
     nnoremap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
     inoremap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
-endfunction"}}}
+endfunction" }}}
 let g:unite_source_history_yank_enable =1
-"}}}
+" }}}
 
-" Vim-LaTeX settings {{{
+" Vim-LaTeX {{{
+nnoremap <silent> [start]ll :<C-u>call Tex_StartTex()<CR>
+function! Tex_StartTex()
+    call Tex_RunLaTeX()
+    call Tex_ViewLaTeX()
+endfunction
+nnoremap <silent> [start]lr :<C-u>call Tex_RunLaTeX()<CR>
+nnoremap <silent> [start]lv :<C-u>call Tex_ViewLaTeX()<CR>
 let s:bundle = neobundle#get("vim-latex")
 function! s:bundle.hooks.on_source(bundle)
     let OSTYPE = system('uname')
@@ -276,7 +289,7 @@ function! s:bundle.hooks.on_source(bundle)
     endif
 endfunction
 unlet s:bundle
-"}}}
+" }}}
 
 " NeoComplete & NeoComplCache {{{
 if neobundle#is_installed('neocomplete')
@@ -311,7 +324,7 @@ elseif neobundle#is_installed('neocomplcache')
         " NeoComplCacheEnable 
     endfunction
 endif
-"}}}
+" }}}
 
 " VimShell {{{
 let g:vimshell_right_prompt='GetGitDetail()'
@@ -327,7 +340,7 @@ function! GetGitDetail()
         return '[= ' . s:branch . ']'
     endif
 endfunction
-"}}}
+" }}}
 
 " Ctags {{{
 function! UpdateTagsFile()
@@ -341,7 +354,7 @@ function! UpdateTagsFile()
     endif
     " もしpythonでかつvirtualenvがあれば、それを含む物にする 
 endfunction 
-"}}}
+" }}}
 
 " Clear undo history {{{
 " A function to clear the undo history
@@ -353,7 +366,7 @@ function! <SID>ForgetUndo()
     unlet old_undolevels
 endfunction
 command! -nargs=0 ClearUndo call <SID>ForgetUndo()
-"}}}
+" }}}
 
 " Evervim {{{
 nnoremap [evervim] <Nop>
@@ -362,7 +375,7 @@ nmap <Space>e [evervim]
 nnoremap [evervim]s :<C-u>EvervimSearchByQuery 
 nnoremap <silent> [evervim]n :<C-u>EvervimCreateNote<CR>
 nnoremap <silent> [evervim]l :<C-u>EvervimNotebookList<CR>
-"}}}
+" }}}
 
 " QuickRun {{{
 let g:quickrun_config = {}
@@ -371,7 +384,7 @@ let g:quickrun_config['markdown'] = {
       \ 'outputter': 'browser',
       \ 'args' : '-f markdown+definition_lists --standalone --mathjax'
       \ }
-"}}}
+" }}}
 
 " Vim-fugitive {{{
 nnoremap [git] <Nop>
@@ -388,10 +401,12 @@ nnoremap <silent> [git]p :<C-u>Gpush<CR>
 nnoremap <silent> [git]s :<C-u>Gstatus<CR>
 nnoremap <silent> [git]bl :<C-u>Gblame<CR>
 nnoremap <silent> [git]br :<C-u>Gbrowse<CR>
-"}}}
+" }}}
 
 " Local config {{{
 if filereadable($HOME."/.vimrc.local")
     so $HOME/.vimrc.local"
 endif
-"}}}
+" }}}
+
+" vim: foldmethod=marker
