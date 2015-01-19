@@ -14,6 +14,7 @@
     d1 = diff HEAD~
     d2 = diff HEAD~~
     d3 = diff HEAD~~~
+    lsd = diff --name-only
     ls = ls-files
     co = checkout
     cob = checkout -b
