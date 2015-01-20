@@ -392,9 +392,9 @@ nmap [start]g [git]
 
 nnoremap [git]m :<C-u>Gmove 
 nnoremap [git]r :<C-u>Gread
-nnoremap [git]c :<C-u>Gcommit -m ""<LEFT>
+nnoremap [git]C :<C-u>Gcommit -am ""<LEFT>
 nnoremap <silent> [git]a :<C-u>Gwrite<CR>
-nnoremap <silent> [git]C :<C-u>Gcommit<CR>
+nnoremap <silent> [git]c :<C-u>Gcommit<CR>
 nnoremap <silent> [git]d :<C-u>Gdiff<CR>
 nnoremap <silent> [git]l :<C-u>Glog<CR>
 nnoremap <silent> [git]p :<C-u>Gpush<CR>
