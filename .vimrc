@@ -160,6 +160,9 @@ set expandtab
 set shiftwidth=4
 set softtabstop=4
 
+set formatoptions+=mM
+set textwidth=78
+
 ""クリップボード設定
 set clipboard=unnamed
 " }}}
