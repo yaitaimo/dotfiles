@@ -38,7 +38,7 @@ alias v="vim"
 # lsコマンド時、自動で色がつく(ls -Gのようなもの？）
 export CLICOLOR=true
 # forward-word
-bindkey ^W forward-word
+bindkey "^W" forward-word
 
 # sttyを使わない設定
 stty stop undef
