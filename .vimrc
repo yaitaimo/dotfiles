@@ -34,7 +34,6 @@ NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/vimshell.vim'
-NeoBundle 'kakkyz81/evervim'
 NeoBundle 'tpope/vim-fugitive'
 
 NeoBundle 'Shougo/vimproc', {
@@ -196,6 +195,7 @@ nmap ; [start]
 nnoremap j gj
 nnoremap k gk
 
+nnoremap <Space>d :<C-u>r! LC_ALL=en_US.UTF-8 date '+\%Y/\%m/\%d (\%a) \%H:\%M'<CR>
 nnoremap [start]e :<C-u>VimFiler -buffer-name=explorer 
             \ -split -simple -winwidth=35 -toggle -no-quit<CR>
 nnoremap [start]s :<C-u>VimShell<CR>
@@ -380,17 +380,6 @@ function! <SID>ForgetUndo()
     unlet old_undolevels
 endfunction
 command! -nargs=0 ClearUndo call <SID>ForgetUndo()
-" }}}
-
-" Evervim {{{
-if neobundle#is_installed('evervim')
-    nnoremap [evervim] <Nop>
-    nmap <Space>e [evervim]
-    "開いていない場合はカレントディレクトリ
-    nnoremap [evervim]s :<C-u>EvervimSearchByQuery 
-    nnoremap <silent> [evervim]n :<C-u>EvervimCreateNote<CR>
-    nnoremap <silent> [evervim]l :<C-u>EvervimNotebookList<CR>
-endif
 " }}}
 
 " QuickRun {{{
