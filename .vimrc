@@ -346,17 +346,17 @@ endfunction
 " }}}
 
 " Ctags {{{
-function! UpdateTagsFile()
-    let current_filetype = &filetype
-    let venv_directory_names = ['env', 'venv']
-    if current_filetype!='' && current_filetype=='py'
-        for name in venv_directory_names
-            if isdirectory(name)
-            endif
-        endfor
-    endif
-    " もしpythonでかつvirtualenvがあれば、それを含む物にする 
-endfunction 
+" function! UpdateTagsFile()
+"     let current_filetype = &filetype
+"     let venv_directory_names = ['env', 'venv']
+"     if current_filetype!='' && current_filetype=='py'
+"         for name in venv_directory_names
+"             if isdirectory(name)
+"             endif
+"         endfor
+"     endif
+"     " もしpythonでかつvirtualenvがあれば、それを含む物にする 
+" endfunction 
 " }}}
 
 " Clear undo history {{{
@@ -369,10 +369,6 @@ function! <SID>ForgetUndo()
     unlet old_undolevels
 endfunction
 command! -nargs=0 ClearUndo call <SID>ForgetUndo()
-" }}}
-
-" jedi-vim {{{
-autocmd FileType python nnoremap [start]g \g
 " }}}
 
 " Evervim {{{
