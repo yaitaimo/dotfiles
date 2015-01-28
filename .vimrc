@@ -414,10 +414,10 @@ nnoremap <silent> [git]bl :<C-u>Gblame<CR>
 nnoremap <silent> [git]br :<C-u>Gbrowse<CR>
 " }}}
 
-" momolist.vim {{{
+" memolist.vim {{{
 let g:memolist_memo_suffix = "txt"
 let g:memolist_unite = 1
-let g:memolist_unite_option = "-auto-preview"
+" let g:memolist_unite_option = "-auto-preview"
 nnoremap <silent> [start]mn  :MemoNew<CR>
 nnoremap <silent> [start]ml  :MemoList<CR>
 nnoremap <silent> [start]ms  :MemoGrep<CR>
