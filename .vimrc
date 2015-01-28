@@ -250,8 +250,8 @@ cnoremap <C-k> <C-\>e getcmdpos() == 1 ?
 
 " Unite {{{
 "開いていない場合はカレントディレクトリ
-nnoremap <silent> [start]f :<C-u>UniteWithBufferDir -buffer-name=files file 
-            \ file/new<CR> 
+nnoremap <silent> [start]f :<C-u>UniteWithBufferDir file file/new<CR> 
+nnoremap <silent> [start]m :<C-u>Unite file:~/tmp file/new:~/tmp<CR>
 nnoremap <silent> [start]b :<C-u>Unite buffer<CR>
 nnoremap <silent> [start]h :<C-u>Unite file_mru<CR>
 nnoremap <silent> [start]c :<C-u>Unite bookmark<CR>
