@@ -35,6 +35,7 @@ NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/vimshell.vim'
 NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'glidenote/memolist.vim'
 
 NeoBundle 'Shougo/vimproc', {
             \ 'build' : {
@@ -196,10 +197,10 @@ nnoremap j gj
 nnoremap k gk
 
 nnoremap <Space>d :<C-u>r! LC_ALL=en_US.UTF-8 date '+\%Y/\%m/\%d (\%a) \%H:\%M'<CR>
-nnoremap [start]e :<C-u>VimFiler -buffer-name=explorer 
+nnoremap <silent> [start]e :<C-u>VimFiler -buffer-name=explorer 
             \ -split -simple -winwidth=35 -toggle -no-quit<CR>
-nnoremap [start]s :<C-u>VimShell<CR>
-nnoremap [start]S :<C-u>VimShell -split<CR>
+nnoremap <silent> [start]s :<C-u>VimShell<CR>
+nnoremap <silent> [start]S :<C-u>VimShell -split<CR>
 nnoremap .r :<C-u>source ~/dotfiles/.vimrc<CR>
 nnoremap .e :<C-u>edit ~/dotfiles/.vimrc<CR>
 " あまりに押し間違いが多いので．
@@ -253,7 +254,6 @@ cnoremap <C-k> <C-\>e getcmdpos() == 1 ?
 " Unite {{{
 "開いていない場合はカレントディレクトリ
 nnoremap <silent> [start]f :<C-u>UniteWithBufferDir file file/new<CR> 
-nnoremap <silent> [start]m :<C-u>Unite file:~/tmp file/new:~/tmp<CR>
 nnoremap <silent> [start]b :<C-u>Unite buffer<CR>
 nnoremap <silent> [start]h :<C-u>Unite file_mru<CR>
 nnoremap <silent> [start]c :<C-u>Unite bookmark<CR>
@@ -412,6 +412,15 @@ nnoremap <silent> [git]p :<C-u>Gpush<CR>
 nnoremap <silent> [git]s :<C-u>Gstatus<CR>
 nnoremap <silent> [git]bl :<C-u>Gblame<CR>
 nnoremap <silent> [git]br :<C-u>Gbrowse<CR>
+" }}}
+
+" momolist.vim {{{
+let g:memolist_memo_suffix = "txt"
+let g:memolist_unite = 1
+let g:memolist_unite_option = "-auto-preview"
+nnoremap <silent> [start]mn  :MemoNew<CR>
+nnoremap <silent> [start]ml  :MemoList<CR>
+nnoremap <silent> [start]ms  :MemoGrep<CR>
 " }}}
 
 " Local config {{{
