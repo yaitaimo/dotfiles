@@ -202,6 +202,8 @@ nnoremap [start]s :<C-u>VimShell<CR>
 nnoremap [start]S :<C-u>VimShell -split<CR>
 nnoremap .r :<C-u>source ~/dotfiles/.vimrc<CR>
 nnoremap .e :<C-u>edit ~/dotfiles/.vimrc<CR>
+" あまりに押し間違いが多いので．
+nnoremap q: :<C-u>
 
 nnoremap [start]r :<C-u>QuickRun<CR>
 " tagsジャンプの際に複数ある場合を考慮
