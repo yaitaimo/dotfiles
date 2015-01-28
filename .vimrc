@@ -200,7 +200,9 @@ nnoremap [start]e :<C-u>VimFiler -buffer-name=explorer
             \ -split -simple -winwidth=35 -toggle -no-quit<CR>
 nnoremap [start]s :<C-u>VimShell<CR>
 nnoremap [start]S :<C-u>VimShell -split<CR>
-nnoremap .r :<C-u>source ~/.vimrc<CR>
+nnoremap .r :<C-u>source ~/dotfiles/.vimrc<CR>
+nnoremap .e :<C-u>edit ~/dotfiles/.vimrc<CR>
+
 nnoremap [start]r :<C-u>QuickRun<CR>
 " tagsジャンプの際に複数ある場合を考慮
 nnoremap <C-]> g<C-]>
