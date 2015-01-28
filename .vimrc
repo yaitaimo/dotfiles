@@ -1,3 +1,17 @@
+" Detect platform {{{
+let os = ""
+if has("win32")
+    let os="win"
+elseif has("unix")
+    let s:uname = system("uname")
+    if s:uname == "Darwin\n"
+        let os="mac"
+    else
+        let os="unix"
+    endif
+endif
+" }}}
+
 " neobundle設定 {{{
 
 filetype off
@@ -20,8 +34,8 @@ NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/vimshell.vim'
-NeoBundle 'kakkyz81/evervim'
 NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'glidenote/memolist.vim'
 
 NeoBundle 'Shougo/vimproc', {
             \ 'build' : {
@@ -36,10 +50,10 @@ NeoBundleLazy 'Shougo/vimfiler.vim', {
             \   'autoload' : { 'commands' : [ "VimFilerTab", "VimFiler",
             \   "VimFilerExplorer" ] } 
             \ }
-
-
-NeoBundleLazy 'jcf/vim-latex', {
-            \ "autoload": {"filetypes": ["tex"]}}
+if os=="mac"
+    NeoBundleLazy 'jcf/vim-latex', {
+                \ "autoload": {"filetypes": ["tex"]}}
+endif    
 
 " QuickRun
 NeoBundle 'tyru/open-browser.vim'
@@ -182,11 +196,16 @@ nmap ; [start]
 nnoremap j gj
 nnoremap k gk
 
-nnoremap [start]e :<C-u>VimFiler -buffer-name=explorer 
+nnoremap <Space>d :<C-u>r! LC_ALL=en_US.UTF-8 date '+\%Y/\%m/\%d (\%a) \%H:\%M'<CR>
+nnoremap <silent> [start]e :<C-u>VimFiler -buffer-name=explorer 
             \ -split -simple -winwidth=35 -toggle -no-quit<CR>
-nnoremap [start]s :<C-u>VimShell<CR>
-nnoremap [start]S :<C-u>VimShell -split<CR>
-nnoremap .r :<C-u>source ~/.vimrc<CR>
+nnoremap <silent> [start]s :<C-u>VimShell<CR>
+nnoremap <silent> [start]S :<C-u>VimShell -split<CR>
+nnoremap .r :<C-u>source ~/dotfiles/.vimrc<CR>
+nnoremap .e :<C-u>edit ~/dotfiles/.vimrc<CR>
+" あまりに押し間違いが多いので．
+nnoremap q: :<C-u>
+
 nnoremap [start]r :<C-u>QuickRun<CR>
 " tagsジャンプの際に複数ある場合を考慮
 nnoremap [start]g <C-]>
@@ -234,8 +253,7 @@ cnoremap <C-k> <C-\>e getcmdpos() == 1 ?
 
 " Unite {{{
 "開いていない場合はカレントディレクトリ
-nnoremap <silent> [start]f :<C-u>UniteWithBufferDir -buffer-name=files file 
-            \ file/new<CR> 
+nnoremap <silent> [start]f :<C-u>UniteWithBufferDir file file/new<CR> 
 nnoremap <silent> [start]b :<C-u>Unite buffer<CR>
 nnoremap <silent> [start]h :<C-u>Unite file_mru<CR>
 nnoremap <silent> [start]c :<C-u>Unite bookmark<CR>
@@ -263,17 +281,16 @@ let g:unite_source_history_yank_enable =1
 " }}}
 
 " Vim-LaTeX {{{
-nnoremap <silent> [start]ll :<C-u>call Tex_StartTex()<CR>
-function! Tex_StartTex()
-    call Tex_RunLaTeX()
-    call Tex_ViewLaTeX()
-endfunction
-nnoremap <silent> [start]lr :<C-u>call Tex_RunLaTeX()<CR>
-nnoremap <silent> [start]lv :<C-u>call Tex_ViewLaTeX()<CR>
-let s:bundle = neobundle#get("vim-latex")
-function! s:bundle.hooks.on_source(bundle)
-    let OSTYPE = system('uname')
-    if OSTYPE == "Darwin\n"
+if neobundle#is_installed('vim-latex')
+    let s:bundle = neobundle#get("vim-latex")
+    function! s:bundle.hooks.on_source(bundle)
+        nnoremap <silent> [start]ll :<C-u>call Tex_StartTex()<CR>
+        function! Tex_StartTex()
+            call Tex_RunLaTeX()
+            call Tex_ViewLaTeX()
+        endfunction
+        nnoremap <silent> [start]lr :<C-u>call Tex_RunLaTeX()<CR>
+        nnoremap <silent> [start]lv :<C-u>call Tex_ViewLaTeX()<CR>
         set shellslash
         set grepprg=grep\ -nH\ $*
         let g:tex_flavor='latex'
@@ -289,9 +306,9 @@ function! s:bundle.hooks.on_source(bundle)
         let g:Tex_BibtexFlavor = '/usr/texbin/pbibtex'
         let g:Tex_ViewRule_dvi = '/usr/bin/open -a Preview'
         let g:Tex_ViewRule_pdf = '/usr/bin/open -a Preview'
-    endif
-endfunction
-unlet s:bundle
+    endfunction
+    unlet s:bundle
+endif
 " }}}
 
 " NeoComplete & NeoComplCache {{{
@@ -371,22 +388,15 @@ endfunction
 " command! -nargs=0 ClearUndo call <SID>ForgetUndo()
 " }}}
 
-" Evervim {{{
-nnoremap [evervim] <Nop>
-nmap <Space>e [evervim]
-"開いていない場合はカレントディレクトリ
-nnoremap [evervim]s :<C-u>EvervimSearchByQuery 
-nnoremap <silent> [evervim]n :<C-u>EvervimCreateNote<CR>
-nnoremap <silent> [evervim]l :<C-u>EvervimNotebookList<CR>
-" }}}
-
 " QuickRun {{{
+if neobundle#is_installed('quickrun')
 let g:quickrun_config = {}
 let g:quickrun_config['markdown'] = {
       \ 'type' : 'markdown/pandoc',
       \ 'outputter': 'browser',
       \ 'args' : '-f markdown+definition_lists --standalone --mathjax'
       \ }
+endif
 " }}}
 
 " Vim-fugitive {{{
@@ -404,6 +414,15 @@ nnoremap <silent> [git]p :<C-u>Gpush<CR>
 nnoremap <silent> [git]s :<C-u>Gstatus<CR>
 nnoremap <silent> [git]bl :<C-u>Gblame<CR>
 nnoremap <silent> [git]br :<C-u>Gbrowse<CR>
+" }}}
+
+" memolist.vim {{{
+let g:memolist_memo_suffix = "txt"
+let g:memolist_unite = 1
+" let g:memolist_unite_option = "-auto-preview"
+nnoremap <silent> [start]mn  :MemoNew<CR>
+nnoremap <silent> [start]ml  :MemoList<CR>
+nnoremap <silent> [start]ms  :MemoGrep<CR>
 " }}}
 
 " Local config {{{

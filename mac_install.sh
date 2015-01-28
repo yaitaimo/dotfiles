@@ -89,4 +89,6 @@ echo "export PATH=/usr/local/bin:$PATH" > ~/.zshrc.local
 # pip install markdown
 
 # vim swap & backup directory
+
+# Geeknote http://www.geeknote.me/install/
 mkdir ~/tmp
