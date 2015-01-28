@@ -205,7 +205,7 @@ nnoremap .e :<C-u>edit ~/dotfiles/.vimrc<CR>
 
 nnoremap [start]r :<C-u>QuickRun<CR>
 " tagsジャンプの際に複数ある場合を考慮
-nnoremap <C-]> g<C-]>
+nnoremap [start]g <C-]>
 nnoremap [start]t :TagbarToggle<CR>
 
 nnoremap <expr> l foldclosed(line('.')) != -1 ? 'zo0zz' : 'l'
@@ -253,10 +253,10 @@ cnoremap <C-k> <C-\>e getcmdpos() == 1 ?
 nnoremap <silent> [start]f :<C-u>UniteWithBufferDir -buffer-name=files file 
             \ file/new<CR> 
 nnoremap <silent> [start]b :<C-u>Unite buffer<CR>
-nnoremap <silent> [start]m :<C-u>Unite file_mru<CR>
+nnoremap <silent> [start]h :<C-u>Unite file_mru<CR>
 nnoremap <silent> [start]c :<C-u>Unite bookmark<CR>
 nnoremap <silent> [start]a :<C-u>UniteBookmarkAdd<CR>
-nnoremap <silent> [start]hy :<C-u>Unite history/yank<CR>
+nnoremap <silent> [start]y :<C-u>Unite history/yank<CR>
 autocmd FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()"{{{
     "ESCでuniteを終了
@@ -359,17 +359,17 @@ endfunction
 " }}}
 
 " Ctags {{{
-function! UpdateTagsFile()
-    let current_filetype = &filetype
-    let venv_directory_names = ['env', 'venv']
-    if current_filetype!='' && current_filetype=='py'
-        for name in venv_directory_names
-            if isdirectory(name)
-            endif
-        endfor
-    endif
-    " もしpythonでかつvirtualenvがあれば、それを含む物にする 
-endfunction 
+" function! UpdateTagsFile()
+"     let current_filetype = &filetype
+"     let venv_directory_names = ['env', 'venv']
+"     if current_filetype!='' && current_filetype=='py'
+"         for name in venv_directory_names
+"             if isdirectory(name)
+"             endif
+"         endfor
+"     endif
+"     " もしpythonでかつvirtualenvがあれば、それを含む物にする 
+" endfunction 
 " }}}
 
 " Clear undo history {{{
