@@ -417,6 +417,9 @@ nnoremap <silent> [git]br :<C-u>Gbrowse<CR>
 " memolist.vim {{{
 let g:memolist_memo_suffix = "txt"
 let g:memolist_unite = 1
+if os == "unix"
+    let g:memolist_path = "~/rsync"
+endif
 " let g:memolist_unite_option = "-auto-preview"
 nnoremap <silent> [start]mn  :MemoNew<CR>
 nnoremap <silent> [start]ml  :MemoList<CR>
