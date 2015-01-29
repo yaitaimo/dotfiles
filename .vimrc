@@ -281,32 +281,34 @@ let g:unite_source_history_yank_enable =1
 " }}}
 
 " Vim-LaTeX {{{
-let s:bundle = neobundle#get("vim-latex")
-function! s:bundle.hooks.on_source(bundle)
-    nnoremap <silent> [start]ll :<C-u>call Tex_StartTex()<CR>
-    function! Tex_StartTex()
-        call Tex_RunLaTeX()
-        call Tex_ViewLaTeX()
+if neobundle#is_installed('vim-latex')
+    let s:bundle = neobundle#get("vim-latex")
+    function! s:bundle.hooks.on_source(bundle)
+        nnoremap <silent> [start]ll :<C-u>call Tex_StartTex()<CR>
+        function! Tex_StartTex()
+            call Tex_RunLaTeX()
+            call Tex_ViewLaTeX()
+        endfunction
+        nnoremap <silent> [start]lr :<C-u>call Tex_RunLaTeX()<CR>
+        nnoremap <silent> [start]lv :<C-u>call Tex_ViewLaTeX()<CR>
+        set shellslash
+        set grepprg=grep\ -nH\ $*
+        let g:tex_flavor='latex'
+        let g:Imap_UsePlaceHolders = 1
+        let g:Imap_DeleteEmptyPlaceHolders = 1
+        let g:Imap_StickyPlaceHolders = 0
+        let g:Tex_DefaultTargetFormat = 'pdf'
+        let g:Tex_FormatDependency_pdf = 'dvi,pdf'
+        let g:Tex_FormatDependency_ps = 'dvi,ps'
+        let g:Tex_CompileRule_dvi = '/usr/texbin/platex -shell-escape
+                    \ -interaction=nonstopmode $*' 
+        let g:Tex_CompileRule_pdf = '/usr/texbin/dvipdfmx $*.dvi'
+        let g:Tex_BibtexFlavor = '/usr/texbin/pbibtex'
+        let g:Tex_ViewRule_dvi = '/usr/bin/open -a Preview'
+        let g:Tex_ViewRule_pdf = '/usr/bin/open -a Preview'
     endfunction
-    nnoremap <silent> [start]lr :<C-u>call Tex_RunLaTeX()<CR>
-    nnoremap <silent> [start]lv :<C-u>call Tex_ViewLaTeX()<CR>
-    set shellslash
-    set grepprg=grep\ -nH\ $*
-    let g:tex_flavor='latex'
-    let g:Imap_UsePlaceHolders = 1
-    let g:Imap_DeleteEmptyPlaceHolders = 1
-    let g:Imap_StickyPlaceHolders = 0
-    let g:Tex_DefaultTargetFormat = 'pdf'
-    let g:Tex_FormatDependency_pdf = 'dvi,pdf'
-    let g:Tex_FormatDependency_ps = 'dvi,ps'
-    let g:Tex_CompileRule_dvi = '/usr/texbin/platex -shell-escape
-                \ -interaction=nonstopmode $*' 
-    let g:Tex_CompileRule_pdf = '/usr/texbin/dvipdfmx $*.dvi'
-    let g:Tex_BibtexFlavor = '/usr/texbin/pbibtex'
-    let g:Tex_ViewRule_dvi = '/usr/bin/open -a Preview'
-    let g:Tex_ViewRule_pdf = '/usr/bin/open -a Preview'
-endfunction
-unlet s:bundle
+    unlet s:bundle
+endif
 " }}}
 
 " NeoComplete & NeoComplCache {{{
@@ -376,14 +378,14 @@ endfunction
 
 " Clear undo history {{{
 " A function to clear the undo history
-function! <SID>ForgetUndo()
-    let old_undolevels = &undolevels
-    set undolevels=-1
-    exe "normal a \<BS>\<Esc>"
-    let &undolevels = old_undolevels
-    unlet old_undolevels
-endfunction
-command! -nargs=0 ClearUndo call <SID>ForgetUndo()
+" function! <SID>ForgetUndo()
+"     let old_undolevels = &undolevels
+"     set undolevels=-1
+"     exe "normal a \<BS>\<Esc>"
+"     let &undolevels = old_undolevels
+"     unlet old_undolevels
+" endfunction
+" command! -nargs=0 ClearUndo call <SID>ForgetUndo()
 " }}}
 
 " QuickRun {{{
