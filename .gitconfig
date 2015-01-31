@@ -39,4 +39,6 @@
     default = simple
 [diff "applescript"]
     textconv = osadecompile
-    
+
+[core]
+    quotepath = false

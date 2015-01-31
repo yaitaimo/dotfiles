@@ -199,8 +199,6 @@ nnoremap k gk
 nnoremap <Space>d :<C-u>r! LC_ALL=en_US.UTF-8 date '+\%Y/\%m/\%d (\%a) \%H:\%M'<CR>
 nnoremap <silent> [start]e :<C-u>VimFiler -buffer-name=explorer 
             \ -split -simple -winwidth=35 -toggle -no-quit<CR>
-nnoremap <silent> [start]s :<C-u>VimShell<CR>
-nnoremap <silent> [start]S :<C-u>VimShell -split<CR>
 nnoremap .r :<C-u>source ~/dotfiles/.vimrc<CR>
 nnoremap .e :<C-u>edit ~/dotfiles/.vimrc<CR>
 " あまりに押し間違いが多いので．
@@ -347,6 +345,8 @@ endif
 " }}}
 
 " VimShell {{{
+nnoremap <silent> [start]s :<C-u>VimShell<CR>
+nnoremap <silent> [start]S :<C-u>VimShell -split<CR>
 let g:vimshell_right_prompt='GetGitDetail()'
 let g:vimshell_user_prompt = 'getcwd()'
 
