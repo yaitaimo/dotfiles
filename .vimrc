@@ -36,6 +36,8 @@ NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/vimshell.vim'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'glidenote/memolist.vim'
+NeoBundle "thinca/vim-quickrun"
+NeoBundle 'majutsushi/tagbar'
 
 NeoBundle 'Shougo/vimproc', {
             \ 'build' : {
@@ -45,7 +47,6 @@ NeoBundle 'Shougo/vimproc', {
             \   'unix' : 'make -f make_uix.mak',
             \   }
             \ }
-
 NeoBundleLazy 'Shougo/vimfiler.vim', {
             \   'autoload' : { 'commands' : [ "VimFilerTab", "VimFiler",
             \   "VimFilerExplorer" ] } 
@@ -53,20 +54,15 @@ NeoBundleLazy 'Shougo/vimfiler.vim', {
 if os=="mac"
     NeoBundleLazy 'jcf/vim-latex', {
                 \ "autoload": {"filetypes": ["tex"]}}
+    " QuickRun
+    NeoBundle 'tyru/open-browser.vim'
 endif    
-
-" QuickRun
-NeoBundle 'tyru/open-browser.vim'
-NeoBundle "thinca/vim-quickrun"
-
-NeoBundle 'majutsushi/tagbar'
 
 " For flask develop
 NeoBundleLazy 'mitsuhiko/vim-jinja', {
             \ "autoload": {
             \   "filetypes": ["python", "python3", "djangohtml"],
             \ }}
-
 NeoBundleLazy "vim-scripts/python_fold", {
             \ "autoload": {
             \   "filetypes": ["python", "python3", "djangohtml"],
@@ -79,11 +75,14 @@ NeoBundleLazy "davidhalter/jedi-vim", {
             \   "mac": "pip install jedi",
             \   "unix": "pip install jedi",
             \ }}
-
-if has('lua') && v:version >= 703 && has('patch885')
+" flake8
+NeoBundleLazy 'hynek/vim-python-pep8-indent', {
+            \ "autoload": {
+            \   "insert": 1, 
+            \   "filetypes": ["python", "python3", "djangohtml"]
+            \ }}
+if has('lua') && (v:version > 703 || (v:version == 703 && has('patch885')))
     NeoBundleLazy 'Shougo/neocomplete.vim'
-else
-    NeoBundleLazy 'Shougo/neocomplcache.vim'
 endif
 " }}}
 
@@ -187,9 +186,9 @@ set smartcase ""検索文字列に大文字が含まれている場合は区別�
 set wrapscan ""検索時に最後までいったら最初に戻る
 " }}}
 
-" Key Bindings {{{
+" Key Bindings & Shortcuts {{{
 
-" Key Bindings for Normal Mode {{{
+" Key Bindings & Shortcuts for Normal Mode {{{
 nnoremap [start] <Nop>
 nmap ; [start]
 
@@ -213,7 +212,7 @@ nnoremap <expr> l foldclosed(line('.')) != -1 ? 'zo0zz' : 'l'
 nnoremap <expr> h col('.') == 1 && foldlevel(line('.')) > 0 ? 'zczz' : 'h'
 " }}}
 
-" Key Bindings for Insert Mode {{{
+" Key Bindings & Shortcuts for Insert Mode {{{
 " 移動
 inoremap <C-a> <Home>
 inoremap <C-e> <End>
@@ -234,7 +233,7 @@ inoremap <F5> <C-r>=strftime('%Y-%m-%d %H:%M:%S')<Return>
 vnoremap * "zy:let @/ = @z<CR>n
 " }}}
 
-" Key Bindings for Command-line Mode {{{
+" Key Bindings & Shortcuts for Command-line Mode {{{
 cnoremap <C-a>  <Home>
 cnoremap <C-e>  <End>
 cnoremap <C-b>  <Left>
@@ -296,6 +295,8 @@ if neobundle#is_installed('vim-latex')
         let g:Imap_DeleteEmptyPlaceHolders = 1
         let g:Imap_StickyPlaceHolders = 0
         let g:Tex_DefaultTargetFormat = 'pdf'
+        let g:Tex_IgnoredWarnings = 
+                    \'LaTex Font Warning:'
         let g:Tex_FormatDependency_pdf = 'dvi,pdf'
         let g:Tex_FormatDependency_ps = 'dvi,ps'
         let g:Tex_CompileRule_dvi = '/usr/texbin/platex -shell-escape
@@ -309,7 +310,7 @@ if neobundle#is_installed('vim-latex')
 endif
 " }}}
 
-" NeoComplete & NeoComplCache {{{
+" NeoComplete{{{
 if neobundle#is_installed('neocomplete')
     " Disable AutoComplPop.
     let g:acp_enableAtStartup = 0
@@ -332,20 +333,71 @@ if neobundle#is_installed('neocomplete')
         let g:neocomplete#keyword_patterns = {}
     endif
     let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-elseif neobundle#is_installed('neocomplcache')
-    let g:neocomplcache_enable_at_startup = 1
-    let s:hooks = neobundle#get_hooks("neocomplcache.vim")
-    function! s:hooks.on_source(bundle)
-        let g:acp_enableAtStartup = 0
-        let g:neocomplcache_enable_smart_case = 1
-        " NeoComplCacheを有効化
-        " NeoComplCacheEnable 
+
+    " Plugin key-mappings.
+    inoremap <expr><C-g>     neocomplete#undo_completion()
+    inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+    " Recommended key-mappings.
+    " <CR>: close popup and save indent.
+    inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+    function! s:my_cr_function()
+      return neocomplete#close_popup() . "\<CR>"
+      " For no inserting <CR> key.
+      "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
     endfunction
+    " <TAB>: completion.
+    inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+    " <C-h>, <BS>: close popup and delete backword char.
+    inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+    inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+    inoremap <expr><C-y>  neocomplete#close_popup()
+    inoremap <expr><C-e>  neocomplete#cancel_popup()
+    " Close popup by <Space>.
+    "inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
+
+    " For cursor moving in insert mode(Not recommended)
+    "inoremap <expr><Left>  neocomplete#close_popup() . "\<Left>"
+    "inoremap <expr><Right> neocomplete#close_popup() . "\<Right>"
+    "inoremap <expr><Up>    neocomplete#close_popup() . "\<Up>"
+    "inoremap <expr><Down>  neocomplete#close_popup() . "\<Down>"
+    " Or set this.
+    "let g:neocomplete#enable_cursor_hold_i = 1
+    " Or set this.
+    "let g:neocomplete#enable_insert_char_pre = 1
+
+    " AutoComplPop like behavior.
+    "let g:neocomplete#enable_auto_select = 1
+
+    " Shell like behavior(not recommended).
+    "set completeopt+=longest
+    "let g:neocomplete#enable_auto_select = 1
+    "let g:neocomplete#disable_auto_complete = 1
+    "inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+
+    " Enable omni completion.
+    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+    " Enable heavy omni completion.
+    if !exists('g:neocomplete#sources#omni#input_patterns')
+      let g:neocomplete#sources#omni#input_patterns = {}
+    endif
+    "let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+    "let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+    "let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+    " For perlomni.vim setting.
+    " https://github.com/c9s/perlomni.vim
+    let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 endif
 " }}}
 
 " VimShell {{{
-nnoremap <silent> [start]s :<C-u>VimShell<CR>
+nnoremap <silent> [start]s :<C-u>VimShellPop<CR>
 nnoremap <silent> [start]S :<C-u>VimShell -split<CR>
 let g:vimshell_right_prompt='GetGitDetail()'
 let g:vimshell_user_prompt = 'getcwd()'
@@ -419,10 +471,10 @@ nnoremap <silent> [git]br :<C-u>Gbrowse<CR>
 " memolist.vim {{{
 let g:memolist_memo_suffix = "txt"
 let g:memolist_unite = 1
+let g:memolist_template_dir_path = "~/.vim/template/memolist"
 if os == "unix"
     let g:memolist_path = "~/rsync"
 endif
-" let g:memolist_unite_option = "-auto-preview"
 nnoremap <silent> [start]mn  :MemoNew<CR>
 nnoremap <silent> [start]ml  :MemoList<CR>
 nnoremap <silent> [start]ms  :MemoGrep<CR>
