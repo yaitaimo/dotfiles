@@ -17,7 +17,7 @@ brew install python
 brew install python3
 brew install zsh
 brew install lua
-brew install vim --devel --with-lua
+brew install vim --with-lua
 brew install w3m
 brew install git
 brew install git-extras
