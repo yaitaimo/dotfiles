@@ -296,7 +296,9 @@ if neobundle#is_installed('vim-latex')
         let g:Imap_StickyPlaceHolders = 0
         let g:Tex_DefaultTargetFormat = 'pdf'
         let g:Tex_IgnoredWarnings = 
-                    \'LaTex Font Warning:'
+                    \'LaTeX Font Warning:'."\n".
+                    \'Overfull'
+        let g:Tex_IgnoreLevel = 2
         let g:Tex_FormatDependency_pdf = 'dvi,pdf'
         let g:Tex_FormatDependency_ps = 'dvi,ps'
         let g:Tex_CompileRule_dvi = '/usr/texbin/platex -shell-escape
