@@ -59,6 +59,8 @@ alias p="popd"
 alias ]="open"
 alias v="vim"
 
+alias vml="vim -c ':MemoList'"
+alias vmn="vim -c ':MemoNew'"
 # }}}
 
 # Prompt {{{
