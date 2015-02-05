@@ -51,11 +51,7 @@ function history-all { history -E 1 | less }
 
 # Alias {{{
 
-# 安全志向
 alias rm="rm -i"
-alias cp="cp -i"
-alias mv="mv -i"
-
 alias ll="ls -lA"
 alias lf="ls -FA"
 alias la="ls -a"

@@ -482,6 +482,11 @@ nnoremap <silent> [start]ml  :MemoList<CR>
 nnoremap <silent> [start]ms  :MemoGrep<CR>
 " }}}
 
+" vifiler {{{ 
+" autocmd FileType vimfiler call vimfiler#custom#profile('vimfiler:explorer', 'vertical-preview', 'off' })
+let g:vimfiler_as_default_explorer = 1
+" }}}
+
 " Local config {{{
 if filereadable($HOME."/.vimrc.local")
     so $HOME/.vimrc.local"
