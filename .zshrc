@@ -61,6 +61,8 @@ alias v="vim"
 
 alias vml="vim -c ':MemoList'"
 alias vmn="vim -c ':MemoNew'"
+alias vrc="vim ~/dotfiles/.vimrc"
+
 # }}}
 
 # Prompt {{{
@@ -117,3 +119,5 @@ fi
 # Load the local configuration.
 [ -f $HOME/.zshrc.local ] && source $HOME/.zshrc.local
 
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting

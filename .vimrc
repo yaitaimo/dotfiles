@@ -38,6 +38,8 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'glidenote/memolist.vim'
 NeoBundle "thinca/vim-quickrun"
 NeoBundle 'majutsushi/tagbar'
+NeoBundle 'soramugi/auto-ctags.vim'
+NeoBundle 'airblade/vim-rooter'
 
 NeoBundle 'Shougo/vimproc', {
             \ 'build' : {
@@ -416,18 +418,10 @@ function! GetGitDetail()
 endfunction
 " }}}
 
-" Ctags {{{
-" function! UpdateTagsFile()
-"     let current_filetype = &filetype
-"     let venv_directory_names = ['env', 'venv']
-"     if current_filetype!='' && current_filetype=='py'
-"         for name in venv_directory_names
-"             if isdirectory(name)
-"             endif
-"         endfor
-"     endif
-"     " もしpythonでかつvirtualenvがあれば、それを含む物にする 
-" endfunction 
+" ctags {{{
+let g:auto_ctags = 1
+" let g:auto_ctags_directory_list = ['.git']
+let g:auto_ctags_tags_args = '-R --tag-relative --recurse --sort=yes $VIRTUAL_ENV/lib/'
 " }}}
 
 " Clear undo history {{{
