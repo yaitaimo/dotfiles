@@ -252,12 +252,15 @@ cnoremap <C-k> <C-\>e getcmdpos() == 1 ?
 
 " Unite {{{
 "開いていない場合はカレントディレクトリ
-nnoremap <silent> [start]f :<C-u>UniteWithBufferDir file file/new<CR> 
+nnoremap <silent> [start]ff :<C-u>UniteWithBufferDir file file/new<CR> 
+nnoremap <silent> [start]p :<C-u>UniteWithProjectDir file_rec file/new<CR> 
+nnoremap <silent> [start]fp :<C-u>Unite file_rec -auto-preview -no-split -vertical-preview<CR> 
 nnoremap <silent> [start]b :<C-u>Unite buffer<CR>
 nnoremap <silent> [start]h :<C-u>Unite file_mru<CR>
 nnoremap <silent> [start]c :<C-u>Unite bookmark<CR>
 nnoremap <silent> [start]a :<C-u>UniteBookmarkAdd<CR>
 nnoremap <silent> [start]y :<C-u>Unite history/yank<CR>
+
 autocmd FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()"{{{
     "ESCでuniteを終了
@@ -403,8 +406,9 @@ endif
 " VimShell {{{
 nnoremap <silent> [start]s :<C-u>VimShellPop<CR>
 nnoremap <silent> [start]S :<C-u>VimShell -split<CR>
-let g:vimshell_right_prompt='GetGitDetail()'
+let g:vimshell_right_prompt = 'GetGitDetail()'
 let g:vimshell_user_prompt = 'getcwd()'
+let g:vimshell_enable_start_insert = 0
 
 function! GetGitDetail()
     let s:branch = substitute(
