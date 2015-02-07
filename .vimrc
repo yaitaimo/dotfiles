@@ -40,6 +40,7 @@ NeoBundle "thinca/vim-quickrun"
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'soramugi/auto-ctags.vim'
 NeoBundle 'airblade/vim-rooter'
+NeoBundle 'yuratomo/w3m.vim'
 
 NeoBundle 'Shougo/vimproc', {
             \ 'build' : {
@@ -179,7 +180,7 @@ set formatoptions+=mM
 set textwidth=78
 
 ""クリップボード設定
-set clipboard=unnamed
+set clipboard+=unnamed " copy to the system clipboard
 " }}}
 
 " 検索設定 {{{
@@ -252,9 +253,13 @@ cnoremap <C-k> <C-\>e getcmdpos() == 1 ?
 
 " Unite {{{
 "開いていない場合はカレントディレクトリ
-nnoremap <silent> [start]ff :<C-u>UniteWithBufferDir file file/new<CR> 
-nnoremap <silent> [start]p :<C-u>UniteWithProjectDir file_rec file/new<CR> 
-nnoremap <silent> [start]fp :<C-u>Unite file_rec -auto-preview -no-split -vertical-preview<CR> 
+nnoremap <silent> [start]f :<C-u>UniteWithBufferDir file file/new<CR> 
+nnoremap <silent> [start]pj :<C-u>UniteWithProjectDir file_rec file/new<CR> 
+nnoremap <silent> [start]pv :<C-u>UniteWithBufferDir file_rec -auto-preview
+            \ -no-split -vertical-preview<CR> 
+" let g:unite_kind_file_preview_max_filesize = 10000000
+call unite#custom#source('file_rec,file_rec/async',
+            \ 'max_candidates', 0)
 nnoremap <silent> [start]b :<C-u>Unite buffer<CR>
 nnoremap <silent> [start]h :<C-u>Unite file_mru<CR>
 nnoremap <silent> [start]c :<C-u>Unite bookmark<CR>
@@ -349,9 +354,9 @@ if neobundle#is_installed('neocomplete')
     " <CR>: close popup and save indent.
     inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
     function! s:my_cr_function()
-      return neocomplete#close_popup() . "\<CR>"
-      " For no inserting <CR> key.
-      "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+        return neocomplete#close_popup() . "\<CR>"
+        " For no inserting <CR> key.
+        "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
     endfunction
     " <TAB>: completion.
     inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
@@ -391,7 +396,7 @@ if neobundle#is_installed('neocomplete')
 
     " Enable heavy omni completion.
     if !exists('g:neocomplete#sources#omni#input_patterns')
-      let g:neocomplete#sources#omni#input_patterns = {}
+        let g:neocomplete#sources#omni#input_patterns = {}
     endif
     "let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
     "let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
@@ -442,12 +447,12 @@ let g:auto_ctags_tags_args = '-R --tag-relative --recurse --sort=yes $VIRTUAL_EN
 
 " QuickRun {{{
 if neobundle#is_installed('quickrun')
-let g:quickrun_config = {}
-let g:quickrun_config['markdown'] = {
-      \ 'type' : 'markdown/pandoc',
-      \ 'outputter': 'browser',
-      \ 'args' : '-f markdown+definition_lists --standalone --mathjax'
-      \ }
+    let g:quickrun_config = {}
+    let g:quickrun_config['markdown'] = {
+                \ 'type' : 'markdown/pandoc',
+                \ 'outputter': 'browser',
+                \ 'args' : '-f markdown+definition_lists --standalone --mathjax'
+                \ }
 endif
 " }}}
 
