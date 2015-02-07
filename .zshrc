@@ -24,7 +24,7 @@ stty start undef
 autoload -U compinit
 compinit
 setopt auto_list
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # 補完時の大文字小文字を区別しない
+zstyle ":completion:*" matcher-list "m:{a-z}={A-Z}" # 補完時の大文字小文字を区別しない
 
 # }}}
 
@@ -58,28 +58,65 @@ alias la="ls -a"
 alias p="popd"
 alias ]="open"
 alias v="vim"
+alias g="git"
+alias b="brew"
 
-alias vml="vim -c ':MemoList'"
-alias vmn="vim -c ':MemoNew'"
+alias cd=" cd"
+alias ..=" cd ..; ls"
+alias ...=" cd ..; cd ..; ls"
+alias ....=" cd ..; cd ..; cd ..; ls"
+
+alias vml="vim -c ":MemoList""
+alias vmn="vim -c ":MemoNew""
 alias vrc="vim ~/dotfiles/.vimrc"
 
+alias -g G="| grep -"
+alias -g L="| less"
+alias -g C="| wc -l"
+
+alias -s md="vim"
+alias -s txt="vim"
+alias -s py="vim"
+alias -s gitignore="vim"
+alias -s gitconfig="vim"
+alias -s php="vim"
+alias -s sh="vim"
+
+alias -s avi="open"
+alias -s AVI="open"
+alias -s mov="open"
+alias -s mpg="open"
+alias -s m4v="open"
+alias -s mp4="open"
+alias -s rmvb="open"
+alias -s MP4="open"
+alias -s ogg="open"
+alias -s ogv="open"
+alias -s flv="open"
+alias -s mkv="open"
+alias -s wav="open"
+alias -s mp3="open"
+alias -s webm="open"
+
+alias -s pdf="open"
+alias -s PDF="open"
+alias -s tif="open"
+alias -s tiff="open"
+alias -s png="open"
+alias -s jpg="open"
+alias -s jpeg="open"
+alias -s JPG="open"
+alias -s gif="open"
+alias -s psd="open"
 # }}}
 
 # Prompt {{{
 
-setopt prompt_subst
-PROMPT='%{${fg[cyan]}%}[%n%{$reset_color%}`prompt-git-current-branch`%{${fg[cyan]}%}]%{${reset_color}%} %{${fg[yellow]}%}%~%{${reset_color}%}
-$'
-# SSHログイン時のプロンプト
-[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
-PROMPT="%{${fg[white]}%}${HOST%%.*} ${PROMPT}"
-;
-
 # %{...%} は囲まれた文字列がエスケープシーケンスであることを明示する
-# これをしないと右プロンプトの位置がずれる
+
 function prompt-git-current-branch { # {{{
 local name st color
-if [[ "$PWD" =~ '/\.git(/.*)?$' ]]; then
+if [[ $PWD =~ '/\.git(/.*)?$' ]]; then
     return
 fi
 name=$(basename "`git symbolic-ref HEAD 2> /dev/null`")
@@ -87,17 +124,25 @@ if [[ -z $name ]]; then
     return
 fi
 st=`git status 2> /dev/null`
-if [[ -n `echo "$st" | grep "^nothing to"` ]]; then
+if [[ -n `echo $st | grep "^nothing to"` ]]; then
     color=${fg[cyan]}
-elif [[ -n `echo "$st" | grep "^nothing added"` ]]; then
+elif [[ -n `echo $st | grep "^nothing added"` ]]; then
     color=${fg[yellow]}
-elif [[ -n `echo "$st" | grep "^# Untracked"` ]]; then
+elif [[ -n `echo $st | grep "^# Untracked"` ]]; then
     color=${fg_bold[red]}
 else
     color=${fg[red]}
 fi
 echo "%{${fg[cyan]}%}|%{$reset_color%}%{$color%}$name%{$reset_color%}"
 } # }}}
+
+setopt prompt_subst
+PROMPT='%{${fg[cyan]}%}[%n%{$reset_color%}`prompt-git-current-branch`%{${fg[cyan]}%}]%{${reset_color}%} %{${fg[yellow]}%}%~%{${reset_color}%}
+$'
+# SSHログイン時のプロンプト
+[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
+   #PROMPT="%{${fg[white]}%}${HOST%%.*} ${PROMPT}"
+;
 
 # }}}
 
@@ -109,9 +154,9 @@ if [[ $(uname) == Darwin  ]]; then
 
     # zmvのセット
     autoload -Uz zmv
-    alias zmv='noglob zmv -W'
+    alias zmv="noglob zmv -W"
 
-    # alias chrome='open -a Google\ Chrome'
+    # alias chrome="open -a Google\ Chrome"
 
 fi
 # }}}
@@ -119,5 +164,3 @@ fi
 # Load the local configuration.
 [ -f $HOME/.zshrc.local ] && source $HOME/.zshrc.local
 
-
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
