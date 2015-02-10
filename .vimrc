@@ -41,6 +41,7 @@ NeoBundle 'majutsushi/tagbar'
 NeoBundle 'soramugi/auto-ctags.vim'
 NeoBundle 'airblade/vim-rooter'
 NeoBundle 'yuratomo/w3m.vim'
+NeoBundle 'Lokaltog/vim-easymotion'
 
 NeoBundle 'Shougo/vimproc', {
             \ 'build' : {
@@ -211,6 +212,9 @@ nnoremap [start]r :<C-u>QuickRun<CR>
 nnoremap [start]g <C-]>
 nnoremap [start]t :TagbarToggle<CR>
 
+nnoremap <silent> <C-b>d :bd<CR>
+nnoremap <silent> <C-w>n :enew<CR>
+
 nnoremap <expr> l foldclosed(line('.')) != -1 ? 'zo0zz' : 'l'
 nnoremap <expr> h col('.') == 1 && foldlevel(line('.')) > 0 ? 'zczz' : 'h'
 " }}}
@@ -253,8 +257,8 @@ cnoremap <C-k> <C-\>e getcmdpos() == 1 ?
 
 " Unite {{{
 "開いていない場合はカレントディレクトリ
-nnoremap <silent> [start]f :<C-u>UniteWithBufferDir file file/new<CR> 
-nnoremap <silent> [start]pj :<C-u>UniteWithProjectDir file_rec file/new<CR> 
+nnoremap <silent> [start]o :<C-u>UniteWithBufferDir file file/new<CR>
+nnoremap <silent> [start]pj :<C-u>UniteWithProjectDir file_rec file/new<CR>
 nnoremap <silent> [start]pv :<C-u>UniteWithBufferDir file_rec -auto-preview
             \ -no-split -vertical-preview<CR> 
 " let g:unite_kind_file_preview_max_filesize = 10000000
@@ -488,6 +492,24 @@ nnoremap <silent> [start]ms  :MemoGrep<CR>
 " vifiler {{{ 
 " autocmd FileType vimfiler call vimfiler#custom#profile('vimfiler:explorer', 'vertical-preview', 'off' })
 let g:vimfiler_as_default_explorer = 1
+" }}}
+
+" EasyMotion {{{
+map [start] <Plug>(easymotion-prefix)
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+
+" Bi-directional find motion
+
+" `s{char}{char}{label}`
+" Need one more keystroke, but on average, it may be more comfortable.
+nmap f <Plug>(easymotion-s2)
+
+" Turn on case insensitive feature
+let g:EasyMotion_smartcase = 1
+
+" JK motions: Line motions
+map [start]j <Plug>(easymotion-j)
+map [start]k <Plug>(easymotion-k)
 " }}}
 
 " Local config {{{
