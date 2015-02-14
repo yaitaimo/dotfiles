@@ -70,6 +70,8 @@ alias vml="vim -c ":MemoList""
 alias vmn="vim -c ":MemoNew""
 alias vrc="vim ~/dotfiles/.vimrc"
 
+alias bup="brew upgrade; brew update"
+
 alias -g G="| grep -"
 alias -g L="| less"
 alias -g C="| wc -l"
