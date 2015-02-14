@@ -19,7 +19,8 @@
     co = checkout
     cob = checkout -b
     # commit
-    cm = commit -am
+    cm = commit -m
+    cam = commit -am
     ci = commit
     amend = commit -a --amend
     st = status
