@@ -13,6 +13,9 @@ brew upgrade
 brew install caskroom/cask/brew-cask
 
 brew brew-any-tap
+brew install jq
+brew install tree
+brew install lha
 brew install python
 brew install python3
 brew install zsh

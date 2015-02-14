@@ -7,8 +7,9 @@
     ps = push
     up = !git pull --rebase --prune $@ && git submodule update --init --recursive
     pl = pull
+    a = add
     # diff
-    dm = diff master
+    d = diff master
     dc = diff --cached
     dl = diff --stat -r
     d1 = diff HEAD~
@@ -19,11 +20,12 @@
     co = checkout
     cob = checkout -b
     # commit
+    c = commit -m
     cm = commit -m
     cam = commit -am
     ci = commit
-    amend = commit -a --amend
-    st = status
+    amend = commit --amend
+    s = status
     br = branch
     ba = branch -a
     ft = fetch
@@ -40,6 +42,5 @@
     default = simple
 [diff "applescript"]
     textconv = osadecompile
-
 [core]
     quotepath = false
