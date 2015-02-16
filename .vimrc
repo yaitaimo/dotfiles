@@ -199,7 +199,8 @@ nmap ; [start]
 nnoremap j gj
 nnoremap k gk
 
-nnoremap <Space>d :<C-u>r! LC_ALL=en_US.UTF-8 date '+\%Y/\%m/\%d (\%a) \%H:\%M'<CR>
+nnoremap <Space>d :<C-u>r! LC_ALL=en_US.UTF-8 date '+\%Y/\%m/\%d (\%a) \%H:\%M'<CR>kdd
+nnoremap <Space>l 78i-<ESC>
 nnoremap <silent> [start]e :<C-u>VimFiler -buffer-name=explorer 
             \ -split -simple -winwidth=35 -toggle -no-quit<CR>
 nnoremap .r :<C-u>source ~/dotfiles/.vimrc<CR>
