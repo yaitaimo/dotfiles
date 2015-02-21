@@ -56,26 +56,67 @@ alias ll="ls -lA"
 alias lf="ls -FA"
 alias la="ls -a"
 alias p="popd"
-alias ]="open"
-alias v="vim"
-alias g="git"
-alias b="brew"
+
+# vim {{{
+alias vml="vim -c ":MemoList""
+alias vmn="vim -c ":MemoNew""
+alias vrc="vim ~/dotfiles/.vimrc"
+# }}}
+
+# git {{{
+alias ga="git add"
+alias gc="git commit -m"
+alias gps="git push"
+alias gpl="git pull"
+alias gd="git diff"
+alias gs="git status"
+alias gl="git log"
+# }}}
 
 alias cd=" cd"
 alias ..=" cd ..; ls"
 alias ...=" cd ..; cd ..; ls"
 alias ....=" cd ..; cd ..; cd ..; ls"
 
-alias vml="vim -c ":MemoList""
-alias vmn="vim -c ":MemoNew""
-alias vrc="vim ~/dotfiles/.vimrc"
+# brew {{{
+alias bs="brew search"
+alias bi="brew install"
+alias bup="brew upgrade; brew update;"
+# }}}
 
-alias bup="brew upgrade; brew update"
+# Global Alias {{{
+setopt extended_glob
+typeset -A abbreviations
+abbreviations=(
+"G" "| grep"
+"L" "| less"
+"W" "| wc"
+"T" "| tail -f"
+"v" "vim"
+"g" "git"
+"]" "open"
+"b" "brew"
+)
 
-alias -g G="| grep -"
-alias -g L="| less"
-alias -g C="| wc -l"
+magic-abbrev-expand() {
+    local MATCH
+    LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
+    LBUFFER+=${abbreviations[$MATCH]:-$MATCH}
+    zle self-insert
+}
 
+no-magic-abbrev-expand() {
+    LBUFFER+=' '
+}
+
+zle -N magic-abbrev-expand
+zle -N no-magic-abbrev-expand
+bindkey " " magic-abbrev-expand
+bindkey "^x " no-magic-abbrev-expand
+# }}}
+
+
+# Suffix Alias {{{
 alias -s md="vim"
 alias -s txt="vim"
 alias -s py="vim"
@@ -112,6 +153,8 @@ alias -s gif="open"
 alias -s psd="open"
 # }}}
 
+# }}}
+
 # Prompt {{{
 
 # %{...%} は囲まれた文字列がエスケープシーケンスであることを明示する
@@ -143,7 +186,7 @@ PROMPT='%{${fg[cyan]}%}[%n%{$reset_color%}`prompt-git-current-branch`%{${fg[cyan
 $'
 # SSHログイン時のプロンプト
 [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
-   #PROMPT="%{${fg[white]}%}${HOST%%.*} ${PROMPT}"
+    #PROMPT="%{${fg[white]}%}${HOST%%.*} ${PROMPT}"
 ;
 
 # }}}
