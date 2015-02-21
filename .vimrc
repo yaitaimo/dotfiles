@@ -177,8 +177,9 @@ set expandtab
 set shiftwidth=4
 set softtabstop=4
 
-set formatoptions+=mM
-set textwidth=78
+" 結局，set pasteをいちいちやるのが面倒だと感じた．
+" set textwidth=78
+" set formatoptions+=mM
 
 ""クリップボード設定
 set clipboard+=unnamed " copy to the system clipboard
@@ -213,6 +214,7 @@ nnoremap [start]r :<C-u>QuickRun<CR>
 nnoremap [start]g <C-]>
 nnoremap [start]t :TagbarToggle<CR>
 
+nnoremap <silent> <C-b>D :bd!<CR>
 nnoremap <silent> <C-b>d :bd<CR>
 nnoremap <silent> <C-w>n :enew<CR>
 
