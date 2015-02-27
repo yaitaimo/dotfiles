@@ -43,6 +43,8 @@ NeoBundle 'airblade/vim-rooter'
 NeoBundle 'yuratomo/w3m.vim'
 NeoBundle 'Lokaltog/vim-easymotion'
 
+NeoBundle 'Align'
+
 NeoBundle 'Shougo/vimproc', {
             \ 'build' : {
             \   'windows' : 'make -f make_mingw32.mak',
@@ -98,7 +100,7 @@ filetype plugin indent on
 NeoBundleCheck 
 " }}}
 
-" カラーテーマの変更 {{{
+" Color Theme {{{
 syntax on
 set background=dark
 let g:solarized_termtrans=1
@@ -107,7 +109,7 @@ let g:solarized_contrast = "high"
 colorscheme solarized
 " }}}
 
-" powerlineの設定 {{{
+" Power Line {{{
 "powerlineで矢印を使う iTremでfontはpowerline用の物を指定
 set laststatus=2
 set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
@@ -134,12 +136,20 @@ set mouse=a
 set foldmethod=marker
 " }}}
 
+" FileType Setting {{{
+
 " Python {{{
 autocmd FileType python setl 
             \ cinwords=if,elif,else,for,while,try,except,finally,def,class
 autocmd FileType python setl tabstop=8 expandtab shiftwidth=4 softtabstop=4
 autocmd FileType python setl textwidth=79
 autocmd FileType python setl formatoptions+=tcqw
+" }}}
+
+" tex {{{
+autocmd FileType tex setl formatoptions+=mM textwidth=79
+" }}}
+
 " }}}
 
 " Swap & Backup {{{
@@ -157,12 +167,17 @@ set writebackup
 set backupdir=~/tmp,~/
 " }}}
 
-" 編集設定 {{{
+" Editing {{{
 set termencoding=utf-8
 set encoding=utf-8
 set fileencodings=iso-2022-jp,cp932,sjis,euc-jp,utf-8
-au BufReadPost * if search("[^\x01-\x7E]", 'n') == 0 |
-                        \ set fenc= | endif
+function! SetFileEncoding()
+    if search("[^\x01-\x7E]", 'n') == 0 && &modifiable
+        set fenc=
+    endif
+endfunction
+au BufReadPost * call SetFileEncoding()
+
 set fileformats=unix,dos,mac
 "set smartindent スマートインデントはいらない。filetype indent onが正解。
 set wildmenu ""コマンドライン補完を便利に
@@ -173,7 +188,6 @@ set backspace=start,eol,indent
 ""タブをスペースで挿入
 set expandtab
 set tabstop=8
-set expandtab
 set shiftwidth=4
 set softtabstop=4
 
@@ -217,6 +231,10 @@ nnoremap [start]t :TagbarToggle<CR>
 nnoremap <silent> <C-b>D :bd!<CR>
 nnoremap <silent> <C-b>d :bd<CR>
 nnoremap <silent> <C-w>n :enew<CR>
+
+nnoremap <silent> tc :<C-u>tabclose<CR>
+nnoremap <silent> tn :<C-u>tabedit<CR>
+nnoremap <silent> ts :<C-u>tab sp<CR>
 
 nnoremap <expr> l foldclosed(line('.')) != -1 ? 'zo0zz' : 'l'
 nnoremap <expr> h col('.') == 1 && foldlevel(line('.')) > 0 ? 'zczz' : 'h'
@@ -417,7 +435,7 @@ endif
 
 " VimShell {{{
 nnoremap <silent> [start]s :<C-u>VimShellPop<CR>
-nnoremap <silent> [start]S :<C-u>VimShell -split<CR>
+nnoremap <silent> [start]S :<C-u>VimShellTab<CR>
 let g:vimshell_right_prompt = 'GetGitDetail()'
 let g:vimshell_user_prompt = 'getcwd()'
 let g:vimshell_enable_start_insert = 0
@@ -513,6 +531,10 @@ let g:EasyMotion_smartcase = 1
 " JK motions: Line motions
 map [start]j <Plug>(easymotion-j)
 map [start]k <Plug>(easymotion-k)
+" }}}
+
+" Align {{{
+:let g:Align_xstrlen = 3
 " }}}
 
 " Local config {{{
