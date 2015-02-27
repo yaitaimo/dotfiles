@@ -7,6 +7,10 @@ export KCODE=u              # KCODEにUTF-8を設定
 
 bindkey -e                  # emacsキーバインド(mac default)
 
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey "^o" edit-command-line
+
 setopt no_beep              # ビープ音なし
 setopt auto_cd              # ディレクトリ名の入力のみで移動する
 setopt auto_pushd           # cdをpushdとして扱う
@@ -14,7 +18,7 @@ setopt pushd_ignore_dups    # 重複するディレクトリは記録しない�
 setopt correct
 
 export CLICOLOR=true        # lsコマンド時、自動で色がつく(ls -Gのようなもの？）
-bindkey "^W" forward-word   # forward-word
+bindkey "^w" backward-word
 
 autoload -U colors; colors
 
@@ -24,6 +28,11 @@ stty start undef
 autoload -U compinit
 compinit
 setopt auto_list
+setopt auto_menu
+setopt auto_resume
+setopt auto_name_dirs
+unsetopt menu_complete
+setopt magic_equal_subst
 zstyle ":completion:*" matcher-list "m:{a-z}={A-Z}" # 補完時の大文字小文字を区別しない
 
 # }}}
@@ -35,7 +44,17 @@ HISTSIZE=100000          # メモリに保存されるヒストリの件数
 SAVEHIST=100000          # 保存されるヒストリの件数
 setopt extended_history # ヒストリに実行時間も保存する
 setopt hist_ignore_dups # 直前と同じコマンドはヒストリに追加しない
+
+# 重複するコマンドが保存されるとき、古い方を削除する。
+setopt hist_save_no_dups
+setopt hist_ignore_all_dups
+
+# 複数の zsh を同時に使う 
 setopt share_history    # 他のシェルのヒストリをリアルタイムで共有する
+setopt append_history   # history ファイルに上書きせず追加する
+
+# コマンドラインの先頭がスペースで始まる場合ヒストリに追加しない
+setopt hist_ignore_space
 
 # マッチしたコマンドのヒストリを表示できるようにする
 autoload history-search-end
@@ -58,19 +77,23 @@ alias la="ls -a"
 alias p="popd"
 
 # vim {{{
-alias vml="vim -c ":MemoList""
-alias vmn="vim -c ":MemoNew""
+alias v="vim"
+alias vh="vim -c ':Unite file_mru'"
+alias vml="vim -c ':MemoList'"
+alias vmn="vim -c ':MemoNew'"
 alias vrc="vim ~/dotfiles/.vimrc"
 # }}}
 
 # git {{{
+alias g="git"
 alias ga="git add"
 alias gc="git commit -m"
-alias gps="git push"
+alias gp="git push"
 alias gpl="git pull"
 alias gd="git diff"
 alias gs="git status"
 alias gl="git log"
+alias gco="git checkout"
 # }}}
 
 alias cd=" cd"
@@ -79,42 +102,11 @@ alias ...=" cd ..; cd ..; ls"
 alias ....=" cd ..; cd ..; cd ..; ls"
 
 # brew {{{
+alias b="brew"
 alias bs="brew search"
 alias bi="brew install"
 alias bup="brew upgrade; brew update;"
 # }}}
-
-# Global Alias {{{
-setopt extended_glob
-typeset -A abbreviations
-abbreviations=(
-"G" "| grep"
-"L" "| less"
-"W" "| wc"
-"T" "| tail -f"
-"v" "vim"
-"g" "git"
-"]" "open"
-"b" "brew"
-)
-
-magic-abbrev-expand() {
-    local MATCH
-    LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
-    LBUFFER+=${abbreviations[$MATCH]:-$MATCH}
-    zle self-insert
-}
-
-no-magic-abbrev-expand() {
-    LBUFFER+=' '
-}
-
-zle -N magic-abbrev-expand
-zle -N no-magic-abbrev-expand
-bindkey " " magic-abbrev-expand
-bindkey "^x " no-magic-abbrev-expand
-# }}}
-
 
 # Suffix Alias {{{
 alias -s md="vim"
@@ -152,6 +144,38 @@ alias -s JPG="open"
 alias -s gif="open"
 alias -s psd="open"
 # }}}
+
+setopt extended_glob
+typeset -A abbreviations
+abbreviations=(
+"G" "| grep"
+"L" "| less"
+"W" "| wc"
+"T" "| tail -f"
+# 'gc' 'gc "__CURSOR__"'
+# "v" "vim"
+# "g" "git"
+"]" "open"
+# "b" "brew"
+)
+
+magic-abbrev-expand() {
+    local MATCH
+    LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
+    LBUFFER+=${abbreviations[$MATCH]:-$MATCH}
+    # [[ $abbreviations[$MATCH] ]] && RBUFFER=${LBUFFER[(ws:__CURSOR__:)2]}
+    # [[ $abbreviations[$MATCH] ]] && LBUFFER=${LBUFFER[(ws:__CURSOR__:)1]}
+    zle self-insert
+}
+
+no-magic-abbrev-expand() {
+    #LBUFFER+=' '
+}
+
+zle -N magic-abbrev-expand
+zle -N no-magic-abbrev-expand
+bindkey " " magic-abbrev-expand
+bindkey "^x " no-magic-abbrev-expand
 
 # }}}
 
