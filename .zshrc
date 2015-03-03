@@ -34,7 +34,21 @@ setopt auto_name_dirs
 unsetopt menu_complete
 setopt magic_equal_subst
 zstyle ":completion:*" matcher-list "m:{a-z}={A-Z}" # 補完時の大文字小文字を区別しない
+zstyle ':completion:*:default' menu select=2
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*' completer _expand _complete _match _prefix _approximate _list _history
+zstyle ':completion:*:messages' format '%F{YELLOW}%d'$DEFAULT
+zstyle ':completion:*:warnings' format '%F{RED}No matches for:''%F{YELLOW} %d'$DEFAULT
+zstyle ':completion:*:descriptions' format '%F{YELLOW}completing %B%d%b'$DEFAULT
+zstyle ':completion:*:options' description 'yes'
+zstyle ':completion:*:descriptions' format '%F{yellow}Completing %B%d%b%f'$DEFAULT
 
+# セパレータを設定する
+zstyle ':completion:*' list-separator '-->'
+zstyle ':completion:*:manuals' separate-sections true
+
+# マッチ種別を別々に表示
+zstyle ':completion:*' group-name ''
 # }}}
 
 # History {{{
@@ -88,6 +102,7 @@ alias vrc="vim ~/dotfiles/.vimrc"
 alias g="git"
 alias ga="git add"
 alias gc="git commit -m"
+alias gca="git commit -am"
 alias gp="git push"
 alias gpl="git pull"
 alias gd="git diff"
@@ -96,7 +111,6 @@ alias gl="git log"
 alias gco="git checkout"
 # }}}
 
-alias cd=" cd"
 alias ..=" cd ..; ls"
 alias ...=" cd ..; cd ..; ls"
 alias ....=" cd ..; cd ..; cd ..; ls"
@@ -144,6 +158,9 @@ alias -s JPG="open"
 alias -s gif="open"
 alias -s psd="open"
 # }}}
+
+# tmux
+alias t="tmux"
 
 setopt extended_glob
 typeset -A abbreviations
@@ -232,4 +249,6 @@ fi
 
 # Load the local configuration.
 [ -f $HOME/.zshrc.local ] && source $HOME/.zshrc.local
+
+[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
 
