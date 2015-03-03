@@ -215,7 +215,7 @@ nnoremap j gj
 nnoremap k gk
 
 nnoremap <Space>d :<C-u>r! LC_ALL=en_US.UTF-8 date '+\%Y/\%m/\%d (\%a) \%H:\%M'<CR>kdd
-nnoremap <Space>l 78i-<ESC>
+nnoremap <Space>l O<ESC>78i-<ESC>
 nnoremap <silent> [start]e :<C-u>VimFiler -buffer-name=explorer 
             \ -split -simple -winwidth=35 -toggle -no-quit<CR>
 nnoremap .r :<C-u>source ~/dotfiles/.vimrc<CR>
@@ -516,7 +516,7 @@ let g:vimfiler_as_default_explorer = 1
 " }}}
 
 " EasyMotion {{{
-map [start] <Plug>(easymotion-prefix)
+" map [start] <Plug>(easymotion-prefix)
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 
 " Bi-directional find motion
@@ -529,8 +529,8 @@ nmap f <Plug>(easymotion-s2)
 let g:EasyMotion_smartcase = 1
 
 " JK motions: Line motions
-map [start]j <Plug>(easymotion-j)
-map [start]k <Plug>(easymotion-k)
+" map [start]j <Plug>(easymotion-j)
+" map [start]k <Plug>(easymotion-k)
 " }}}
 
 " Align {{{
