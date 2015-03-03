@@ -21,6 +21,7 @@ brew install python3
 brew install zsh
 brew install lua
 brew install vim --with-lua
+brew install autojump
 brew install w3m
 brew install git
 brew install git-extras
@@ -90,6 +91,7 @@ echo "export PATH=/usr/local/bin:$PATH" > ~/.zshrc.local
 # pip install psutil
 
 # pip install markdown
+# pip install ipython
 
 # vim swap & backup directory
 
