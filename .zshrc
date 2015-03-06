@@ -106,8 +106,11 @@ alias gca="git commit -am"
 alias gp="git push"
 alias gpl="git pull"
 alias gd="git diff"
+alias gb="git branch"
+alias gba="git branch -a"
 alias gs="git status"
 alias gl="git log"
+alias gm="git merge"
 alias gco="git checkout"
 # }}}
 
