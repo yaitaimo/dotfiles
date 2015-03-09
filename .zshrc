@@ -115,6 +115,7 @@ alias gm="git merge"
 alias gco="git checkout"
 # }}}
 
+alias c="cd"
 alias ..=" cd ..; ls"
 alias ...=" cd ..; cd ..; ls"
 alias ....=" cd ..; cd ..; cd ..; ls"
@@ -163,8 +164,12 @@ alias -s gif="open"
 alias -s psd="open"
 # }}}
 
-# tmux
+# tmux Alias {{{
 alias t="tmux"
+alias ta="tmux a -t"
+alias tn="tmux new -s"
+alias tl="tmux ls"
+# }}}
 
 setopt extended_glob
 typeset -A abbreviations
