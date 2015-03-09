@@ -73,14 +73,14 @@ NeoBundleLazy "vim-scripts/python_fold", {
             \ "autoload": {
             \   "filetypes": ["python", "python3", "djangohtml"],
             \ }}
-NeoBundleLazy "davidhalter/jedi-vim", {
-            \ "autoload": {
-            \   "filetypes": ["python", "python3", "djangohtml"],
-            \ },
-            \ "build": {
-            \   "mac": "pip install jedi",
-            \   "unix": "pip install jedi",
-            \ }}
+" NeoBundleLazy "davidhalter/jedi-vim", {
+"             \ "autoload": {
+"             \   "filetypes": ["python", "python3", "djangohtml"],
+"             \ },
+"             \ "build": {
+"             \   "mac": "pip install jedi",
+"             \   "unix": "pip install jedi",
+"             \ }}
 " flake8
 NeoBundleLazy 'hynek/vim-python-pep8-indent', {
             \ "autoload": {
@@ -416,7 +416,7 @@ if neobundle#is_installed('neocomplete')
     autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
     autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
     autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+    " autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
     autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
     " Enable heavy omni completion.
