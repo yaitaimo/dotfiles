@@ -22,7 +22,7 @@
     # commit
     c = commit -m
     cm = commit -m
-    cam = commit -am
+    cma = commit -am
     ci = commit
     amend = commit --amend
     s = status
