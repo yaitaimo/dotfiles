@@ -13,31 +13,34 @@ brew upgrade
 brew install caskroom/cask/brew-cask
 
 brew brew-any-tap
-brew install jq
-brew install tree
-brew install lha
-brew install python
-brew install python3
-brew install zsh
-brew install lua
-brew install vim --with-lua
 brew install autojump
-brew install w3m
+brew install ctags
+brew install fontforge
 brew install git
 brew install git-extras
+brew install gnuplot --with-x11
+brew install heroku-toolbelt
+brew install hub
+brew install jq
+brew install lha
+brew install lua
+brew install mysql
+brew install nkf
+brew install python
+brew install python3
+brew install reattach-to-user-namespace
+brew install sl
 brew install sqlite
 brew install termshare
-brew install wget
-brew install heroku-toolbelt
-brew install sl
-brew install reattach-to-user-namespace
-brew install nkf
 brew install tmux
-brew install mysql
-brew install ctags
-brew install hub
-brew install fontforge
+brew install tree
+brew install vim --with-lua
+brew install w3m
+brew install wget
+brew install zsh
 
+# brew cask install pycharm
+brew cask install 1password
 brew cask install alfred
 brew cask install appcleaner
 brew cask install bettertouchtool
@@ -46,22 +49,19 @@ brew cask install evernote
 brew cask install google-chrome
 brew cask install google-japanese-ime
 brew cask install gyazo
-brew cask install karabiner
 brew cask install iterm2
-brew cask install minecraft
+brew cask install karabiner
 brew cask install macwinzipper
+brew cask install minecraft
 brew cask install openoffice
-brew cask install 1password
 brew cask install plain-clip
-brew cask install xquartz
-# brew cask install pycharm
 brew cask install sitesucker
 brew cask install skype
 brew cask install slack
 brew cask install torbrowser
 brew cask install tunnelblick
-brew cask install virtualbox
 brew cask install vagrant
+brew cask install virtualbox
 brew cask install xquartz
 
 brew cleanup
