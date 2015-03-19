@@ -36,12 +36,24 @@ setopt magic_equal_subst
 zstyle ":completion:*" matcher-list "m:{a-z}={A-Z}" # 補完時の大文字小文字を区別しない
 zstyle ':completion:*:default' menu select=2
 zstyle ':completion:*' verbose yes
-zstyle ':completion:*' completer _expand _complete _match _prefix _approximate _list _history
+zstyle ':completion:*'  _expand _complete _match _prefix _approximate _list _history
+# zstyle ':completion:*' completer
 zstyle ':completion:*:messages' format '%F{YELLOW}%d'$DEFAULT
 zstyle ':completion:*:warnings' format '%F{RED}No matches for:''%F{YELLOW} %d'$DEFAULT
 zstyle ':completion:*:descriptions' format '%F{YELLOW}completing %B%d%b'$DEFAULT
 zstyle ':completion:*:options' description 'yes'
 zstyle ':completion:*:descriptions' format '%F{yellow}Completing %B%d%b%f'$DEFAULT
+
+if [[ -n $(echo ${^fpath}/chpwd_recent_dirs(N)) && -n $(echo ${^fpath}/cdr(N)) ]]; then
+    autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+    add-zsh-hook chpwd chpwd_recent_dirs
+    zstyle ':completion:*:*:cdr:*:*' menu selection
+    zstyle ':completion:*' recent-dirs-insert both
+    zstyle ':chpwd:*' recent-dirs-max 500
+    zstyle ':chpwd:*' recent-dirs-default true
+    zstyle ':chpwd:*' recent-dirs-file "${XDG_CACHE_HOME:-$HOME/.cache}/shell/chpwd-recent-dirs"
+    zstyle ':chpwd:*' recent-dirs-pushd true
+fi
 
 # セパレータを設定する
 zstyle ':completion:*' list-separator '-->'
@@ -89,6 +101,8 @@ alias ll="ls -lA"
 alias lf="ls -FA"
 alias la="ls -a"
 alias p="popd"
+alias ]="open"
+alias t="todo.sh"
 
 # vim {{{
 alias v="vim"
@@ -134,7 +148,7 @@ alias -s py="vim"
 alias -s gitignore="vim"
 alias -s gitconfig="vim"
 alias -s php="vim"
-alias -s sh="vim"
+# alias -s sh="vim"
 
 alias -s avi="open"
 alias -s AVI="open"
@@ -165,10 +179,10 @@ alias -s psd="open"
 # }}}
 
 # tmux Alias {{{
-alias t="tmux"
-alias ta="tmux a -t"
-alias tn="tmux new -s"
-alias tl="tmux ls"
+alias tm="tmux"
+alias tma="tmux a -t"
+alias tmn="tmux new -s"
+alias tml="tmux ls"
 # }}}
 
 setopt extended_glob
@@ -179,10 +193,6 @@ abbreviations=(
 "W" "| wc"
 "T" "| tail -f"
 # 'gc' 'gc "__CURSOR__"'
-# "v" "vim"
-# "g" "git"
-"]" "open"
-# "b" "brew"
 )
 
 magic-abbrev-expand() {
@@ -251,13 +261,17 @@ if [[ $(uname) == Darwin  ]]; then
     autoload -Uz zmv
     alias zmv="noglob zmv -W"
 
+    [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
+
     # alias chrome="open -a Google\ Chrome"
 
 fi
 # }}}
 
+# about Ruby
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
 # Load the local configuration.
 [ -f $HOME/.zshrc.local ] && source $HOME/.zshrc.local
 
-[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
 
