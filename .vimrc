@@ -137,6 +137,10 @@ set foldmethod=marker
 " }}}
 
 " FileType Setting {{{
+" TXT {{{
+autocmd BufRead,BufNewFile *.txt setlocal ft=txt
+autocmd FileType txt setl tabstop=2 expandtab autoindent softtabstop=2 shiftwidth=2
+" }}}
 
 " Python {{{
 autocmd FileType python setl 
@@ -332,8 +336,9 @@ if neobundle#is_installed('vim-latex')
         let g:Tex_DefaultTargetFormat = 'pdf'
         let g:Tex_IgnoredWarnings = 
                     \'LaTeX Font Warning:'."\n".
-                    \'Overfull'
-        let g:Tex_IgnoreLevel = 2
+                    \'Overfull'."\n".
+                    \'Underfull'
+        let g:Tex_IgnoreLevel = 3
         let g:Tex_FormatDependency_pdf = 'dvi,pdf'
         let g:Tex_FormatDependency_ps = 'dvi,ps'
         let g:Tex_CompileRule_dvi = '/usr/texbin/platex -shell-escape
@@ -479,6 +484,12 @@ if neobundle#is_installed('quickrun')
                 \ 'args' : '-f markdown+definition_lists --standalone --mathjax'
                 \ }
 endif
+" }}}
+
+" open-browser {{{
+let g:netrw_nogx = 1 " disable netrw's gx mapping.
+nmap gx <Plug>(openbrowser-smart-search)
+vmap gx <Plug>(openbrowser-smart-search)
 " }}}
 
 " Vim-fugitive {{{
