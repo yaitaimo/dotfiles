@@ -88,7 +88,7 @@ chsh -s /usr/local/bin/zsh
 
 echo "export PATH=/usr/local/bin:$PATH" > ~/.zshrc.local
 
-# pip install git+git://github.com/Lokaltog/powerline
+# pip install powerline-status
 # pip install psutil
 
 # pip install markdown
