@@ -38,6 +38,7 @@ brew install vim --with-lua
 brew install w3m
 brew install wget
 brew install zsh
+brew install weechat --with-python --with-perl --with-ruby
 
 # brew cask install pycharm
 brew cask install 1password
