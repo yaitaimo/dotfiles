@@ -320,7 +320,7 @@ let g:unite_source_history_yank_enable =1
 " }}}
 
 " Vim-LaTeX {{{
-if neobundle#is_installed('vim-latex')
+if neobundle#is_sourced('vim-latex')
     let s:bundle = neobundle#get("vim-latex")
     function! s:bundle.hooks.on_source(bundle)
         nnoremap <silent> [start]ll :<C-u>call Tex_StartTex()<CR>
@@ -356,7 +356,7 @@ endif
 " }}}
 
 " NeoComplete{{{
-if neobundle#is_installed('neocomplete.vim')
+if neobundle#is_sourced('neocomplete.vim')
     " Disable AutoComplPop.
     let g:acp_enableAtStartup = 0
     " Use neocomplete.
@@ -490,7 +490,7 @@ let g:auto_ctags_tags_args = '-R --tag-relative --recurse --sort=yes'
 " }}}
 
 " QuickRun {{{
-if neobundle#is_installed('quickrun')
+if neobundle#is_installed('vim-quickrun')
     let g:quickrun_config = {}
     let g:quickrun_config['markdown'] = {
                 \ 'type' : 'markdown/pandoc',
@@ -563,11 +563,11 @@ let g:EasyMotion_smartcase = 1
 " }}}
 
 " jedi {{{
-if neobundle#is_installed('jedi')
+if neobundle#is_sourced('jedi-vim')
     " docstringは表示しない
     " autocmd FileType python setlocal completeopt-=preview
     jedi.preload_module('os', 'sys', 'math', 'whatever_module_you_want', 'numpy')
-    let g:jedi#autocompletion_command = "<TAB>"
+    " let g:jedi#autocompletion_command = "<TAB>"
     " autocmd FileType python setlocal omnifunc=jedi#completions
     "let g:jedi#popup_select_first=0
     " let g:jedi#completions_enabled = 0
