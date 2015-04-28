@@ -42,7 +42,7 @@ NeoBundle 'soramugi/auto-ctags.vim'
 NeoBundle 'airblade/vim-rooter'
 NeoBundle 'yuratomo/w3m.vim'
 NeoBundle 'Lokaltog/vim-easymotion'
-
+NeoBundle 'scrooloose/syntastic'
 NeoBundle 'Align'
 
 NeoBundle 'Shougo/vimproc', {
@@ -67,29 +67,31 @@ endif
 " For flask develop
 NeoBundleLazy 'mitsuhiko/vim-jinja', {
             \ "autoload": {
-            \   "filetypes": ["python", "python3", "djangohtml"],
+            \   "filetypes": ["html"],
             \ }}
 NeoBundleLazy "vim-scripts/python_fold", {
             \ "autoload": {
             \   "filetypes": ["python", "python3", "djangohtml"],
             \ }}
-" NeoBundleLazy "davidhalter/jedi-vim", {
-"             \ "autoload": {
-"             \   "filetypes": ["python", "python3", "djangohtml"],
-"             \ },
-"             \ "build": {
-"             \   "mac": "pip install jedi",
-"             \   "unix": "pip install jedi",
-"             \ }}
+NeoBundleLazy "davidhalter/jedi-vim", {
+            \ "autoload": {
+            \   "filetypes": ["python", "python3", "djangohtml"],
+            \ },
+            \ "build": {
+            \   "mac": "pip install jedi",
+            \   "unix": "pip install jedi",
+            \ }}
 " flake8
 NeoBundleLazy 'hynek/vim-python-pep8-indent', {
             \ "autoload": {
             \   "insert": 1, 
             \   "filetypes": ["python", "python3", "djangohtml"]
             \ }}
+
 if has('lua') && (v:version > 703 || (v:version == 703 && has('patch885')))
-    NeoBundleLazy 'Shougo/neocomplete.vim'
+    NeoBundle 'Shougo/neocomplete.vim'
 endif
+
 " }}}
 
 call neobundle#end()
@@ -139,7 +141,7 @@ set foldmethod=marker
 " FileType Setting {{{
 " TXT {{{
 autocmd BufRead,BufNewFile *.txt setlocal ft=txt
-autocmd FileType txt setl tabstop=2 expandtab autoindent softtabstop=2 shiftwidth=2
+autocmd FileType txt setl tabstop=2 expandtab softtabstop=2 shiftwidth=2
 " }}}
 
 " Python {{{
@@ -253,6 +255,7 @@ inoremap <C-f> <Right>
 inoremap <C-n> <Down>
 inoremap <C-p> <UP>
 inoremap <C-k> <C-o>d$
+inoremap <Nul> <C-n>
 
 " 消去
 inoremap <C-h> <BS>
@@ -353,7 +356,7 @@ endif
 " }}}
 
 " NeoComplete{{{
-if neobundle#is_installed('neocomplete')
+if neobundle#is_installed('neocomplete.vim')
     " Disable AutoComplPop.
     let g:acp_enableAtStartup = 0
     " Use neocomplete.
@@ -396,7 +399,9 @@ if neobundle#is_installed('neocomplete')
     inoremap <expr><C-y>  neocomplete#close_popup()
     inoremap <expr><C-e>  neocomplete#cancel_popup()
     " Close popup by <Space>.
-    "inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
+    inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
+    
+
 
     " For cursor moving in insert mode(Not recommended)
     "inoremap <expr><Left>  neocomplete#close_popup() . "\<Left>"
@@ -418,23 +423,31 @@ if neobundle#is_installed('neocomplete')
     "inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
 
     " Enable omni completion.
-    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+    " autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+    " autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+    " autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
     " autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+    " autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
     " Enable heavy omni completion.
-    if !exists('g:neocomplete#sources#omni#input_patterns')
-        let g:neocomplete#sources#omni#input_patterns = {}
-    endif
+    " if !exists('g:neocomplete#sources#omni#input_patterns')
+    "     let g:neocomplete#sources#omni#input_patterns = {}
+    " endif
     "let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
     "let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
     "let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 
     " For perlomni.vim setting.
     " https://github.com/c9s/perlomni.vim
-    let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+    " let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+
+    " For jedi-vim setting.
+    " if !exists('g:neocomplete#force_omni_input_patterns')
+    "     let g:neocomplete#force_omni_input_patterns = {}
+    " endif
+    " let g:neocomplete#force_omni_input_patterns.python =
+    "             \ '\%([^.\t]\.\|^\s*@\|^\s*from\s.\+import '
+    "             \ +'\|^\s*from \|^\s*import \)\w*'
 endif
 " }}}
 
@@ -547,6 +560,31 @@ let g:EasyMotion_smartcase = 1
 
 " Align {{{
 :let g:Align_xstrlen = 3
+" }}}
+
+" jedi {{{
+if neobundle#is_installed('jedi')
+    " docstringは表示しない
+    " autocmd FileType python setlocal completeopt-=preview
+    jedi.preload_module('os', 'sys', 'math', 'whatever_module_you_want', 'numpy')
+    let g:jedi#autocompletion_command = "<TAB>"
+    " autocmd FileType python setlocal omnifunc=jedi#completions
+    "let g:jedi#popup_select_first=0
+    " let g:jedi#completions_enabled = 0
+    " let g:jedi#auto_vim_configuration = 0
+endif
+" }}}
+
+" Syntax {{{
+let g:syntastic_python_checkers = ['pep8']
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 " }}}
 
 " Local config {{{
