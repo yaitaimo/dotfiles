@@ -62,6 +62,7 @@ if os=="mac"
                 \ "autoload": {"filetypes": ["tex"]}}
     " QuickRun
     NeoBundle 'tyru/open-browser.vim'
+    NeoBundle 'tyru/open-browser-github.vim'
 endif    
 
 " For flask develop
@@ -225,7 +226,7 @@ nnoremap <Space>l O<ESC>78i-<ESC>
 nnoremap <silent> [start]e :<C-u>VimFiler -buffer-name=explorer 
             \ -split -simple -winwidth=35 -toggle -no-quit<CR>
 nnoremap .r :<C-u>source ~/dotfiles/.vimrc<CR>
-nnoremap .e :<C-u>edit ~/dotfiles/.vimrc<CR>
+nnoremap <silent> .e :<C-u>edit ~/dotfiles/.vimrc<CR><CR>
 " あまりに押し間違いが多いので．
 nnoremap q: :<C-u>
 
@@ -562,24 +563,8 @@ let g:EasyMotion_smartcase = 1
 :let g:Align_xstrlen = 3
 " }}}
 
-" jedi {{{
-if neobundle#is_sourced('jedi-vim')
-    " docstringは表示しない
-    " autocmd FileType python setlocal completeopt-=preview
-    jedi.preload_module('os', 'sys', 'math', 'whatever_module_you_want', 'numpy')
-    " let g:jedi#autocompletion_command = "<TAB>"
-    " autocmd FileType python setlocal omnifunc=jedi#completions
-    "let g:jedi#popup_select_first=0
-    " let g:jedi#completions_enabled = 0
-    " let g:jedi#auto_vim_configuration = 0
-endif
-" }}}
-
 " Syntax {{{
 let g:syntastic_python_checkers = ['pep8']
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
