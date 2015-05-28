@@ -1,7 +1,8 @@
 " Detect platform {{{
 let os = ""
-if has("win32")
+if has("win32") || has("win64")
     let os="win"
+    exit
 elseif has("unix")
     let s:uname = system("uname")
     if s:uname == "Darwin\n"
@@ -35,13 +36,13 @@ NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/vimshell.vim'
 NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'glidenote/memolist.vim'
+" NeoBundle 'glidenote/memolist.vim'
 NeoBundle "thinca/vim-quickrun"
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'soramugi/auto-ctags.vim'
 NeoBundle 'airblade/vim-rooter'
-NeoBundle 'yuratomo/w3m.vim'
-NeoBundle 'Lokaltog/vim-easymotion'
+" NeoBundle 'yuratomo/w3m.vim'
+" NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'Align'
 
@@ -74,14 +75,11 @@ NeoBundleLazy "vim-scripts/python_fold", {
             \ "autoload": {
             \   "filetypes": ["python", "python3", "djangohtml"],
             \ }}
-NeoBundleLazy "davidhalter/jedi-vim", {
-            \ "autoload": {
-            \   "filetypes": ["python", "python3", "djangohtml"],
-            \ },
-            \ "build": {
-            \   "mac": "pip install jedi",
-            \   "unix": "pip install jedi",
-            \ }}
+" NeoBundleLazy "davidhalter/jedi-vim", {
+"             \ "autoload": {
+"             \   "filetypes": ["python", "python3", "djangohtml"],
+"             \ }}
+
 " flake8
 NeoBundleLazy 'hynek/vim-python-pep8-indent', {
             \ "autoload": {
@@ -287,7 +285,7 @@ cnoremap <C-k> <C-\>e getcmdpos() == 1 ?
 " Unite {{{
 "開いていない場合はカレントディレクトリ
 nnoremap <silent> [start]o :<C-u>UniteWithBufferDir file file/new<CR>
-nnoremap <silent> [start]pj :<C-u>UniteWithProjectDir file_rec file/new<CR>
+nnoremap <silent> [start]po :<C-u>UniteWithProjectDir file_rec file/new<CR>
 nnoremap <silent> [start]pv :<C-u>UniteWithBufferDir file_rec -auto-preview
             \ -no-split -vertical-preview<CR> 
 " let g:unite_kind_file_preview_max_filesize = 10000000
@@ -398,7 +396,7 @@ if neobundle#is_sourced('neocomplete.vim')
     inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
     inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
     inoremap <expr><C-y>  neocomplete#close_popup()
-    inoremap <expr><C-e>  neocomplete#cancel_popup()
+    " inoremap <expr><C-e>  neocomplete#cancel_popup()
     " Close popup by <Space>.
     inoremap <expr><Space> pumvisible() ? neocomplete#close_popup()."\<Space>" : "\<Space>"
     
@@ -428,6 +426,7 @@ if neobundle#is_sourced('neocomplete.vim')
     " autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
     " autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
     " autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+    autocmd FileType python setlocal omnifunc=
     " autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
     " Enable heavy omni completion.
@@ -472,7 +471,7 @@ endfunction
 " }}}
 
 " ctags {{{
-let g:auto_ctags = 1
+let g:auto_ctags = 0
 let g:auto_ctags_directory_list = ['.git', '.']
 let g:auto_ctags_tags_args = '-R --tag-relative --recurse --sort=yes'
 " let g:auto_ctags_tags_args = '-R --tag-relative --recurse --sort=yes $VIRTUAL_ENV/lib/'
@@ -536,6 +535,10 @@ nnoremap <silent> [start]ml  :MemoList<CR>
 nnoremap <silent> [start]ms  :MemoGrep<CR>
 " }}}
 
+" open-browser-github.vim{{{
+nnoremap <silent> [start]go :<C-u>OpenGithubProject<CR>
+" }}}
+
 " vifiler {{{ 
 " autocmd FileType vimfiler call vimfiler#custom#profile('vimfiler:explorer', 'vertical-preview', 'off' })
 let g:vimfiler_as_default_explorer = 1
@@ -543,16 +546,16 @@ let g:vimfiler_as_default_explorer = 1
 
 " EasyMotion {{{
 " map [start] <Plug>(easymotion-prefix)
-let g:EasyMotion_do_mapping = 0 " Disable default mappings
+" let g:EasyMotion_do_mapping = 0 " Disable default mappings
 
 " Bi-directional find motion
 
 " `s{char}{char}{label}`
 " Need one more keystroke, but on average, it may be more comfortable.
-nmap f <Plug>(easymotion-s2)
+" nmap f <Plug>(easymotion-s2)
 
 " Turn on case insensitive feature
-let g:EasyMotion_smartcase = 1
+" let g:EasyMotion_smartcase = 1
 
 " JK motions: Line motions
 " map [start]j <Plug>(easymotion-j)
@@ -561,6 +564,12 @@ let g:EasyMotion_smartcase = 1
 
 " Align {{{
 :let g:Align_xstrlen = 3
+" }}}
+
+" jedi-vim {{{
+" if neobundle#is_sourced('jedi-vim')
+"     g:jedi#popup_select_first = 0
+" endif
 " }}}
 
 " Syntax {{{
