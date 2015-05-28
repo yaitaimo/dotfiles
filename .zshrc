@@ -138,7 +138,7 @@ alias ....=" cd ..; cd ..; cd ..; ls"
 alias b="brew"
 alias bs="brew search"
 alias bi="brew install"
-alias bup="brew upgrade; brew update;"
+alias bup="brew update; brew upgrade --all;"
 # }}}
 
 # Suffix Alias {{{
