@@ -492,11 +492,18 @@ let g:auto_ctags_tags_args = '-R --tag-relative --recurse --sort=yes'
 " QuickRun {{{
 if neobundle#is_installed('vim-quickrun')
     let g:quickrun_config = {}
-    let g:quickrun_config['markdown'] = {
-                \ 'type' : 'markdown/pandoc',
-                \ 'outputter': 'browser',
-                \ 'args' : '-f markdown+definition_lists --standalone --mathjax'
-                \ }
+    let g:quickrun_config.python = {'command' : 'python3'}
+    let g:quickrun_config._ = {'outputter/buffer/close_on_empty' : 1}
+
+    " let g:quickrun_config['markdown'] = {
+    "             \ 'type' : 'markdown/pandoc',
+    "             \ 'outputter': 'browser',
+    "             \ 'args' : '-f markdown+definition_lists --standalone --mathjax'
+    "             \ }
+
+    if neobundle#is_installed('vimproc')
+        let g:quickrun_config._ = {'runner' : 'vimproc'}
+    endif
 endif
 " }}}
 
