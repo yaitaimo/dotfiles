@@ -189,7 +189,7 @@ setopt extended_glob
 typeset -A abbreviations
 abbreviations=(
 "G" "| grep"
-"L" "| less"
+# "L" "| less"
 "W" "| wc"
 "T" "| tail -f"
 # 'gc' 'gc "__CURSOR__"'
