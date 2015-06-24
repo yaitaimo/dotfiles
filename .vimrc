@@ -580,7 +580,8 @@ let g:vimfiler_as_default_explorer = 1
 " }}}
 
 " Syntax {{{
-let g:syntastic_python_checkers = ['pep8']
+let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_python_checker_args='--ignore=E501'
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
