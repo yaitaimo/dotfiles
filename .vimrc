@@ -37,7 +37,7 @@ NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/vimshell.vim'
 NeoBundle 'tpope/vim-fugitive'
 " NeoBundle 'glidenote/memolist.vim'
-NeoBundle "thinca/vim-quickrun"
+NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'soramugi/auto-ctags.vim'
 NeoBundle 'airblade/vim-rooter'
@@ -62,8 +62,10 @@ if os=="mac"
     NeoBundleLazy 'jcf/vim-latex', {
                 \ "autoload": {"filetypes": ["tex"]}}
     " QuickRun
+    NeoBundle 'mattn/webapi-vim'
     NeoBundle 'tyru/open-browser.vim'
     NeoBundle 'tyru/open-browser-github.vim'
+    NeoBundle 'superbrothers/vim-quickrun-markdown-gfm'
 endif    
 
 " For flask develop
@@ -196,9 +198,7 @@ set tabstop=8
 set shiftwidth=4
 set softtabstop=4
 
-" 結局，set pasteをいちいちやるのが面倒だと感じた．
-" set textwidth=78
-" set formatoptions+=mM
+autocmd FileType markdown setl textwidth=78 formatoptions+=mM
 
 ""クリップボード設定
 set clipboard+=unnamed " copy to the system clipboard
@@ -495,11 +495,10 @@ if neobundle#is_installed('vim-quickrun')
     let g:quickrun_config.python = {'command' : 'python3'}
     let g:quickrun_config._ = {'outputter/buffer/close_on_empty' : 1}
 
-    " let g:quickrun_config['markdown'] = {
-    "             \ 'type' : 'markdown/pandoc',
-    "             \ 'outputter': 'browser',
-    "             \ 'args' : '-f markdown+definition_lists --standalone --mathjax'
-    "             \ }
+    let g:quickrun_config.markdown = {
+                \ 'type' : 'markdown/gfm',
+                \ 'outputter': 'browser'
+                \ }
 
     if neobundle#is_installed('vimproc')
         let g:quickrun_config._ = {'runner' : 'vimproc'}
