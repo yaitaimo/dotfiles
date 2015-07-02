@@ -499,6 +499,10 @@ if neobundle#is_installed('vim-quickrun')
                 \ 'type' : 'markdown/gfm',
                 \ 'outputter': 'browser'
                 \ }
+    " let g:quickrun_config.markdown = {
+    "             \ 'outputter': 'browser',
+    "             \ 'args': '--mathjax'
+    "             \ }
 
     if neobundle#is_installed('vimproc')
         let g:quickrun_config._ = {'runner' : 'vimproc'}
