@@ -228,6 +228,8 @@ nnoremap <silent> .e :<C-u>edit ~/dotfiles/.vimrc<CR><CR>
 " あまりに押し間違いが多いので．
 nnoremap q: :<C-u>
 
+nnoremap [start]n :<C-u>set nonumber!<CR>
+
 nnoremap [start]r :<C-u>QuickRun<CR>
 " tagsジャンプの際に複数ある場合を考慮
 nnoremap [start]g <C-]>
