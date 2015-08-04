@@ -4,13 +4,9 @@ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/
  
 # brew doctor
 
-export HOMEBREW_CASK_OPTS="--appdir=/Applications"
-
-# Homebrew & Homebrew-Cask
+# Homebrew
 brew update
 brew upgrade
-
-brew install caskroom/cask/brew-cask
 
 brew brew-any-tap
 brew install autojump
@@ -40,35 +36,31 @@ brew install wget
 brew install zsh
 brew install weechat --with-python --with-perl --with-ruby
 
-# brew cask install pycharm
-brew cask install 1password
-brew cask install alfred
-brew cask install appcleaner
-brew cask install bettertouchtool
-brew cask install dropbox
-brew cask install evernote
-brew cask install google-chrome
-brew cask install google-japanese-ime
-brew cask install gyazo
-brew cask install iterm2
-brew cask install karabiner
-brew cask install macwinzipper
-brew cask install minecraft
-brew cask install openoffice
-brew cask install plain-clip
-brew cask install sitesucker
-brew cask install skype
-brew cask install slack
-brew cask install torbrowser
-brew cask install tunnelblick
-brew cask install vagrant
-brew cask install virtualbox
-brew cask install xquartz
+# 1password
+# alfred
+# appcleaner
+# bettertouchtool
+# dropbox
+# evernote
+# google-chrome
+# google-japanese-ime
+# gyazo
+# iterm2
+# karabiner
+# macwinzipper
+# minecraft
+# openoffice
+# plain-clip
+# sitesucker
+# skype
+# slack
+# torbrowser
+# tunnelblick
+# vagrant
+# virtualbox
+# xquartz
 
 brew cleanup
-brew cask cleanup
-
-brew cask alfred link
 
 # LINE
 # brew opencv
