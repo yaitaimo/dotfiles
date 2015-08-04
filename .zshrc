@@ -242,12 +242,15 @@ echo "%{${fg[cyan]}%}|%{$reset_color%}%{$color%}$name%{$reset_color%}"
 } # }}}
 
 setopt prompt_subst
-PROMPT='%{${fg[cyan]}%}[%n%{$reset_color%}`prompt-git-current-branch`%{${fg[cyan]}%}]%{${reset_color}%} %{${fg[yellow]}%}%~%{${reset_color}%}
-$'
+PROMPT_USER='%n`prompt-git-current-branch`'
+PROMPT_DIR="%{${reset_color}%}%{${fg[yellow]}%}%~%{${reset_color}%}"
+PROMPT="%{${fg[cyan]}%}[${PROMPT_USER}] ${PROMPT_DIR}
+$"
+
 # SSHログイン時のプロンプト
 [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
-    #PROMPT="%{${fg[white]}%}${HOST%%.*} ${PROMPT}"
-;
+PROMPT="%{${fg[cyan]}%}[${HOST%%.*}:${PROMPT_USER}] ${PROMPT_DIR}
+$"
 
 # }}}
 
