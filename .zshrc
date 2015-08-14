@@ -271,9 +271,6 @@ if [[ $(uname) == Darwin  ]]; then
 fi
 # }}}
 
-# about Ruby
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
-
 # Load the local configuration.
 [ -f $HOME/.zshrc.local ] && source $HOME/.zshrc.local
 
