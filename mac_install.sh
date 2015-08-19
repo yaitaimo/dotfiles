@@ -5,8 +5,7 @@ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/
 # brew doctor
 
 # Homebrew
-brew update
-brew upgrade
+# brew update
 
 brew brew-any-tap
 brew install autojump
@@ -25,6 +24,7 @@ brew install nkf
 brew install python
 brew install python3
 brew install reattach-to-user-namespace
+brew install ruby
 brew install sl
 brew install sqlite
 brew install termshare
@@ -34,7 +34,7 @@ brew install vim --with-lua
 brew install w3m
 brew install wget
 brew install zsh
-brew install weechat --with-python --with-perl --with-ruby
+# brew install weechat --with-python --with-perl --with-ruby
 
 # 1password
 # alfred
