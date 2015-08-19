@@ -156,6 +156,8 @@ autocmd FileType python setl formatoptions+=tcqw
 
 " Ruby {{{
 autocmd FileType ruby setl tabstop=2 expandtab shiftwidth=2 softtabstop=2
+autocmd FileType python setl textwidth=79
+autocmd FileType python setl formatoptions+=tcqw
 " }}}
 
 " eruby {{{
