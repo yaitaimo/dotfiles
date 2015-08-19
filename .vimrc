@@ -45,6 +45,7 @@ NeoBundle 'airblade/vim-rooter'
 " NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'Align'
+NeoBundle 'othree/html5.vim'    "HTML5 + inline SVG omnicomplete function, indent and syntax for Vim. Based on the default htmlcomplete.vim.
 
 NeoBundle 'Shougo/vimproc', {
             \ 'build' : {
@@ -155,6 +156,10 @@ autocmd FileType python setl formatoptions+=tcqw
 
 " Ruby {{{
 autocmd FileType ruby setl tabstop=2 expandtab shiftwidth=2 softtabstop=2
+" }}}
+
+" eruby {{{
+autocmd FileType eruby setl tabstop=2 expandtab shiftwidth=2 softtabstop=2
 " }}}
 
 " tex {{{
