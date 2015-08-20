@@ -168,6 +168,10 @@ autocmd FileType eruby setl tabstop=2 expandtab shiftwidth=2 softtabstop=2
 autocmd FileType tex setl formatoptions+=mM textwidth=79
 " }}}
 
+" SCSS {{{
+autocmd FileType scss setl tabstop=2 expandtab shiftwidth=2 softtabstop=2
+" }}}
+
 " }}}
 
 " Swap & Backup {{{
@@ -232,8 +236,6 @@ nnoremap k gk
 
 nnoremap <Space>d :<C-u>r! LC_ALL=en_US.UTF-8 date '+\%Y/\%m/\%d (\%a) \%H:\%M'<CR>kdd
 nnoremap <Space>l O<ESC>78i-<ESC>
-nnoremap <silent> [start]e :<C-u>VimFiler -buffer-name=explorer 
-            \ -split -simple -winwidth=35 -toggle -no-quit<CR>
 nnoremap .r :<C-u>source ~/dotfiles/.vimrc<CR>
 nnoremap <silent> .e :<C-u>edit ~/dotfiles/.vimrc<CR><CR>
 " あまりに押し間違いが多いので．
@@ -298,8 +300,9 @@ cnoremap <C-k> <C-\>e getcmdpos() == 1 ?
 " Unite {{{
 "開いていない場合はカレントディレクトリ
 nnoremap <silent> [start]o :<C-u>UniteWithBufferDir file file/new<CR>
-nnoremap <silent> [start]po :<C-u>UniteWithProjectDir file_rec file/new<CR>
-nnoremap <silent> [start]pv :<C-u>UniteWithBufferDir file_rec -auto-preview
+nnoremap <silent> [start]po :<C-u>UniteWithProjectDir file_rec:!<CR>
+nnoremap <silent> <C-p> :<C-u>UniteWithProjectDir -start-insert file_rec/async:! file/new<CR>
+nnoremap <silent> [start]pv :<C-u>UniteWithBufferDir file_rec:! -auto-preview
             \ -no-split -vertical-preview<CR> 
 " let g:unite_kind_file_preview_max_filesize = 10000000
 call unite#custom#source('file_rec,file_rec/async',
@@ -309,6 +312,8 @@ nnoremap <silent> [start]h :<C-u>Unite file_mru<CR>
 nnoremap <silent> [start]c :<C-u>Unite bookmark<CR>
 nnoremap <silent> [start]a :<C-u>UniteBookmarkAdd<CR>
 nnoremap <silent> [start]y :<C-u>Unite history/yank<CR>
+
+let g:unite_source_rec_max_cache_files = 20000
 
 autocmd FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()"{{{
@@ -562,9 +567,10 @@ nnoremap <silent> [start]ms  :MemoGrep<CR>
 nnoremap <silent> [start]go :<C-u>OpenGithubProject<CR>
 " }}}
 
-" vifiler {{{ 
-" autocmd FileType vimfiler call vimfiler#custom#profile('vimfiler:explorer', 'vertical-preview', 'off' })
+" vimfiler {{{ 
 let g:vimfiler_as_default_explorer = 1
+nnoremap <silent> [start]e :<C-u>VimFilerCurrentDir -buffer-name=explorer 
+            \ -split -simple -winwidth=35 -toggle -no-quit<CR>
 " }}}
 
 " EasyMotion {{{
