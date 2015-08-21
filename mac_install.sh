@@ -43,11 +43,13 @@ brew install zsh
 # dropbox
 # evernote
 # google-chrome
+# google-drive
 # google-japanese-ime
 # gyazo
 # iterm2
 # karabiner
 # macwinzipper
+# messenger
 # minecraft
 # openoffice
 # plain-clip
