@@ -298,40 +298,58 @@ cnoremap <C-k> <C-\>e getcmdpos() == 1 ?
 " }}}
 
 " Unite {{{
-"開いていない場合はカレントディレクトリ
+" 入力モードで開始
+let g:unite_enable_start_insert=1
+
+" カレントディレクトリ
 nnoremap <silent> [start]o :<C-u>UniteWithBufferDir file file/new<CR>
-nnoremap <silent> [start]po :<C-u>UniteWithProjectDir file_rec:!<CR>
-nnoremap <silent> <C-p> :<C-u>UniteWithProjectDir -start-insert file_rec/async:! file/new<CR>
+
+" カレントディレクトリ・プレビューモード
 nnoremap <silent> [start]pv :<C-u>UniteWithBufferDir file_rec:! -auto-preview
             \ -no-split -vertical-preview<CR> 
 " let g:unite_kind_file_preview_max_filesize = 10000000
-call unite#custom#source('file_rec,file_rec/async',
-            \ 'max_candidates', 0)
-nnoremap <silent> [start]b :<C-u>Unite buffer<CR>
-nnoremap <silent> [start]h :<C-u>Unite file_mru<CR>
-nnoremap <silent> [start]c :<C-u>Unite bookmark<CR>
-nnoremap <silent> [start]a :<C-u>UniteBookmarkAdd<CR>
-nnoremap <silent> [start]y :<C-u>Unite history/yank<CR>
 
+" プロジェクト全表示＆検索
+nnoremap <silent> <C-p> :<C-u>UniteWithProjectDir -start-insert file_rec/async:! file/new<CR>
 let g:unite_source_rec_max_cache_files = 20000
 
+" 何の設定か忘れた
+" call unite#custom#source('file_rec,file_rec/async',
+"             \ 'max_candidates', 0)
+
+" バッファ
+nnoremap <silent> [start]b :<C-u>Unite buffer<CR>
+
+" ヒストリ
+nnoremap <silent> [start]h :<C-u>Unite file_mru<CR>
+
+" ブックマーク
+nnoremap <silent> [start]c :<C-u>Unite bookmark<CR>
+nnoremap <silent> [start]a :<C-u>UniteBookmarkAdd<CR>
+
+" ヤンクヒストリ
+nnoremap <silent> [start]y :<C-u>Unite history/yank<CR>
+
 autocmd FileType unite call s:unite_my_settings()
+
 function! s:unite_my_settings()"{{{
     "ESCでuniteを終了
-    nnoremap <buffer> <ESC> <Plug>(unite_exit)
-    inoremap <C-a> <Home>
-    inoremap <C-e> <End>
-    inoremap <C-b> <Left>
-    inoremap <C-f> <Right>
-    inoremap <C-n> <Down>
-    inoremap <C-p> <UP>
-    inoremap <C-h> <BS>
+    nnoremap <silent> <buffer> <Esc><Esc> :q<CR>
+    inoremap <silent> <buffer> <Esc><Esc> <Esc>:q<CR>
+    inoremap <buffer> <C-a> <Home>
+    inoremap <buffer> <C-e> <End>
+    inoremap <buffer> <C-b> <Left>
+    inoremap <buffer> <C-f> <Right>
+    inoremap <buffer> <C-n> <Down>
+    inoremap <buffer> <C-p> <UP>
+    inoremap <buffer> <C-h> <BS>
     "ctrl+sで縦に分割して開く
     nnoremap <silent><buffer><expr> <C-s> unite#do_action('split')
     inoremap <silent><buffer><expr> <C-s> unite#do_action('split')
     "ctrl+vで横に分割して開く
     nnoremap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
     inoremap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
+    imap <buffer> <C-w>     <Plug>(unite_delete_backward_path)
 endfunction" }}}
 let g:unite_source_history_yank_enable =1
 " }}}
