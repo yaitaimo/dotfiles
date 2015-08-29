@@ -87,6 +87,7 @@ echo "export PATH=/usr/local/bin:$PATH" > ~/.zshrc.local
 
 # pip install markdown
 # pip install ipython
+# pip install flake8
 
 # vim swap & backup directory
 
