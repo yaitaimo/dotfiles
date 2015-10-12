@@ -102,7 +102,6 @@ alias lf="ls -FA"
 alias la="ls -a"
 alias p="popd"
 alias ]="open"
-alias t="todo.sh"
 
 # vim {{{
 alias v="vim"
@@ -129,7 +128,6 @@ alias gm="git merge"
 alias gco="git checkout"
 # }}}
 
-alias c="cd"
 alias ..=" cd ..; ls"
 alias ...=" cd ..; cd ..; ls"
 alias ....=" cd ..; cd ..; cd ..; ls"
@@ -179,39 +177,16 @@ alias -s psd="open"
 # }}}
 
 # tmux Alias {{{
-alias tm="tmux"
-alias tma="tmux a -t"
-alias tmn="tmux new -s"
-alias tml="tmux ls"
+alias t="tmux"
 # }}}
 
 setopt extended_glob
 typeset -A abbreviations
 abbreviations=(
 "G" "| grep"
-# "L" "| less"
 "W" "| wc"
 "T" "| tail -f"
-# 'gc' 'gc "__CURSOR__"'
 )
-
-magic-abbrev-expand() {
-    local MATCH
-    LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
-    LBUFFER+=${abbreviations[$MATCH]:-$MATCH}
-    # [[ $abbreviations[$MATCH] ]] && RBUFFER=${LBUFFER[(ws:__CURSOR__:)2]}
-    # [[ $abbreviations[$MATCH] ]] && LBUFFER=${LBUFFER[(ws:__CURSOR__:)1]}
-    zle self-insert
-}
-
-no-magic-abbrev-expand() {
-    #LBUFFER+=' '
-}
-
-zle -N magic-abbrev-expand
-zle -N no-magic-abbrev-expand
-bindkey " " magic-abbrev-expand
-bindkey "^x " no-magic-abbrev-expand
 
 # }}}
 
@@ -257,16 +232,9 @@ $"
 # For mac {{{
 if [[ $(uname) == Darwin  ]]; then
 
-    # Add alias for ctags in Vim
-    # alias ctags="/usr/local/bin/ctags"
-
-    # zmvのセット
+    # zmv
     autoload -Uz zmv
     alias zmv="noglob zmv -W"
-
-    [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
-
-    # alias chrome="open -a Google\ Chrome"
 
 fi
 # }}}
