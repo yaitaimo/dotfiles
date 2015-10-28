@@ -192,7 +192,7 @@ set backupdir=~/tmp,~/
 " Editing {{{
 set termencoding=utf-8
 set encoding=utf-8
-set fileencodings=iso-2022-jp,euc-jp,utf-8
+set fileencodings=iso-2022-jp,euc-jp,utf-8,sjis
 " set fileencodings=iso-2022-jp,cp932,sjis,euc-jp,utf-8
 function! SetFileEncoding()
     if search("[^\x01-\x7E]", 'n') == 0 && &modifiable
