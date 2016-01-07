@@ -15,15 +15,9 @@ endif
 
 " neobundle設定 {{{
 
-filetype off
-
 if has('vim_starting') 
-    if &compatible
-        set nocompatible
-    endif
-    set runtimepath+=~/.vim/bundle/neobundle.vim/
+    set runtimepath+=~/.vim/bundle/neobundle.vim
 endif
-
 call neobundle#begin(expand('~/.vim/bundle')) 
 
 " Let NeoBundle manage NeoBundle
@@ -97,11 +91,8 @@ endif
 " }}}
 
 call neobundle#end()
-
 filetype plugin indent on
 
-" インストールされてないプラグインのチェック及びダウンロード
-NeoBundleCheck 
 " }}}
 
 " Color Theme {{{
@@ -356,39 +347,37 @@ let g:unite_source_history_yank_enable =1
 " }}}
 
 " Vim-LaTeX {{{
-if neobundle#is_sourced('vim-latex')
-    let s:bundle = neobundle#get("vim-latex")
-    function! s:bundle.hooks.on_source(bundle)
-        nnoremap <silent> [start]ll :<C-u>call Tex_StartTex()<CR>
-        function! Tex_StartTex()
-            call Tex_RunLaTeX()
-            call Tex_ViewLaTeX()
-        endfunction
-        nnoremap <silent> [start]lr :<C-u>call Tex_RunLaTeX()<CR>
-        nnoremap <silent> [start]lv :<C-u>call Tex_ViewLaTeX()<CR>
-        set shellslash
-        set grepprg=grep\ -nH\ $*
-        let g:tex_flavor='latex'
-        let g:Imap_UsePlaceHolders = 1
-        let g:Imap_DeleteEmptyPlaceHolders = 1
-        let g:Imap_StickyPlaceHolders = 0
-        let g:Tex_DefaultTargetFormat = 'pdf'
-        let g:Tex_IgnoredWarnings = 
-                    \'LaTeX Font Warning:'."\n".
-                    \'Overfull'."\n".
-                    \'Underfull'
-        let g:Tex_IgnoreLevel = 3
-        let g:Tex_FormatDependency_pdf = 'dvi,pdf'
-        let g:Tex_FormatDependency_ps = 'dvi,ps'
-        let g:Tex_CompileRule_dvi = '/usr/texbin/platex -shell-escape
-                    \ -interaction=nonstopmode $*' 
-        let g:Tex_CompileRule_pdf = '/usr/texbin/dvipdfmx $*.dvi'
-        let g:Tex_BibtexFlavor = '/usr/texbin/pbibtex'
-        let g:Tex_ViewRule_dvi = '/usr/bin/open -a Preview'
-        let g:Tex_ViewRule_pdf = '/usr/bin/open -a Preview'
+let s:bundle = neobundle#get("vim-latex")
+function! s:bundle.hooks.on_source(bundle)
+    nnoremap <silent> [start]ll :<C-u>call Tex_StartTex()<CR>
+    function! Tex_StartTex()
+        call Tex_RunLaTeX()
+        call Tex_ViewLaTeX()
     endfunction
-    unlet s:bundle
-endif
+    nnoremap <silent> [start]lr :<C-u>call Tex_RunLaTeX()<CR>
+    nnoremap <silent> [start]lv :<C-u>call Tex_ViewLaTeX()<CR>
+    set shellslash
+    set grepprg=grep\ -nH\ $*
+    let g:tex_flavor='latex'
+    let g:Imap_UsePlaceHolders = 1
+    let g:Imap_DeleteEmptyPlaceHolders = 1
+    let g:Imap_StickyPlaceHolders = 0
+    let g:Tex_DefaultTargetFormat = 'pdf'
+    let g:Tex_IgnoredWarnings = 
+                \'LaTeX Font Warning:'."\n".
+                \'Overfull'."\n".
+                \'Underfull'
+    let g:Tex_IgnoreLevel = 3
+    let g:Tex_FormatDependency_pdf = 'dvi,pdf'
+    let g:Tex_FormatDependency_ps = 'dvi,ps'
+    let g:Tex_CompileRule_dvi = '/usr/texbin/platex -shell-escape
+                \ -interaction=nonstopmode $*' 
+    let g:Tex_CompileRule_pdf = '/usr/texbin/dvipdfmx $*.dvi'
+    let g:Tex_BibtexFlavor = '/usr/texbin/pbibtex'
+    let g:Tex_ViewRule_dvi = '/usr/bin/open -a Preview'
+    let g:Tex_ViewRule_pdf = '/usr/bin/open -a Preview'
+endfunction
+unlet s:bundle
 " }}}
 
 " NeoComplete{{{
@@ -477,14 +466,6 @@ if neobundle#is_sourced('neocomplete.vim')
     " For perlomni.vim setting.
     " https://github.com/c9s/perlomni.vim
     " let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-
-    " For jedi-vim setting.
-    " if !exists('g:neocomplete#force_omni_input_patterns')
-    "     let g:neocomplete#force_omni_input_patterns = {}
-    " endif
-    " let g:neocomplete#force_omni_input_patterns.python =
-    "             \ '\%([^.\t]\.\|^\s*@\|^\s*from\s.\+import '
-    "             \ +'\|^\s*from \|^\s*import \)\w*'
 endif
 " }}}
 
@@ -616,7 +597,18 @@ nnoremap <silent> [start]e :<C-u>VimFilerCurrentDir -buffer-name=explorer
 
 " jedi-vim {{{
 if neobundle#is_sourced('jedi-vim')
-    g:jedi#popup_select_first = 0
+"    g:jedi#popup_select_first = 0
+autocmd FileType python setlocal completeopt-=preview
+autocmd FileType python setlocal omnifunc=jedi#completions
+let g:jedi#completions_enabled = 0
+let g:jedi#auto_vim_configuration = 0
+
+if !exists('g:neocomplete#force_omni_input_patterns')
+    let g:neocomplete#force_omni_input_patterns = {}
+endif
+
+" let g:neocomplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+let g:neocomplete#force_omni_input_patterns.python = '\h\w*\|[^. \t]\.\w*'
 endif
 " }}}
 
@@ -624,9 +616,9 @@ endif
 let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_python_checker_args='--ignore=E501'
 
-let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 " }}}
 
