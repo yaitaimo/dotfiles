@@ -370,10 +370,10 @@ function! s:bundle.hooks.on_source(bundle)
     let g:Tex_IgnoreLevel = 3
     let g:Tex_FormatDependency_pdf = 'dvi,pdf'
     let g:Tex_FormatDependency_ps = 'dvi,ps'
-    let g:Tex_CompileRule_dvi = '/usr/texbin/platex -shell-escape
+    let g:Tex_CompileRule_dvi = '/Library/TeX/texbin/platex -shell-escape
                 \ -interaction=nonstopmode $*' 
-    let g:Tex_CompileRule_pdf = '/usr/texbin/dvipdfmx $*.dvi'
-    let g:Tex_BibtexFlavor = '/usr/texbin/pbibtex'
+    let g:Tex_CompileRule_pdf = '/Library/TeX/texbin/dvipdfmx $*.dvi'
+    let g:Tex_BibtexFlavor = '/Library/TeX/texbin/pbibtex'
     let g:Tex_ViewRule_dvi = '/usr/bin/open -a Preview'
     let g:Tex_ViewRule_pdf = '/usr/bin/open -a Preview'
 endfunction
