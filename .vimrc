@@ -366,7 +366,8 @@ function! s:bundle.hooks.on_source(bundle)
     let g:Tex_IgnoredWarnings = 
                 \'LaTeX Font Warning:'."\n".
                 \'Overfull'."\n".
-                \'Underfull'
+                \'Underfull'."\n".
+                \'Wrong length of dash may have been used'
     let g:Tex_IgnoreLevel = 3
     let g:Tex_FormatDependency_pdf = 'dvi,pdf'
     let g:Tex_FormatDependency_ps = 'dvi,ps'
