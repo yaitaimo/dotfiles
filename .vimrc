@@ -28,6 +28,7 @@ NeoBundle 'Lokaltog/powerline'
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neomru.vim'
+NeoBundle 'Shougo/neoyank.vim'
 NeoBundle 'Shougo/vimshell.vim'
 NeoBundle 'tpope/vim-fugitive'
 " NeoBundle 'glidenote/memolist.vim'
@@ -157,6 +158,9 @@ autocmd FileType eruby setl tabstop=2 expandtab shiftwidth=2 softtabstop=2
 
 " tex {{{
 autocmd FileType tex setl formatoptions+=mM textwidth=79
+" }}}
+" JavaScript {{{
+autocmd FileType javascript setl tabstop=2 expandtab shiftwidth=2 softtabstop=2
 " }}}
 
 " SCSS {{{
@@ -366,8 +370,7 @@ function! s:bundle.hooks.on_source(bundle)
     let g:Tex_IgnoredWarnings = 
                 \'LaTeX Font Warning:'."\n".
                 \'Overfull'."\n".
-                \'Underfull'."\n".
-                \'Wrong length of dash may have been used'
+                \'Underfull'
     let g:Tex_IgnoreLevel = 3
     let g:Tex_FormatDependency_pdf = 'dvi,pdf'
     let g:Tex_FormatDependency_ps = 'dvi,ps'
