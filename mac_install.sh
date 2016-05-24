@@ -7,7 +7,6 @@ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/
 # Homebrew
 # brew update
 
-brew brew-any-tap
 brew install autojump
 brew install ctags
 brew install fontforge
