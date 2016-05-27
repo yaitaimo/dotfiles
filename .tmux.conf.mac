@@ -1,0 +1,5 @@
+source '/usr/local/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf'
+set-option -g default-command "reattach-to-user-namespace -l $SHELL"
+
+set -g status-right '#(env "$POWERLINE_COMMAND" $POWERLINE_COMMAND_ARGS tmux right -w30 -R pane_id=`tmux display -p "#D"`)'
+set -g status-right-length 50
