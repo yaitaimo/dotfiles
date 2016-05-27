@@ -351,7 +351,7 @@ let g:unite_source_history_yank_enable =1
 " }}}
 
 " Vim-LaTeX {{{
-if os!="mac"
+if os=="mac"
     let s:bundle = neobundle#get("vim-latex")
     function! s:bundle.hooks.on_source(bundle)
         nnoremap <silent> [start]ll :<C-u>call Tex_StartTex()<CR>
