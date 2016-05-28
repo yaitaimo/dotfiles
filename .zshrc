@@ -142,11 +142,8 @@ alias bup="brew update; brew upgrade --all;"
 # Suffix Alias {{{
 alias -s md="vim"
 alias -s txt="vim"
-alias -s py="vim"
 alias -s gitignore="vim"
 alias -s gitconfig="vim"
-alias -s php="vim"
-# alias -s sh="vim"
 
 alias -s avi="open"
 alias -s AVI="open"
