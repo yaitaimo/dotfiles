@@ -41,6 +41,7 @@ NeoBundle 'airblade/vim-rooter'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'Align'
 NeoBundle 'othree/html5.vim'    "HTML5 + inline SVG omnicomplete function, indent and syntax for Vim. Based on the default htmlcomplete.vim.
+NeoBundle 'slim-template/vim-slim.git'
 
 NeoBundle 'Shougo/vimproc', {
             \ 'build' : {
@@ -156,9 +157,14 @@ autocmd FileType python setl formatoptions+=tcqw
 autocmd FileType eruby setl tabstop=2 expandtab shiftwidth=2 softtabstop=2
 " }}}
 
+" slim {{{
+autocmd BufRead,BufNewFile *.slim setlocal filetype=slim
+" }}}
+
 " tex {{{
 autocmd FileType tex setl formatoptions+=mM textwidth=79
 " }}}
+
 " JavaScript {{{
 autocmd FileType javascript setl tabstop=2 expandtab shiftwidth=2 softtabstop=2
 " }}}
