@@ -19,6 +19,7 @@ brew install jq
 brew install lha
 brew install lua
 brew install mysql
+brew install neovim/neovim/neovim
 brew install nkf
 brew install python
 brew install python3
