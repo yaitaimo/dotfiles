@@ -8,7 +8,6 @@ Session.vim
 .netrwhist
 *~
 
-
 ### OSX ###
 .DS_Store
 .AppleDouble
@@ -31,3 +30,11 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+*.swp
+*.rbc
+*.sass-cache
+/pkg
+/doc/api
+/Gemfile.lock
+/coverage
+.yardoc

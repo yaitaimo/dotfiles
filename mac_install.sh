@@ -73,6 +73,7 @@ ln -s ~/dotfiles/.vimrc ~/
 ln -s ~/dotfiles/.vim ~/
 ln -s ~/dotfiles/.tmux.conf ~/
 ln -s ~/dotfiles/.gitconfig ~/
+ln -s ~/dotfiles/.gitignore ~/.gitignore_global
 
 git submodule update --init --recursive
 
