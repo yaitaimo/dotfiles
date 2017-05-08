@@ -1,0 +1,72 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+repo = 'Shougo/neocomplete.vim'
+
+[[plugins]]
+repo = 'Lokaltog/powerline'
+
+[[plugins]]
+repo = 'altercation/vim-colors-solarized'
+
+[[plugins]]
+repo = 'Shougo/unite.vim'
+
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+
+[[plugins]]
+repo = 'Shougo/neoyank.vim'
+
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+
+[[plugins]]
+repo = 'thinca/vim-quickrun'
+
+[[plugins]]
+repo = 'majutsushi/tagbar'
+
+[[plugins]]
+repo = 'soramugi/auto-ctags.vim'
+
+[[plugins]]
+repo = 'airblade/vim-rooter'
+
+[[plugins]]
+repo = 'scrooloose/syntastic'
+
+[[plugins]]
+repo = 'vim-scripts/Align'
+
+[[plugins]]
+repo = 'othree/html5.vim'
+
+[[plugins]]
+repo = 'slim-template/vim-slim.git'
+
+[[plugins]]
+repo = 'Shougo/vimproc'
+build = 'make'
+
+[[plugins]]
+repo = 'Shougo/vimfiler.vim'
+on_cmd = ["VimFilerTab", "VimFiler", "VimFilerExplorer"]
+
+[[plugins]]
+repo = 'mitsuhiko/vim-jinja'
+on_ft = ["html"]
+
+[[plugins]]
+repo = "vim-scripts/python_fold"
+on_ft = ["python", "python3", "djangohtml"]
+
+[[plugins]]
+repo = "davidhalter/jedi-vim"
+on_ft = ["python", "python3", "djangohtml"]
+
+[[plugins]]
+repo = 'hynek/vim-python-pep8-indent'
+on_ft = ["python", "python3", "djangohtml"]
+insert = 1
