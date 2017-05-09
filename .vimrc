@@ -36,9 +36,11 @@ if dein#load_state(s:dein_dir)
 
     let g:rc_dir = expand('~/.vim/rc')
     let s:toml = g:rc_dir . '/dein.toml'
+    let s:tomllazy = g:rc_dir . '/deinlazy.toml'
 
     " TOML を読み込み、キャッシュしておく
-    call dein#load_toml(s:toml,      {'lazy': 0})
+    call dein#load_toml(s:toml, {'lazy': 0})
+    call dein#load_toml(s:tomllazy, {'lazy': 1})
      
     if os=="mac"
         call dein#add('jcf/vim-latex', {'on_ft': ["tex"]})

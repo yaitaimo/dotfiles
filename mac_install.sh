@@ -36,6 +36,8 @@ brew install wget
 brew install zsh
 # brew install weechat --with-python --with-perl --with-ruby
 
+pip3 install neovim
+
 # 1password
 # alfred
 # appcleaner
