@@ -590,10 +590,12 @@ nnoremap <silent> [start]e :<C-u>VimFilerCurrentDir -buffer-name=explorer
 " endif
 " }}}
 
-" Syntax {{{
+" Syntastic {{{
 nnoremap <Space>c :<C-u>SyntasticCheck<CR>
 let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_python_checker_args='--ignore=E501'
+
+let g:syntastic_ruby_checkers = ['rubocop']
 
 let g:syntastic_mode_map = {"mode": "passive"}
 let g:syntastic_always_populate_loc_list = 0
