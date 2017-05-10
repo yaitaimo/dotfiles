@@ -43,7 +43,6 @@ if dein#load_state(s:dein_dir)
     call dein#load_toml(s:tomllazy, {'lazy': 1})
      
     if os=="mac"
-        call dein#add('jcf/vim-latex', {'on_ft': ["tex"]})
         " QuickRun
         call dein#add('mattn/webapi-vim')
         call dein#add('tyru/open-browser.vim')
@@ -91,8 +90,6 @@ set laststatus=2
 set number
 set visualbell
 set mouse=a
-"" カーソル行をハイライト
-"set cursorline
 " }}}
 
 " Folding {{{
@@ -128,6 +125,7 @@ autocmd BufRead,BufNewFile *.slim setlocal filetype=slim
 " }}}
 
 " tex {{{
+let g:tex_flavor = "latex"
 autocmd FileType tex setl formatoptions+=mM textwidth=79
 " }}}
 
@@ -275,15 +273,10 @@ nnoremap <silent> [start]o :<C-u>UniteWithBufferDir file file/new<CR>
 " カレントディレクトリ・プレビューモード
 nnoremap <silent> [start]pv :<C-u>UniteWithBufferDir file_rec:! -auto-preview
             \ -no-split -vertical-preview<CR> 
-" let g:unite_kind_file_preview_max_filesize = 10000000
 
 " プロジェクト全表示＆検索
 nnoremap <silent> <C-p> :<C-u>UniteWithProjectDir -start-insert file_rec/async:! file/new<CR>
 let g:unite_source_rec_max_cache_files = 20000
-
-" 何の設定か忘れた
-" call unite#custom#source('file_rec,file_rec/async',
-"             \ 'max_candidates', 0)
 
 " バッファ
 nnoremap <silent> [start]b :<C-u>Unite buffer<CR>
@@ -320,42 +313,6 @@ function! s:unite_my_settings()"{{{
     imap <buffer> <C-w>     <Plug>(unite_delete_backward_path)
 endfunction" }}}
 let g:unite_source_history_yank_enable =1
-" }}}
-
-" Vim-LaTeX {{{
-" if os=="mac"
-"     let s:bundle = neobundle#get("vim-latex")
-"     function! s:bundle.hooks.on_source(bundle)
-"         nnoremap <silent> [start]ll :<C-u>call Tex_StartTex()<CR>
-"         function! Tex_StartTex()
-"             call Tex_RunLaTeX()
-"             call Tex_ViewLaTeX()
-"         endfunction
-"         nnoremap <silent> [start]lr :<C-u>call Tex_RunLaTeX()<CR>
-"         nnoremap <silent> [start]lv :<C-u>call Tex_ViewLaTeX()<CR>
-"         set shellslash
-"         set grepprg=grep\ -nH\ $*
-"         let g:tex_flavor='latex'
-"         let g:Imap_UsePlaceHolders = 1
-"         let g:Imap_DeleteEmptyPlaceHolders = 1
-"         let g:Imap_StickyPlaceHolders = 0
-"         let g:Tex_DefaultTargetFormat = 'pdf'
-"         let g:Tex_IgnoredWarnings = 
-"                     \'LaTeX Font Warning:'."\n".
-"                     \'Overfull'."\n".
-"                     \'Underfull'
-"         let g:Tex_IgnoreLevel = 3
-"         let g:Tex_FormatDependency_pdf = 'dvi,pdf'
-"         let g:Tex_FormatDependency_ps = 'dvi,ps'
-"         let g:Tex_CompileRule_dvi = '/Library/TeX/texbin/platex -shell-escape
-"                     \ -interaction=nonstopmode $*' 
-"         let g:Tex_CompileRule_pdf = '/Library/TeX/texbin/dvipdfmx $*.dvi'
-"         let g:Tex_BibtexFlavor = '/Library/TeX/texbin/pbibtex'
-"         let g:Tex_ViewRule_dvi = '/usr/bin/open -a Preview'
-"         let g:Tex_ViewRule_pdf = '/usr/bin/open -a Preview'
-"     endfunction
-"     unlet s:bundle
-" endif
 " }}}
 
 " NeoComplete{{{
@@ -529,18 +486,6 @@ nnoremap <silent> [git]bl :<C-u>Gblame<CR>
 nnoremap <silent> [git]br :<C-u>Gbrowse<CR>
 " }}}
 
-" memolist.vim {{{
-let g:memolist_memo_suffix = "txt"
-let g:memolist_unite = 1
-let g:memolist_template_dir_path = "~/.vim/template/memolist"
-if os == "unix"
-    let g:memolist_path = "~/rsync"
-endif
-nnoremap <silent> [start]mn  :MemoNew<CR>
-nnoremap <silent> [start]ml  :MemoList<CR>
-nnoremap <silent> [start]ms  :MemoGrep<CR>
-" }}}
-
 " open-browser-github.vim{{{
 nnoremap <silent> [start]go :<C-u>OpenGithubProject<CR>
 " }}}
@@ -551,26 +496,8 @@ nnoremap <silent> [start]e :<C-u>VimFilerCurrentDir -buffer-name=explorer
             \ -split -simple -winwidth=35 -toggle -no-quit<CR>
 " }}}
 
-" EasyMotion {{{
-" map [start] <Plug>(easymotion-prefix)
-" let g:EasyMotion_do_mapping = 0 " Disable default mappings
-
-" Bi-directional find motion
-
-" `s{char}{char}{label}`
-" Need one more keystroke, but on average, it may be more comfortable.
-" nmap f <Plug>(easymotion-s2)
-
-" Turn on case insensitive feature
-" let g:EasyMotion_smartcase = 1
-
-" JK motions: Line motions
-" map [start]j <Plug>(easymotion-j)
-" map [start]k <Plug>(easymotion-k)
-" }}}
-
 " Align {{{
-:let g:Align_xstrlen = 3
+let g:Align_xstrlen = 3
 " }}}
 
 " jedi-vim {{{
@@ -590,17 +517,20 @@ nnoremap <silent> [start]e :<C-u>VimFilerCurrentDir -buffer-name=explorer
 " endif
 " }}}
 
+" Vim-LaTeX {{{
+if dein#util#_is_mac()
+    nnoremap <silent> [start]ll :<C-u>call Tex_StartTex()<CR>
+    function! Tex_StartTex()
+        call Tex_RunLaTeX()
+        call Tex_ViewLaTeX()
+    endfunction
+    nnoremap <silent> [start]lr :<C-u>call Tex_RunLaTeX()<CR>
+    nnoremap <silent> [start]lv :<C-u>call Tex_ViewLaTeX()<CR>
+endif
+" }}}
+
 " Syntastic {{{
 nnoremap <Space>c :<C-u>SyntasticCheck<CR>
-let g:syntastic_python_checkers = ['flake8']
-let g:syntastic_python_checker_args='--ignore=E501'
-
-let g:syntastic_ruby_checkers = ['rubocop']
-
-let g:syntastic_mode_map = {"mode": "passive"}
-let g:syntastic_always_populate_loc_list = 0
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_wq = 0
 " }}}
 
 " Local config {{{
