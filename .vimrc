@@ -74,7 +74,7 @@ colorscheme solarized
 " Power Line {{{
 "powerlineで矢印を使う iTremでfontはpowerline用の物を指定
 set laststatus=2
-set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
+set rtp+=~/.cache/dein/repos/github.com/Lokaltog/powerline/powerline/bindings/vim
 let g:Powerline_symbols = 'fancy'
 set t_Co=256  "色数設定
 set noshowmode
