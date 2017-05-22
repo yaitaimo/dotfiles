@@ -492,8 +492,11 @@ nnoremap <silent> [start]go :<C-u>OpenGithubProject<CR>
 
 " vimfiler {{{ 
 let g:vimfiler_as_default_explorer = 1
+"セーフモードを無効にした状態で起動する
+let g:vimfiler_safe_mode_by_default = 0
 nnoremap <silent> [start]e :<C-u>VimFilerCurrentDir -buffer-name=explorer 
             \ -split -simple -winwidth=35 -toggle -no-quit<CR>
+autocmd VimEnter * if !argc() | VimFiler | endif
 " }}}
 
 " Align {{{
