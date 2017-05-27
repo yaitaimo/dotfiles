@@ -61,3 +61,6 @@ repo = 'slim-template/vim-slim.git'
 [[plugins]]
 repo = 'Shougo/vimproc'
 build = 'make'
+
+[[plugins]]
+repo = 'vobornik/vim-mql4'
