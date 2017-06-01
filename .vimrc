@@ -494,9 +494,20 @@ nnoremap <silent> [start]go :<C-u>OpenGithubProject<CR>
 let g:vimfiler_as_default_explorer = 1
 "セーフモードを無効にした状態で起動する
 let g:vimfiler_safe_mode_by_default = 0
+" Like Textmate icons.
+let g:vimfiler_tree_leaf_icon = ' '
+if has('gui_running')
+    let g:vimfiler_tree_opened_icon = '▾'
+    let g:vimfiler_tree_closed_icon = '▸'
+else
+    let g:vimfiler_tree_opened_icon = 'V'
+    let g:vimfiler_tree_closed_icon = '>'
+endif
+let g:vimfiler_file_icon = '-'
 nnoremap <silent> [start]e :<C-u>VimFilerCurrentDir -buffer-name=explorer 
             \ -split -simple -winwidth=35 -toggle -no-quit<CR>
-autocmd VimEnter * if !argc() | VimFiler | endif
+autocmd VimEnter * if !argc() | VimFilerCurrentDir -buffer-name=explorer 
+            \ -split -simple -winwidth=35 -toggle -no-quit | endif
 " }}}
 
 " Align {{{
@@ -538,9 +549,10 @@ let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_python_checker_args='--ignore=E501'
 
 let g:syntastic_ruby_checkers = ['rubocop']
+let g:syntastic_javascript_checkers = ['eslint']
 
 let g:syntastic_mode_map = { "mode": "passive",
-            \ 'active_filetypes': ['ruby'] }
+            \ 'active_filetypes': ['ruby', 'javascript'] }
 let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_wq = 0
