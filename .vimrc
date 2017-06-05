@@ -179,8 +179,6 @@ set tabstop=8
 set shiftwidth=4
 set softtabstop=4
 
-autocmd FileType markdown setl textwidth=78 formatoptions+=mM
-
 ""クリップボード設定
 set clipboard+=unnamed " copy to the system clipboard
 " }}}
