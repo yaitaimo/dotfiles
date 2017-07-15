@@ -20,6 +20,10 @@ on_ft = ["python", "python3", "djangohtml"]
 insert = 1
 
 [[plugins]]
+repo = 'vobornik/vim-mql4'
+on_ft = ["mq", "mq4", "mql4"]
+
+[[plugins]]
 repo = 'jcf/vim-latex'
 on_ft = ["tex"]
 hook_source = '''
