@@ -137,6 +137,10 @@ autocmd FileType javascript setl tabstop=2 expandtab shiftwidth=2 softtabstop=2
 autocmd FileType scss setl tabstop=2 expandtab shiftwidth=2 softtabstop=2
 " }}}
 
+" YAML {{{
+autocmd FileType yaml setl tabstop=2 expandtab shiftwidth=2 softtabstop=2
+" }}}
+
 " }}}
 
 " Swap & Backup {{{

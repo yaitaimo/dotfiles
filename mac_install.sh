@@ -24,6 +24,7 @@ brew install python3
 brew install reattach-to-user-namespace
 brew install ruby
 brew install sl
+brew install source-highlight
 brew install sqlite
 brew install termshare
 brew install tmux
