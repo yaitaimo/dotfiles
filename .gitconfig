@@ -40,6 +40,10 @@
     last = log -1 HEAD
     ig  = "!gi() { curl https://www.gitignore.io/api/$@ ;}; gi"
     new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
+    openpr = "!f() { hub browse -- `git log --merges --oneline --reverse --ancestry-path $1...master | grep 'Merge pull request #' | head -n 1 | cut -f5 -d' ' | sed -e 's%#%pull/%'`; }; f"
+    showpr = "!f() { git log --merges --oneline --reverse --ancestry-path $1...master | grep 'Merge pull request #' | head -n 1; }; f"
+    gr = grep -n
+
 [push]
     default = simple
 [diff "applescript"]
