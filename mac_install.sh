@@ -1,19 +1,17 @@
 # xcode-select --install
  
+# Homebrew
+
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
  
-# brew doctor
-
-# Homebrew
-# brew update
-
 brew install autojump
 brew install ctags
+brew install direnv
 brew install fontforge
 brew install git
 brew install git-extras
 brew install gnuplot --with-x11
-brew install heroku-toolbelt
+brew install heroku
 brew install hub
 brew install jq
 brew install lha
@@ -26,6 +24,7 @@ brew install python3
 brew install reattach-to-user-namespace
 brew install ruby
 brew install sl
+brew install source-highlight
 brew install sqlite
 brew install termshare
 brew install tmux
@@ -34,14 +33,14 @@ brew install vim --with-lua
 brew install w3m
 brew install wget
 brew install zsh
-# brew install weechat --with-python --with-perl --with-ruby
 
-pip3 install neovim
+brew cleanup
 
 # 1password
 # alfred
 # appcleaner
 # bettertouchtool
+# docker
 # dropbox
 # evernote
 # google-chrome
@@ -55,6 +54,7 @@ pip3 install neovim
 # minecraft
 # openoffice
 # plain-clip
+# plaincalc
 # sitesucker
 # skype
 # slack
@@ -64,26 +64,31 @@ pip3 install neovim
 # virtualbox
 # xquartz
 
-brew cleanup
-
 # LINE
 # brew opencv
 # PlainCalc
 
 # dotfiles
 ln -s ~/dotfiles/.zshrc ~/
+ln -s ~/dotfiles/config.fish ~/.config/fish/
 ln -s ~/dotfiles/.vimrc ~/
 ln -s ~/dotfiles/.vim ~/
 ln -s ~/dotfiles/.tmux.conf ~/
 ln -s ~/dotfiles/.gitconfig ~/
 ln -s ~/dotfiles/.gitignore_global ~/.gitignore_global
 
-git submodule update --init --recursive
+# sudo sh -c "echo '/usr/local/bin/zsh' >> /etc/shells"
+# chsh -s /usr/local/bin/zsh
+# echo "export PATH=/usr/local/bin:$PATH" > ~/.zshrc.local
 
-sudo sh -c "echo '/usr/local/bin/zsh' >> /etc/shells"
-chsh -s /usr/local/bin/zsh
+sudo sh -c "echo '/usr/local/bin/fish' >> /etc/shells"
+chsh -s /usr/local/bin/fish
 
-echo "export PATH=/usr/local/bin:$PATH" > ~/.zshrc.local
+fish
+
+curl -Lo ~/.config/fish/functions/fisher.fish --create-dirs https://git.io/fisher
+fisher z
+fisher fzf
 
 # pip install powerline-status
 # pip install psutil
@@ -91,8 +96,3 @@ echo "export PATH=/usr/local/bin:$PATH" > ~/.zshrc.local
 # pip install markdown
 # pip install ipython
 # pip install flake8
-
-# vim swap & backup directory
-
-# Geeknote http://www.geeknote.me/install/
-mkdir ~/tmp

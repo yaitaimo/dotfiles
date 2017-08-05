@@ -137,6 +137,10 @@ autocmd FileType javascript setl tabstop=2 expandtab shiftwidth=2 softtabstop=2
 autocmd FileType scss setl tabstop=2 expandtab shiftwidth=2 softtabstop=2
 " }}}
 
+" YAML {{{
+autocmd FileType yaml setl tabstop=2 expandtab shiftwidth=2 softtabstop=2
+" }}}
+
 " }}}
 
 " Swap & Backup {{{
@@ -178,8 +182,6 @@ set expandtab
 set tabstop=8
 set shiftwidth=4
 set softtabstop=4
-
-autocmd FileType markdown setl textwidth=78 formatoptions+=mM
 
 ""クリップボード設定
 set clipboard+=unnamed " copy to the system clipboard
@@ -494,9 +496,20 @@ nnoremap <silent> [start]go :<C-u>OpenGithubProject<CR>
 let g:vimfiler_as_default_explorer = 1
 "セーフモードを無効にした状態で起動する
 let g:vimfiler_safe_mode_by_default = 0
+" Like Textmate icons.
+let g:vimfiler_tree_leaf_icon = ' '
+if has('gui_running')
+    let g:vimfiler_tree_opened_icon = '▾'
+    let g:vimfiler_tree_closed_icon = '▸'
+else
+    let g:vimfiler_tree_opened_icon = 'V'
+    let g:vimfiler_tree_closed_icon = '>'
+endif
+let g:vimfiler_file_icon = '-'
 nnoremap <silent> [start]e :<C-u>VimFilerCurrentDir -buffer-name=explorer 
             \ -split -simple -winwidth=35 -toggle -no-quit<CR>
-autocmd VimEnter * if !argc() | VimFiler | endif
+autocmd VimEnter * if !argc() | VimFilerCurrentDir -buffer-name=explorer 
+            \ -split -simple -winwidth=35 -toggle -no-quit | endif
 " }}}
 
 " Align {{{
