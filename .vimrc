@@ -508,8 +508,6 @@ endif
 let g:vimfiler_file_icon = '-'
 nnoremap <silent> [start]e :<C-u>VimFilerCurrentDir -buffer-name=explorer 
             \ -split -simple -winwidth=35 -toggle -no-quit<CR>
-autocmd VimEnter * if !argc() | VimFilerCurrentDir -buffer-name=explorer 
-            \ -split -simple -winwidth=35 -toggle -no-quit | endif
 " }}}
 
 " Align {{{
