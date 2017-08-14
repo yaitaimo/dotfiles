@@ -11,7 +11,7 @@
     pl = pull
     a = add
     # diff
-    d = diff master
+    d = diff HEAD
     dc = diff --cached
     dl = diff --stat -r
     d1 = diff HEAD~
