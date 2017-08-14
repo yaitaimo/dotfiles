@@ -35,7 +35,7 @@ repo = 'soramugi/auto-ctags.vim'
 repo = 'airblade/vim-rooter'
 
 [[plugins]]
-repo = 'scrooloose/syntastic'
+repo = 'w0rp/ale'
 
 [[plugins]]
 repo = 'vim-scripts/Align'
@@ -52,3 +52,6 @@ build = 'make'
 
 [[plugins]]
 repo = 'vobornik/vim-mql4'
+
+[[plugins]]
+repo = 'fatih/vim-go'
