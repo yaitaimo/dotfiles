@@ -1,3 +1,10 @@
+# direnv
+.envrc
+
+# ctags
+tags
+.ctags
+
 # Created by http://www.gitignore.io
 
 ### vim ###
@@ -35,7 +42,6 @@ Temporary Items
 *.sass-cache
 /pkg
 /doc/api
-/Gemfile.lock
 /coverage
 .yardoc
 

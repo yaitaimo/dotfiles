@@ -19,6 +19,7 @@ brew install lua
 brew install mysql
 brew install neovim/neovim/neovim
 brew install nkf
+brew insatll peco
 brew install python
 brew install python3
 brew install reattach-to-user-namespace

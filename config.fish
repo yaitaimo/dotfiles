@@ -38,7 +38,7 @@ function fish_prompt
 
   printf '%s' (__fish_git_prompt)
 
-  printf '\n$'
+  printf '\n$ '
 end
 
 alias v 'vim'
