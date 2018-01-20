@@ -2,16 +2,16 @@
 repo = 'Shougo/dein.vim'
 
 [[plugins]]
-repo = 'Shougo/neocomplete.vim'
+repo = 'Shougo/deoplete.nvim'
 
 [[plugins]]
-repo = 'Lokaltog/powerline'
+repo = 'vim-airline/vim-airline'
 
 [[plugins]]
-repo = 'altercation/vim-colors-solarized'
+repo = 'lifepillar/vim-solarized8'
 
 [[plugins]]
-repo = 'Shougo/unite.vim'
+repo = 'Shougo/denite.nvim'
 
 [[plugins]]
 repo = 'Shougo/neomru.vim'

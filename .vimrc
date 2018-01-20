@@ -65,19 +65,8 @@ syntax enable
 
 " Color Theme {{{
 set background=dark
-let g:solarized_termtrans=1
-let g:solarized_visibility = "high"
-let g:solarized_contrast = "high"
-colorscheme solarized
-" }}}
-
-" Power Line {{{
-"powerlineで矢印を使う iTremでfontはpowerline用の物を指定
-set laststatus=2
-set rtp+=~/.cache/dein/repos/github.com/Lokaltog/powerline/powerline/bindings/vim
-let g:Powerline_symbols = 'fancy'
-set t_Co=256  "色数設定
-set noshowmode
+let g:solarized_termtrans = 1
+colorscheme solarized8
 " }}}
 
 " Display {{{
@@ -90,6 +79,8 @@ set laststatus=2
 set number
 set visualbell
 set mouse=a
+set cursorline
+highlight CursorLine cterm=NONE ctermbg=black
 " }}}
 
 " Folding {{{
@@ -266,74 +257,41 @@ cnoremap <C-k> <C-\>e getcmdpos() == 1 ?
 " }}}
 
 " Unite {{{
-" 入力モードで開始
-let g:unite_enable_start_insert=1
+call denite#custom#option('default', 'prompt', '>')
+
+call denite#custom#map('insert', "<C-n>", '<denite:move_to_next_line>')
+call denite#custom#map('insert', "<C-p>", '<denite:move_to_previous_line>')
+
+call denite#custom#map('insert', "<C-t>", '<denite:do_action:tabopen>')
+call denite#custom#map('insert', "<C-v>", '<denite:do_action:vsplit>')
+call denite#custom#map('insert', "<C-s>", '<denite:do_action:split>')
+
+call denite#custom#map('normal', "t", '<denite:do_action:tabopen>')
+call denite#custom#map('normal', "v", '<denite:do_action:vsplit>')
+call denite#custom#map('normal', "s", '<denite:do_action:split>')
+
+"call denite#custom#map('insert', '<Esc>', '<denite:enter_mode:normal>')
 
 " カレントディレクトリ
-nnoremap <silent> [start]o :<C-u>UniteWithBufferDir file file/new<CR>
+nnoremap <silent> [start]o :<C-u>Denite file_rec<CR>
 
-" カレントディレクトリ・プレビューモード
-nnoremap <silent> [start]pv :<C-u>UniteWithBufferDir file_rec:! -auto-preview
-            \ -no-split -vertical-preview<CR> 
-
-" プロジェクト全表示＆検索
-nnoremap <silent> <C-p> :<C-u>UniteWithProjectDir -start-insert file_rec/async:! file/new<CR>
-let g:unite_source_rec_max_cache_files = 20000
+" プロジェクト
+nnoremap <silent> [start]p :<C-u>DeniteProjectDir file_rec<CR>
 
 " バッファ
-nnoremap <silent> [start]b :<C-u>Unite buffer<CR>
+nnoremap <silent> [start]b :<C-u>Denite buffer<CR>
 
 " ヒストリ
-nnoremap <silent> [start]h :<C-u>Unite file_mru<CR>
-
-" ブックマーク
-nnoremap <silent> [start]c :<C-u>Unite bookmark<CR>
-nnoremap <silent> [start]a :<C-u>UniteBookmarkAdd<CR>
+nnoremap <silent> [start]h :<C-u>Denite file_mru<CR>
 
 " ヤンクヒストリ
-nnoremap <silent> [start]y :<C-u>Unite history/yank<CR>
+nnoremap <silent> [start]y :<C-u>Denite neoyank<CR>
 
-autocmd FileType unite call s:unite_my_settings()
+" 全文検索
+nnoremap <silent> [start]g :<C-u>Denite -buffer-name=search -mode=normal grep<CR>
+" 全文検索（カーソル下単語）
+nnoremap <silent> [start]gw :<C-u>DeniteCursorWord grep -buffer-name=search line<CR><C-R><C-W><CR>
 
-function! s:unite_my_settings()"{{{
-    "ESCでuniteを終了
-    nnoremap <silent> <buffer> <Esc><Esc> :q<CR>
-    inoremap <silent> <buffer> <Esc><Esc> <Esc>:q<CR>
-    inoremap <buffer> <C-a> <Home>
-    inoremap <buffer> <C-e> <End>
-    inoremap <buffer> <C-b> <Left>
-    inoremap <buffer> <C-f> <Right>
-    inoremap <buffer> <C-n> <Down>
-    inoremap <buffer> <C-p> <UP>
-    inoremap <buffer> <C-h> <BS>
-    "ctrl+sで縦に分割して開く
-    nnoremap <silent><buffer><expr> <C-s> unite#do_action('split')
-    inoremap <silent><buffer><expr> <C-s> unite#do_action('split')
-    "ctrl+vで横に分割して開く
-    nnoremap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
-    inoremap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
-    imap <buffer> <C-w>     <Plug>(unite_delete_backward_path)
-endfunction" }}}
-let g:unite_source_history_yank_enable =1
-" }}}
-
-" VimShell {{{
-nnoremap <silent> [start]s :<C-u>VimShellPop<CR>
-nnoremap <silent> [start]S :<C-u>VimShellTab<CR>
-let g:vimshell_right_prompt = 'GetGitDetail()'
-let g:vimshell_user_prompt = 'getcwd()'
-let g:vimshell_enable_start_insert = 0
-
-function! GetGitDetail()
-    let s:branch = substitute(
-                \ system("git rev-parse --abbrev-ref HEAD 2> /dev/null"),
-                \ '\n', '', 'g') 
-    if s:branch == '' 
-        return ''
-    else
-        return '[= ' . s:branch . ']'
-    endif
-endfunction
 " }}}
 
 " ctags {{{
@@ -380,23 +338,6 @@ let g:auto_ctags_tags_args = '-R --tag-relative --recurse --sort=yes'
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
 nmap gx <Plug>(openbrowser-smart-search)
 vmap gx <Plug>(openbrowser-smart-search)
-" }}}
-
-" Vim-fugitive {{{
-nnoremap [git] <Nop>
-nmap [start]g [git]
-
-nnoremap [git]m :<C-u>Gmove 
-nnoremap [git]r :<C-u>Gread
-nnoremap [git]C :<C-u>Gcommit -am ""<LEFT>
-nnoremap <silent> [git]a :<C-u>Gwrite<CR>
-nnoremap <silent> [git]c :<C-u>Gcommit<CR>
-nnoremap <silent> [git]d :<C-u>Gdiff<CR>
-nnoremap <silent> [git]l :<C-u>Glog<CR>
-nnoremap <silent> [git]p :<C-u>Gpush<CR>
-nnoremap <silent> [git]s :<C-u>Gstatus<CR>
-nnoremap <silent> [git]bl :<C-u>Gblame<CR>
-nnoremap <silent> [git]br :<C-u>Gbrowse<CR>
 " }}}
 
 " open-browser-github.vim{{{
