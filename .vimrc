@@ -50,6 +50,12 @@ if dein#load_state(s:dein_dir)
         call dein#add('superbrothers/vim-quickrun-markdown-gfm')
     endif    
 
+    call dein#add('Shougo/deoplete.nvim')
+    if !has('nvim')
+        call dein#add('roxma/nvim-yarp')
+        call dein#add('roxma/vim-hug-neovim-rpc')
+    endif
+
     call dein#end()
     call dein#save_state()
 endif
@@ -186,8 +192,6 @@ set wrapscan ""検索時に最後までいったら最初に戻る
 
 " Key Bindings & Shortcuts {{{
 
-" Key Bindings & Shortcuts for Normal Mode {{{
-nnoremap [start] <Nop>
 nmap ; [start]
 
 nnoremap j gj
@@ -198,14 +202,11 @@ nnoremap <Space>l O<ESC>78i-<ESC>
 nnoremap .r :<C-u>source ~/dotfiles/.vimrc<CR>
 nnoremap <silent> .e :<C-u>edit ~/dotfiles/.vimrc<CR><CR>
 " あまりに押し間違いが多いので．
-nnoremap q: :<C-u>
-
 nnoremap [start]n :<C-u>set nonumber!<CR>
 
 nnoremap [start]r :<C-u>QuickRun<CR>
 " tagsジャンプの際に複数ある場合を考慮
-nnoremap [start]g <C-]>
-nnoremap [start]t :TagbarToggle<CR>
+nnoremap [start]t :<C-u>TagbarToggle<CR>
 
 nnoremap <silent> <C-b>D :bd!<CR>
 nnoremap <silent> <C-b>d :bd<CR>
@@ -217,6 +218,9 @@ nnoremap <silent> ts :<C-u>tab sp<CR>
 
 nnoremap <expr> l foldclosed(line('.')) != -1 ? 'zo0zz' : 'l'
 nnoremap <expr> h col('.') == 1 && foldlevel(line('.')) > 0 ? 'zczz' : 'h'
+
+nmap <Esc><Esc> :<C-u>cclose<CR>
+
 " }}}
 
 " Key Bindings & Shortcuts for Insert Mode {{{
@@ -256,7 +260,7 @@ cnoremap <C-k> <C-\>e getcmdpos() == 1 ?
 
 " }}}
 
-" Unite {{{
+" Denite {{{
 call denite#custom#option('default', 'prompt', '>')
 
 call denite#custom#map('insert', "<C-n>", '<denite:move_to_next_line>')
@@ -273,10 +277,10 @@ call denite#custom#map('normal', "s", '<denite:do_action:split>')
 "call denite#custom#map('insert', '<Esc>', '<denite:enter_mode:normal>')
 
 " カレントディレクトリ
-nnoremap <silent> [start]o :<C-u>Denite file_rec<CR>
+nnoremap <silent> [start]o :<C-u>DeniteBufferDir file_rec<CR>
 
 " プロジェクト
-nnoremap <silent> [start]p :<C-u>DeniteProjectDir file_rec<CR>
+nnoremap <silent> <C-p> :<C-u>DeniteProjectDir file_rec<CR>
 
 " バッファ
 nnoremap <silent> [start]b :<C-u>Denite buffer<CR>
@@ -288,50 +292,18 @@ nnoremap <silent> [start]h :<C-u>Denite file_mru<CR>
 nnoremap <silent> [start]y :<C-u>Denite neoyank<CR>
 
 " 全文検索
-nnoremap <silent> [start]g :<C-u>Denite -buffer-name=search -mode=normal grep<CR>
+" nnoremap <silent> [start]g :<C-u>Denite -buffer-name=search -mode=normal grep<CR>
 " 全文検索（カーソル下単語）
-nnoremap <silent> [start]gw :<C-u>DeniteCursorWord grep -buffer-name=search line<CR><C-R><C-W><CR>
+" nnoremap <silent> [start]gw :<C-u>DeniteCursorWord grep -buffer-name=search line<CR><C-R><C-W><CR>
+
+nnoremap <silent> [start]gg :<C-u>Ggrep <C-R><C-W><CR>
+nnoremap <silent> [start]gd :<C-u>Gdiff<CR>
+nnoremap <silent> [start]gs :<C-u>Gstatus<CR>
 
 " }}}
 
-" ctags {{{
-let g:auto_ctags = 0
-let g:auto_ctags_directory_list = ['.git', '.']
-let g:auto_ctags_tags_args = '-R --tag-relative --recurse --sort=yes'
-" let g:auto_ctags_tags_args = '-R --tag-relative --recurse --sort=yes $VIRTUAL_ENV/lib/'
-" }}}
-
-" Clear undo history {{{
-" A function to clear the undo history
-" function! <SID>ForgetUndo()
-"     let old_undolevels = &undolevels
-"     set undolevels=-1
-"     exe "normal a \<BS>\<Esc>"
-"     let &undolevels = old_undolevels
-"     unlet old_undolevels
-" endfunction
-" command! -nargs=0 ClearUndo call <SID>ForgetUndo()
-" }}}
-
-" QuickRun {{{
-" if neobundle#is_installed('vim-quickrun')
-"     let g:quickrun_config = {}
-"     let g:quickrun_config.python = {'command' : 'python3'}
-"     let g:quickrun_config._ = {'outputter/buffer/close_on_empty' : 1}
-" 
-"     let g:quickrun_config.markdown = {
-"                 \ 'type' : 'markdown/gfm',
-"                 \ 'outputter': 'browser'
-"                 \ }
-"     " let g:quickrun_config.markdown = {
-"     "             \ 'outputter': 'browser',
-"     "             \ 'args': '--mathjax'
-"     "             \ }
-" 
-"     if neobundle#is_installed('vimproc')
-"         let g:quickrun_config._ = {'runner' : 'vimproc'}
-"     endif
-" endif
+" Deoplete {{{
+let g:deoplete#enable_at_startup = 1
 " }}}
 
 " open-browser {{{
@@ -342,24 +314,6 @@ vmap gx <Plug>(openbrowser-smart-search)
 
 " open-browser-github.vim{{{
 nnoremap <silent> [start]go :<C-u>OpenGithubProject<CR>
-" }}}
-
-" vimfiler {{{ 
-let g:vimfiler_as_default_explorer = 1
-"セーフモードを無効にした状態で起動する
-let g:vimfiler_safe_mode_by_default = 0
-" Like Textmate icons.
-let g:vimfiler_tree_leaf_icon = ' '
-if has('gui_running')
-    let g:vimfiler_tree_opened_icon = '▾'
-    let g:vimfiler_tree_closed_icon = '▸'
-else
-    let g:vimfiler_tree_opened_icon = 'V'
-    let g:vimfiler_tree_closed_icon = '>'
-endif
-let g:vimfiler_file_icon = '-'
-nnoremap <silent> [start]e :<C-u>VimFilerCurrentDir -buffer-name=explorer 
-            \ -split -simple -winwidth=35 -toggle -no-quit<CR>
 " }}}
 
 " Align {{{
