@@ -10,6 +10,7 @@ brew install direnv
 brew install fontforge
 brew install git
 brew install git-extras
+brew install global --with-ctags --with-pygments
 brew install gnuplot --with-x11
 brew install heroku
 brew install hub
@@ -17,7 +18,7 @@ brew install jq
 brew install lha
 brew install lua
 brew install mysql
-brew install neovim/neovim/neovim
+brew install neovim
 brew install nkf
 brew insatll peco
 brew install python
@@ -30,7 +31,7 @@ brew install sqlite
 brew install termshare
 brew install tmux
 brew install tree
-brew install vim --with-lua
+brew install vim --with-python3 --with-lua
 brew install w3m
 brew install wget
 brew install zsh
@@ -77,6 +78,10 @@ ln -s ~/dotfiles/.vim ~/
 ln -s ~/dotfiles/.tmux.conf ~/
 ln -s ~/dotfiles/.gitconfig ~/
 ln -s ~/dotfiles/.gitignore_global ~/.gitignore_global
+ln -s ~/dotfiles/.globalrc ~/
+
+mkdir ~/.config/nvim
+ln -s ~/dotfiles/.vimrc ~/.config/nvim/
 
 # sudo sh -c "echo '/usr/local/bin/zsh' >> /etc/shells"
 # chsh -s /usr/local/bin/zsh
@@ -91,9 +96,10 @@ curl -Lo ~/.config/fish/functions/fisher.fish --create-dirs https://git.io/fishe
 fisher z
 fisher fzf
 
-# pip install powerline-status
-# pip install psutil
+# pip3 install powerline-status
+# pip3 install psutil
 
-# pip install markdown
-# pip install ipython
-# pip install flake8
+# pip3 install markdown
+# pip3 install ipython
+# pip3 install flake8
+# pip3 install neovim
