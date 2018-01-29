@@ -6,6 +6,12 @@ repo = 'vim-airline/vim-airline'
 
 [[plugins]]
 repo = 'lifepillar/vim-solarized8'
+hook_add = '''
+  set background=dark
+  " colorscheme 設定は source 後に行う必要があるので VimEnter で行う。
+  " 但し Colorscheme イベントの発生が抑制されないよう nented を付ける。
+  au VimEnter * nested colorscheme solarized8
+'''
 
 [[plugins]]
 repo = 'Shougo/denite.nvim'
