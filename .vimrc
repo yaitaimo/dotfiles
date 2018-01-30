@@ -69,10 +69,6 @@ syntax enable
 
 " }}}
 
-" Color Theme {{{
-set background=dark
-" }}}
-
 " Display {{{
 set modeline
 set title ""編集中のファイル名を表示
