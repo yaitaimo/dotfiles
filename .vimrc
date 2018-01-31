@@ -80,7 +80,6 @@ set number
 set visualbell
 set mouse=a
 set cursorline
-highlight CursorLine cterm=NONE ctermbg=black
 " }}}
 
 " Folding {{{
