@@ -315,9 +315,9 @@ nnoremap <silent> [start]y :<C-u>Denite neoyank<CR>
 " 全文検索（カーソル下単語）
 " nnoremap <silent> [start]gw :<C-u>DeniteCursorWord grep -buffer-name=search line<CR><C-R><C-W><CR>
 
-nnoremap <silent> [start]gg :<C-u>Ggrep <C-R><C-W><CR>
 nnoremap <silent> [start]gd :<C-u>Gdiff<CR>
-nnoremap <silent> [start]gs :<C-u>Gstatus<CR>
+nnoremap <silent> [start]gb :<C-u>Gblame<CR>
+nnoremap <silent> [start]gs :<C-u>Gstats<CR>
 
 " }}}
 

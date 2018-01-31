@@ -7,11 +7,11 @@ repo = 'vim-airline/vim-airline'
 [[plugins]]
 repo = 'lifepillar/vim-solarized8'
 hook_add = '''
-  set background=dark
-  let g:solarized_use16 = 1
-  " colorscheme 設定は source 後に行う必要があるので VimEnter で行う。
-  " 但し Colorscheme イベントの発生が抑制されないよう nented を付ける。
-  au VimEnter * nested colorscheme solarized8_flat
+set background=dark
+let g:solarized_use16 = 1
+" colorscheme 設定は source 後に行う必要があるので VimEnter で行う。
+" 但し Colorscheme イベントの発生が抑制されないよう nented を付ける。
+au VimEnter * nested colorscheme solarized8_flat
 '''
 
 [[plugins]]
@@ -32,10 +32,10 @@ repo = 'majutsushi/tagbar'
 [[plugins]]
 repo = 'lighttiger2505/gtags.vim'
 hook_add = '''
-  let g:Gtags_Auto_Update = 1
-  let g:Gtags_Auto_Map = 0
-  let g:Gtags_No_Auto_Jump = 1
-  nmap <silent> <C-]> :<C-u>GtagsCursor<CR>
+let g:Gtags_Auto_Update = 1
+let g:Gtags_Auto_Map = 0
+let g:Gtags_No_Auto_Jump = 1
+nmap <C-]> :<C-u>GtagsCursor<CR>
 '''
 
 [[plugins]]
@@ -55,3 +55,9 @@ repo = 'slim-template/vim-slim.git'
 
 [[plugins]]
 repo = 'cohama/lexima.vim'
+
+[[plugins]]
+repo = 'himanoa/denite-git-grep'
+hook_add = '''
+nmap ;gg :<C-u>Denite git-grep:
+'''
