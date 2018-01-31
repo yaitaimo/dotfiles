@@ -295,7 +295,7 @@ call denite#custom#map('normal', "s", '<denite:do_action:split>')
 "call denite#custom#map('insert', '<Esc>', '<denite:enter_mode:normal>')
 
 " カレントディレクトリ
-nnoremap <silent> [start]o :<C-u>DeniteBufferDir file<CR>
+nnoremap <silent> [start]o :<C-u>DeniteBufferDir file file:new<CR>
 
 " プロジェクト
 nnoremap <silent> <C-p> :<C-u>DeniteProjectDir file_rec<CR>
