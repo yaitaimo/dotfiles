@@ -296,7 +296,7 @@ call denite#custom#map('normal', "s", '<denite:do_action:split>')
 "call denite#custom#map('insert', '<Esc>', '<denite:enter_mode:normal>')
 
 " カレントディレクトリ
-nnoremap <silent> [start]o :<C-u>DeniteBufferDir file_rec<CR>
+nnoremap <silent> [start]o :<C-u>DeniteBufferDir file<CR>
 
 " プロジェクト
 nnoremap <silent> <C-p> :<C-u>DeniteProjectDir file_rec<CR>
@@ -381,8 +381,8 @@ function! g:CopyFileName()
   echo @*
 endfunction
  
-" Folder path
-function! g:CopyFolderPath()
+" Directory path
+function! g:CopyDirectoryPath()
   let @* = expand("%:p:h")
   echo @*
 endfunction
@@ -390,7 +390,12 @@ endfunction
 " コマンドとして実行できるようにする
 command! CopyFilePath :call g:CopyFilePath()
 command! CopyFileName :call g:CopyFileName()
-command! CopyFolderPath :call g:CopyFolderPath()
+command! CopyDirectoryPath :call g:CopyDirectoryPath()
+
+nnoremap [start]cfp :<C-u>CopyFilePath<CR>
+nnoremap [start]cfn :<C-u>CopyFileName<CR>
+nnoremap [start]cdp :<C-u>CopyDirectoryPath<CR>
+
 " }}}
 
 " Local config {{{
