@@ -215,6 +215,33 @@ nnoremap <expr> h col('.') == 1 && foldlevel(line('.')) > 0 ? 'zczz' : 'h'
 
 nmap <Esc><Esc> :<C-u>cclose<CR>
 
+if has('nvim')
+    function! OpenTerminal()
+        let pattern = "term://"
+        let bufcount = bufnr("$")
+        let currbufnr = 1
+        let matchingbufnr = -1
+        while currbufnr <= bufcount
+            if(bufexists(currbufnr))
+                let currbufname = bufname(currbufnr)
+                if(match(currbufname, pattern) > -1)
+                    let matchingbufnr = currbufnr
+                endif
+            endif
+            let currbufnr = currbufnr + 1
+        endwhile
+        if(matchingbufnr > -1)
+            execute ":buffer ". matchingbufnr
+        else
+            execute ":terminal"
+        endif
+    endfunction
+    
+    nnoremap <silent> <Space>t :<C-u>vsplit<CR>:call OpenTerminal()<CR>i
+    tnoremap <ESC> <C-\><C-n>
+    tnoremap <ESC><ESC> <C-\><C-n>:<C-u>hide<CR>
+endif
+
 " }}}
 
 " Key Bindings & Shortcuts for Insert Mode {{{
@@ -250,8 +277,6 @@ cnoremap <C-p>  <Up>
 cnoremap <C-n>  <Down>
 cnoremap <C-k> <C-\>e getcmdpos() == 1 ?
             \ '' : getcmdline()[:getcmdpos()-2]<CR>
-" }}}
-
 " }}}
 
 " Denite {{{
