@@ -36,7 +36,12 @@ hook_add = '''
 let g:Gtags_Auto_Update = 1
 let g:Gtags_Auto_Map = 0
 let g:Gtags_No_Auto_Jump = 1
-nmap <C-]> :<C-u>GtagsCursor<CR>
+'''
+
+[[plugins]]
+repo = 'ozelentok/denite-gtags'
+hook_add = '''
+nnoremap <silent> <C-]> :<C-u>DeniteCursorWord -buffer-name=gtags_completion gtags_completion<CR>
 '''
 
 [[plugins]]
