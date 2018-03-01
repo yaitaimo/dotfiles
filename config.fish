@@ -41,7 +41,7 @@ function fish_prompt
   printf '\n$ '
 end
 
-alias v 'vim'
+alias v 'nvim'
 alias ls 'ls -hG'
 alias ll 'ls -lhG'
 alias la 'ls -lahG'
