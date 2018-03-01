@@ -7,7 +7,10 @@ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/
 brew install autojump
 brew install ctags
 brew install direnv
+brew install fish
 brew install fontforge
+brew install fzf
+brew install ghq
 brew install git
 brew install git-extras
 brew install global --with-ctags --with-pygments
@@ -71,7 +74,8 @@ brew cleanup
 # PlainCalc
 
 # dotfiles
-ln -s ~/dotfiles/.zshrc ~/
+# ln -s ~/dotfiles/.zshrc ~/
+mkdir -p ~/.config/fish
 ln -s ~/dotfiles/config.fish ~/.config/fish/
 ln -s ~/dotfiles/.vimrc ~/
 ln -s ~/dotfiles/.vim ~/
@@ -81,7 +85,7 @@ ln -s ~/dotfiles/.gitignore_global ~/.gitignore_global
 ln -s ~/dotfiles/.globalrc ~/
 
 mkdir ~/.config/nvim
-ln -s ~/dotfiles/.vimrc ~/.config/nvim/
+ln -s ~/dotfiles/.vimrc ~/.config/nvim/init.vim
 
 # sudo sh -c "echo '/usr/local/bin/zsh' >> /etc/shells"
 # chsh -s /usr/local/bin/zsh
@@ -95,6 +99,7 @@ fish
 curl -Lo ~/.config/fish/functions/fisher.fish --create-dirs https://git.io/fisher
 fisher z
 fisher fzf
+fisher install decors/fish-ghq
 
 # pip3 install powerline-status
 # pip3 install psutil
