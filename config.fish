@@ -2,7 +2,11 @@ set -x EDITOR vim
 set -x LC_CTYPE "ja_JP.UTF-8"
 set -x PATH /usr/local/bin $PATH
 
+# direnv
 eval (direnv hook fish)
+
+# pyenv
+status --is-interactive; and . (pyenv init -|psub)
 
 set __fish_git_prompt_showdirtystate yes
 set __fish_git_prompt_showstashstate yes
@@ -39,6 +43,14 @@ function fish_prompt
   printf '%s' (__fish_git_prompt)
 
   printf '\n$ '
+end
+
+set -x FZF_COMPLETE 1
+set -x FZF_DEFAULT_OPTS "--reverse --height 40%"
+set -x FZF_DEFAULT_COMMAND 'ag -g ""'
+
+function fssh -d "Fuzzy-find ssh host and ssh into it"
+  ag '^host [^*]' ~/.ssh/config | cut -d ' ' -f 2 | fzf | xargs -o ssh
 end
 
 alias v 'nvim'
