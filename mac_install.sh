@@ -4,6 +4,7 @@
 
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
  
+brew install ag
 brew install autojump
 brew install ctags
 brew install direnv
