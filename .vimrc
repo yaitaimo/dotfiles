@@ -281,18 +281,18 @@ cnoremap <C-k> <C-\>e getcmdpos() == 1 ?
 " Denite {{{
 call denite#custom#option('default', 'prompt', '>')
 
-call denite#custom#map('insert', "<C-n>", '<denite:move_to_next_line>')
-call denite#custom#map('insert', "<C-p>", '<denite:move_to_previous_line>')
+call denite#custom#map('insert', "<C-n>", '<denite:move_to_next_line>', 'noremap')
+call denite#custom#map('insert', "<C-p>", '<denite:move_to_previous_line>', 'noremap')
 
-call denite#custom#map('insert', "<C-t>", '<denite:do_action:tabopen>')
-call denite#custom#map('insert', "<C-v>", '<denite:do_action:vsplit>')
-call denite#custom#map('insert', "<C-s>", '<denite:do_action:split>')
+call denite#custom#map('insert', "<C-t>", '<denite:do_action:tabopen>', 'noremap')
+call denite#custom#map('insert', "<C-v>", '<denite:do_action:vsplit>', 'noremap')
+call denite#custom#map('insert', "<C-s>", '<denite:do_action:split>', 'noremap')
 
-call denite#custom#map('normal', "t", '<denite:do_action:tabopen>')
-call denite#custom#map('normal', "v", '<denite:do_action:vsplit>')
-call denite#custom#map('normal', "s", '<denite:do_action:split>')
+call denite#custom#map('normal', "t", '<denite:do_action:tabopen>', 'noremap')
+call denite#custom#map('normal', "v", '<denite:do_action:vsplit>', 'noremap')
+call denite#custom#map('normal', "s", '<denite:do_action:split>', 'noremap')
 
-"call denite#custom#map('insert', '<Esc>', '<denite:enter_mode:normal>')
+"call denite#custom#map('insert', '<Esc>', '<denite:enter_mode:normal>', 'noremap')
 
 " カレントディレクトリ
 nnoremap <silent> [start]o :<C-u>DeniteBufferDir file file:new<CR>
