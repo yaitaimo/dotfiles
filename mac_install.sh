@@ -23,12 +23,14 @@ brew install lha
 brew install lua
 brew install mysql
 brew install neovim
+brew install nodenv
 brew install nkf
 brew insatll peco
 brew install pyenv
 brew install python
 brew install python3
 brew install reattach-to-user-namespace
+brew install rbenv
 brew install ruby
 brew install sl
 brew install source-highlight
@@ -98,10 +100,11 @@ chsh -s /usr/local/bin/fish
 
 fish
 
-curl -Lo ~/.config/fish/functions/fisher.fish --create-dirs https://git.io/fisher
-fisher z
-fisher fzf
-fisher install decors/fish-ghq
+# fisher z
+# fisher fzf
+# fisher install decors/fish-ghq
+# fisher pipenv
+# fisher rbenv
 
 # pip3 install powerline-status
 # pip3 install psutil

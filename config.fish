@@ -4,18 +4,6 @@ set -x LC_CTYPE "ja_JP.UTF-8"
 if status --is-interactive
     # direnv
     eval (direnv hook fish)
-
-    # rbenv
-    . (rbenv init -|psub)
-
-    # pipenv
-    eval (pipenv --completion)
-
-    # pyenv
-    . (pyenv init -|psub)
-
-    # nodenv
-    . (nodenv init -|psub)
 end
 
 # git on prompt
