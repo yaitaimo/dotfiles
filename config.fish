@@ -74,3 +74,9 @@ alias gb 'git branch'
 function reload
     source ~/.config/fish/config.fish
 end
+
+# load local settings
+set local_config_path ~/.config/fish/local.fish
+if test -e $local_config_path
+    source $local_config_path
+end
