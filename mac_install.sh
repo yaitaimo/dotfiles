@@ -104,6 +104,7 @@ fish
 # fisher fzf
 # fisher install decors/fish-ghq
 # fisher pipenv
+# fisher pyenv
 # fisher rbenv
 
 # pip3 install powerline-status
