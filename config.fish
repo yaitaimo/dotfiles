@@ -1,5 +1,6 @@
 set -x EDITOR vim
-set -x LC_CTYPE "ja_JP.UTF-8"
+set -x LC_CTYPE ja_JP.UTF-8
+set -x LANG ja_JP.UTF-8
 
 if status --is-interactive
     # direnv
