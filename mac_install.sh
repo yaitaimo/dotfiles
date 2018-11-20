@@ -98,14 +98,14 @@ ln -s ~/dotfiles/.vimrc ~/.config/nvim/init.vim
 sudo sh -c "echo '/usr/local/bin/fish' >> /etc/shells"
 chsh -s /usr/local/bin/fish
 
+curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
+
 fish
 
-# fisher z
-# fisher fzf
-# fisher install decors/fish-ghq
-# fisher pipenv
-# fisher pyenv
-# fisher rbenv
+# fisher add jethrokuan/z
+# fisher add jethrokuan/fzf
+# fisher add decors/fish-ghq
+# fisher add kennethreitz/fish-pipenv
 
 # pip3 install powerline-status
 # pip3 install psutil
