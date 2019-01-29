@@ -56,3 +56,6 @@ repo = 'himanoa/denite-git-grep'
 hook_add = '''
 nmap ;gg :<C-u>Denite git-grep:
 '''
+
+[[plugins]]
+repo = 'terryma/vim-multiple-cursors'
