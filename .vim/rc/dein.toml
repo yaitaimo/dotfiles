@@ -43,12 +43,6 @@ repo = 'w0rp/ale'
 repo = 'vim-scripts/Align'
 
 [[plugins]]
-repo = 'othree/html5.vim'
-
-[[plugins]]
-repo = 'slim-template/vim-slim.git'
-
-[[plugins]]
 repo = 'cohama/lexima.vim'
 
 [[plugins]]
@@ -59,3 +53,10 @@ nmap ;gg :<C-u>Denite git-grep:
 
 [[plugins]]
 repo = 'terryma/vim-multiple-cursors'
+
+[[plugins]]
+repo = 'iCyMind/NeoSolarized'
+hook_add = '''
+colorscheme NeoSolarized
+set background=dark
+'''
