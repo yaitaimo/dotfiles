@@ -1,16 +1,16 @@
 " Detect platform {{{
-let os = ""
-if has("win32") || has("win64")
-    let os="win"
-    exit
-elseif has("unix")
-    let s:uname = system("uname")
-    if s:uname == "Darwin\n"
-        let os="mac"
-    else
-        let os="unix"
-    endif
-endif
+" let os = ""
+" if has("win32") || has("win64")
+"     let os="win"
+"     exit
+" elseif has("unix")
+"     let s:uname = system("uname")
+"     if s:uname == "Darwin\n"
+"         let os="mac"
+"     else
+"         let os="unix"
+"     endif
+" endif
 " }}}
 
 if &compatible
@@ -42,13 +42,13 @@ if dein#load_state(s:dein_dir)
     call dein#load_toml(s:toml, {'lazy': 0})
     call dein#load_toml(s:tomllazy, {'lazy': 1})
      
-    if os=="mac"
-        " QuickRun
-        call dein#add('mattn/webapi-vim')
-        call dein#add('tyru/open-browser.vim')
-        call dein#add('tyru/open-browser-github.vim')
-        call dein#add('superbrothers/vim-quickrun-markdown-gfm')
-    endif    
+    " if os=="mac"
+    "     " QuickRun
+    "     call dein#add('mattn/webapi-vim')
+    "     call dein#add('tyru/open-browser.vim')
+    "     call dein#add('tyru/open-browser-github.vim')
+    "     call dein#add('superbrothers/vim-quickrun-markdown-gfm')
+    " endif    
 
     call dein#add('Shougo/deoplete.nvim')
     if !has('nvim')
@@ -80,6 +80,7 @@ set number
 set visualbell
 set mouse=a
 set cursorline
+set termguicolors
 " }}}
 
 " Folding {{{
@@ -174,7 +175,7 @@ set shiftwidth=4
 set softtabstop=4
 
 ""クリップボード設定
-set clipboard+=unnamed " copy to the system clipboard
+set clipboard=unnamedplus " copy to the system clipboard
 " }}}
 
 " 検索設定 {{{
@@ -199,7 +200,7 @@ nnoremap [start]n :<C-u>set nonumber!<CR>
 
 nnoremap [start]r :<C-u>QuickRun<CR>
 " tagsジャンプの際に複数ある場合を考慮
-nnoremap [start]t :<C-u>TagbarToggle<CR>
+" nnoremap [start]t :<C-u>TagbarToggle<CR>
 
 nnoremap <silent> <C-b>D :bd!<CR>
 nnoremap <silent> <C-b>d :bd<CR>
@@ -321,22 +322,22 @@ nnoremap <silent> [start]gs :<C-u>Gstats<CR>
 " }}}
 
 " Deoplete {{{
-let g:deoplete#enable_at_startup = 1
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+" let g:deoplete#enable_at_startup = 1
+" autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 " }}}
 
 " open-browser {{{
-let g:netrw_nogx = 1 " disable netrw's gx mapping.
-nmap gx <Plug>(openbrowser-smart-search)
-vmap gx <Plug>(openbrowser-smart-search)
+" let g:netrw_nogx = 1 " disable netrw's gx mapping.
+" nmap gx <Plug>(openbrowser-smart-search)
+" vmap gx <Plug>(openbrowser-smart-search)
 " }}}
 
 " open-browser-github.vim{{{
-nnoremap <silent> [start]go :<C-u>OpenGithubProject<CR>
+" nnoremap <silent> [start]go :<C-u>OpenGithubProject<CR>
 " }}}
 
 " Align {{{
-let g:Align_xstrlen = 3
+" let g:Align_xstrlen = 3
 " }}}
 
 " jedi-vim {{{
@@ -350,22 +351,22 @@ let g:Align_xstrlen = 3
 " if !exists('g:neocomplete#force_omni_input_patterns')
 "     let g:neocomplete#force_omni_input_patterns = {}
 " endif
-
+"
 " let g:neocomplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
 " let g:neocomplete#force_omni_input_patterns.python = '\h\w*\|[^. \t]\.\w*'
 " endif
 " }}}
 
 " Vim-LaTeX {{{
-if dein#util#_is_mac()
-    nnoremap <silent> [start]ll :<C-u>call Tex_StartTex()<CR>
-    function! Tex_StartTex()
-        call Tex_RunLaTeX()
-        call Tex_ViewLaTeX()
-    endfunction
-    nnoremap <silent> [start]lr :<C-u>call Tex_RunLaTeX()<CR>
-    nnoremap <silent> [start]lv :<C-u>call Tex_ViewLaTeX()<CR>
-endif
+" if dein#util#_is_mac()
+"     nnoremap <silent> [start]ll :<C-u>call Tex_StartTex()<CR>
+"     function! Tex_StartTex()
+"         call Tex_RunLaTeX()
+"         call Tex_ViewLaTeX()
+"     endfunction
+"     nnoremap <silent> [start]lr :<C-u>call Tex_RunLaTeX()<CR>
+"     nnoremap <silent> [start]lv :<C-u>call Tex_ViewLaTeX()<CR>
+" endif
 " }}}
 
 " Copy File name & path {{{
