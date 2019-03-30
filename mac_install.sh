@@ -14,8 +14,8 @@ brew install fzf
 brew install ghq
 brew install git
 brew install git-extras
-brew install global --with-ctags --with-pygments
-brew install gnuplot --with-x11
+brew install global
+brew install gnuplot
 brew install heroku
 brew install hub
 brew install jq
@@ -35,52 +35,50 @@ brew install ruby
 brew install sl
 brew install source-highlight
 brew install sqlite
-brew install termshare
 brew install tmux
 brew install tree
-brew install vim --with-python3 --with-lua
+brew install vim
 brew install w3m
 brew install wget
-brew install zsh
 
 brew cleanup
+
+# GUI Application
 
 # 1password
 # alfred
 # appcleaner
+# bear
 # bettertouchtool
 # docker
 # dropbox
-# evernote
+# firefox
 # google-chrome
-# google-drive
 # google-japanese-ime
-# gyazo
+# intellij-idea
 # iterm2
 # karabiner
+# line
 # macwinzipper
-# messenger
-# minecraft
-# openoffice
-# plain-clip
-# plaincalc
+# messenger(facebook)
+# numi
 # sitesucker
 # skype
 # slack
 # torbrowser
 # tunnelblick
 # vagrant
-# virtualbox
+# virtual-box
+# wireshark
 # xquartz
+# yoink
 
-# LINE
-# brew opencv
-# PlainCalc
+# Dotfiles
 
-# dotfiles
 # ln -s ~/dotfiles/.zshrc ~/
 mkdir -p ~/.config/fish
-ln -s ~/dotfiles/config.fish ~/.config/fish/
+ln -s ~/dotfiles/fish/config.fish ~/.config/fish/
+ln -s ~/dotfiles/fish/fishfilea ~/.config/fish/
 ln -s ~/dotfiles/.vimrc ~/
 ln -s ~/dotfiles/.vim ~/
 ln -s ~/dotfiles/.tmux.conf ~/
@@ -91,16 +89,12 @@ ln -s ~/dotfiles/.globalrc ~/
 mkdir ~/.config/nvim
 ln -s ~/dotfiles/.vimrc ~/.config/nvim/init.vim
 
-# sudo sh -c "echo '/usr/local/bin/zsh' >> /etc/shells"
-# chsh -s /usr/local/bin/zsh
-# echo "export PATH=/usr/local/bin:$PATH" > ~/.zshrc.local
-
 sudo sh -c "echo '/usr/local/bin/fish' >> /etc/shells"
 chsh -s /usr/local/bin/fish
 
 curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
 
-fish
+fish -c fisher
 
 # fisher add jethrokuan/z
 # fisher add jethrokuan/fzf
