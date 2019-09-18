@@ -4,24 +4,16 @@
 
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
  
-brew install ag
-brew install autojump
-brew install ctags
 brew install direnv
 brew install fish
-brew install fontforge
 brew install fzf
 brew install ghq
 brew install git
 brew install git-extras
 brew install global
-brew install gnuplot
-brew install heroku
-brew install hub
 brew install jq
 brew install lha
 brew install lua
-brew install mysql
 brew install neovim
 brew install nodenv
 brew install nkf
@@ -33,13 +25,10 @@ brew install reattach-to-user-namespace
 brew install rbenv
 brew install ruby
 brew install sl
-brew install source-highlight
 brew install sqlite
 brew install tmux
 brew install tree
 brew install vim
-brew install w3m
-brew install wget
 
 brew cleanup
 
