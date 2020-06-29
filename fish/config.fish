@@ -29,9 +29,12 @@ set __fish_git_prompt_color_invalidstate blue
 set __fish_git_prompt_color_untrackedfiles red
 set __fish_git_prompt_color_cleanstate cyan
 
-# prompt
 function fish_prompt
   set last_status $status
+
+  if set -q VIRTUAL_ENV
+    echo -n -s (set_color -b blue white) "(" (basename "$VIRTUAL_ENV") ")" (set_color normal) " "
+  end
 
   set_color cyan
   printf '[%s] ' (whoami)
