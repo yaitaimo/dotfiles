@@ -1,5 +1,6 @@
 # direnv
 .envrc
+.rubymine_helpers
 
 # Ignore tags created by etags, ctags, gtags (GNU global) and cscope
 .ctags
@@ -111,3 +112,16 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
+
+# Created by https://www.toptal.com/developers/gitignore/api/vscode
+# Edit at https://www.toptal.com/developers/gitignore?templates=vscode
+
+### vscode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# End of https://www.toptal.com/developers/gitignore/api/vscode
