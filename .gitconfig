@@ -50,3 +50,5 @@
     textconv = osadecompile
 [core]
     quotepath = false
+[pull]
+	ff = only
