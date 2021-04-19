@@ -1,6 +1,3 @@
 source ~/.vimrc
-set multiple-cursors
-map <C-n>  <A-n>
-map <C-p>  <A-p>
-map <C-x>  <A-x>
-map g<C-n> g<A-n>
+
+:map ;r <Action>(ReformatCode)
