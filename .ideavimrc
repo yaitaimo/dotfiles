@@ -1,3 +1,26 @@
 source ~/.vimrc
 
 :map ;r <Action>(ReformatCode)
+:map ;b <Action>(Annotate)
+
+nnoremap <C-o> :<C-u>action Back<CR>
+nnoremap <C-i> :<C-u>action Forward<CR>
+nnoremap <C-S-o> <C-o>
+nnoremap <C-S-i> <C-i>
+
+nnoremap zM <Nop>
+nnoremap zc <Nop>
+nnoremap zC <Nop>
+nnoremap zR <Nop>
+nnoremap zo <Nop>
+nnoremap zO <Nop>
+
+nnoremap / :<C-u>action Find<CR>
+
+inoremap <C-a> <Home>
+inoremap <C-e> <End>
+inoremap <C-b> <Left>
+inoremap <C-f> <Right>
+inoremap <C-n> <Down>
+inoremap <C-p> <UP>
+
