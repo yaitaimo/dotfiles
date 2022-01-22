@@ -210,9 +210,6 @@ nnoremap <silent> tc :<C-u>tabclose<CR>
 nnoremap <silent> tn :<C-u>tabedit<CR>
 nnoremap <silent> ts :<C-u>tab sp<CR>
 
-nnoremap <expr> l foldclosed(line('.')) != -1 ? 'zo0zz' : 'l'
-nnoremap <expr> h col('.') == 1 && foldlevel(line('.')) > 0 ? 'zczz' : 'h'
-
 nmap <Esc><Esc> :<C-u>cclose<CR>
 
 if has('nvim')
