@@ -2,11 +2,6 @@ set -x EDITOR vim
 set -x LC_CTYPE ja_JP.UTF-8
 set -x LANG ja_JP.UTF-8
 
-if status --is-interactive
-    # direnv
-    eval (direnv hook fish)
-end
-
 # git on prompt
 set __fish_git_prompt_showdirtystate yes
 set __fish_git_prompt_showstashstate yes
@@ -100,6 +95,8 @@ end
 function fish_user_key_bindings
   bind \cw workspace_search
 end
+
+source ~/.asdf/asdf.fish
 
 # reload
 function reload
