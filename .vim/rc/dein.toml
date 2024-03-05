@@ -58,5 +58,5 @@ repo = 'terryma/vim-multiple-cursors'
 repo = 'iCyMind/NeoSolarized'
 hook_add = '''
 colorscheme NeoSolarized
-set background=dark
+set background=light
 '''
