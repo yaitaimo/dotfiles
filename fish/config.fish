@@ -16,9 +16,6 @@ alias ll 'ls -lhG'
 alias ls 'ls -hG'
 alias v 'nvim'
 
-# ASDF バージョン管理
-source /opt/homebrew/opt/asdf/libexec/asdf.fish
-
 # ローカル設定
 set local_config_path ~/.config/fish/local.fish
 if test -e $local_config_path
