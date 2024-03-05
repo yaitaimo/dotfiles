@@ -3,3 +3,4 @@ source ~/.vimrc
 nnoremap ;r :action ReformatCode<cr>
 nnoremap ;b :action Annotate<cr>
 nnoremap ;t :action ActivateTerminalToolWindow<cr>
+set clipboard^=ideaput
