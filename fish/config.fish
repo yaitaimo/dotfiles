@@ -69,32 +69,7 @@ alias ga 'git add'
 alias gc 'git commit -m'
 alias gb 'git branch'
 
-function workspace_search -d 'Workspace search'
-    set -l selector
-    [ -n "$WORKSPACE_SELECTOR" ]; and set selector $WORKSPACE_SELECTOR; or set selector fzf
-    set -l selector_options
-    [ -n "$WORKSPACE_SELECTOR_OPTS" ]; and set selector_options $WORKSPACE_SELECTOR_OPTS
-
-    if not type -qf $selector
-        printf "\nERROR: '$selector' not found.\n"
-        return 1
-    end
-
-    set -l query (commandline -b)
-    [ -n "$query" ]; and set flags --query="$query"; or set flags
-    switch "$selector"
-        case fzf fzf-tmux peco percol fzy sk
-            ls ~/Workspace | "$selector" $selector_options $flags | read select
-        case \*
-            printf "\nERROR.\n"
-    end
-    [ -n "$select" ]; and cd ~/Workspace/"$select"
-    commandline -f repaint
-end
-
-function fish_user_key_bindings
-  bind \cw workspace_search
-end
+source /opt/homebrew/opt/asdf/libexec/asdf.fish
 
 source ~/.asdf/asdf.fish
 
