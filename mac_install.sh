@@ -1,99 +1,44 @@
-# xcode-select --install
- 
-# Homebrew
+# 現在のディレクトリを取得して変数に格納
+current_dir=$(pwd)
 
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
- 
-brew install direnv
-brew install fish
-brew install fzf
-brew install ghq
-brew install git
-brew install git-extras
-brew install global
-brew install jq
-brew install lha
-brew install lua
-brew install neovim
-brew install nodenv
-brew install nkf
-brew insatll peco
-brew install pyenv
-brew install python
-brew install python3
-brew install reattach-to-user-namespace
-brew install rbenv
-brew install ruby
-brew install sl
-brew install sqlite
-brew install tmux
-brew install tree
-brew install vim
+# Homebrew のインストールと設定
+# 公式サイト: https://brew.sh/
+# Homebrew は macOS 用のパッケージマネージャーで、コマンドラインツールやアプリケーションのインストールを簡単に行えます。
+brew install fish fzf ghq git git-extras jq neovim nkf reattach-to-user-namespace starship tmux tree
 
-brew cleanup
+# GUIアプリケーションのインストール
+# 以下のアプリは手動でインストールする必要があります。App Storeや各公式サイトからダウンロードしてください。
+# 例: 1Password, Better Touch Tool, Discord, Notion, Raycast, Spotify, AppCleaner, Bear, Docker for Desktop, Google Chrome, Google Japanese IME, IntelliJ IDEA, iTerm2, Karabiner, Numi, SiteSucker, Slack
 
-# GUI Application
-
-# 1password
-# alfred
-# appcleaner
-# bear
-# bettertouchtool
-# docker
-# dropbox
-# firefox
-# google-chrome
-# google-japanese-ime
-# intellij-idea
-# iterm2
-# karabiner
-# line
-# macwinzipper
-# messenger(facebook)
-# numi
-# sitesucker
-# skype
-# slack
-# torbrowser
-# tunnelblick
-# vagrant
-# virtual-box
-# wireshark
-# xquartz
-# yoink
-
-# Dotfiles
-
-# ln -s ~/dotfiles/.zshrc ~/
+# dotfiles の設定
+# dotfiles は、開発環境の設定ファイル群です。これらをリンクすることで、新しいマシンでも独自の環境を素早く構築できます。
 mkdir -p ~/.config/fish
-ln -s ~/dotfiles/fish/config.fish ~/.config/fish/
-ln -s ~/dotfiles/fish/fishfilea ~/.config/fish/
-ln -s ~/dotfiles/.vimrc ~/
-ln -s ~/dotfiles/.vim ~/
-ln -s ~/dotfiles/.tmux.conf ~/
-ln -s ~/dotfiles/.gitconfig ~/
-ln -s ~/dotfiles/.gitignore_global ~/.gitignore_global
-ln -s ~/dotfiles/.globalrc ~/
+ln -sf "$current_dir/dotfiles/fish/config.fish" ~/.config/fish/config.fish
+ln -sf "$current_dir/dotfiles/fish/fishfile" ~/.config/fish/fishfile
+ln -sf "$current_dir/dotfiles/.vimrc" ~/
+ln -sf "$current_dir/dotfiles/.vim" ~/
+ln -sf "$current_dir/dotfiles/.tmux.conf" ~/
+ln -sf "$current_dir/dotfiles/.gitconfig" ~/
+ln -sf "$current_dir/dotfiles/.gitignore_global" ~/.gitignore_global
+ln -sf "$current_dir/dotfiles/.globalrc" ~/
 
-mkdir ~/.config/nvim
-ln -s ~/dotfiles/.vimrc ~/.config/nvim/init.vim
+# NeoVim の設定
+# NeoVim は Vim の改良版で、拡張性とカスタマイズ性に優れたテキストエディタです。
+mkdir -p ~/.config/nvim
+ln -sf "$current_dir/dotfiles/.vimrc" ~/.config/nvim/init.vim
 
+# fish シェルをデフォルトに設定
+# fish は使いやすさを重視したコマンドラインシェルです。
 sudo sh -c "echo '/usr/local/bin/fish' >> /etc/shells"
 chsh -s /usr/local/bin/fish
 
+# Fisher のインストール
+# Fisher は fish のパッケージマネージャーで、様々なプラグインを簡単にインストールできます。
 curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
-
 fish -c fisher
 
-# fisher add jethrokuan/z
-# fisher add jethrokuan/fzf
-# fisher add decors/fish-ghq
-# fisher add kennethreitz/fish-pipenv
+# fish のプラグインをインストール
+fisher add jethrokuan/z
+fisher add jethrokuan/fzf
+fisher add decors/fish-ghq
 
-# pip3 install powerline-status
-# pip3 install psutil
-
-# pip3 install markdown
-# pip3 install ipython
-# pip3 install flake8
-# pip3 install neovim
