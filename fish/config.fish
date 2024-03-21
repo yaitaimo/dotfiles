@@ -3,6 +3,8 @@ set -x EDITOR vim
 set -x LC_CTYPE ja_JP.UTF-8
 set -x LANG ja_JP.UTF-8
 
+starship init fish | source
+
 # fzf 設定
 set -x FZF_COMPLETE 1
 set -x FZF_DEFAULT_OPTS "--reverse --height 40%"
