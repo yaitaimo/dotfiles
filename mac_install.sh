@@ -1,3 +1,7 @@
+#!/bin/bash
+
+set -e
+
 # 現在のディレクトリを取得して変数に格納
 current_dir=$(pwd)
 
@@ -13,24 +17,24 @@ brew install fish fzf ghq git git-extras jq neovim nkf reattach-to-user-namespac
 # dotfiles の設定
 # dotfiles は、開発環境の設定ファイル群です。これらをリンクすることで、新しいマシンでも独自の環境を素早く構築できます。
 mkdir -p ~/.config/fish
-ln -sf "$current_dir/dotfiles/fish/config.fish" ~/.config/fish/config.fish
-ln -sf "$current_dir/dotfiles/fish/fishfile" ~/.config/fish/fishfile
-ln -sf "$current_dir/dotfiles/.vimrc" ~/
-ln -sf "$current_dir/dotfiles/.vim" ~/
-ln -sf "$current_dir/dotfiles/.tmux.conf" ~/
-ln -sf "$current_dir/dotfiles/.gitconfig" ~/
-ln -sf "$current_dir/dotfiles/.gitignore_global" ~/.gitignore_global
-ln -sf "$current_dir/dotfiles/.globalrc" ~/
+ln -sf "$current_dir/fish/config.fish" ~/.config/fish/config.fish
+ln -sf "$current_dir/fish/fishfile" ~/.config/fish/fishfile
+ln -sf "$current_dir/.vimrc" ~/
+ln -sf "$current_dir/.vim" ~/
+ln -sf "$current_dir/.tmux.conf" ~/
+ln -sf "$current_dir/.gitconfig" ~/
+ln -sf "$current_dir/.gitignore_global" ~/.gitignore_global
+ln -sf "$current_dir/.globalrc" ~/
 
 # NeoVim の設定
 # NeoVim は Vim の改良版で、拡張性とカスタマイズ性に優れたテキストエディタです。
 mkdir -p ~/.config/nvim
-ln -sf "$current_dir/dotfiles/.vimrc" ~/.config/nvim/init.vim
+ln -sf "$current_dir/.vimrc" ~/.config/nvim/init.vim
 
 # fish シェルをデフォルトに設定
 # fish は使いやすさを重視したコマンドラインシェルです。
-sudo sh -c "echo '/usr/local/bin/fish' >> /etc/shells"
-chsh -s /usr/local/bin/fish
+sudo sh -c "echo '/opt/homebrew/bin/fish' >> /etc/shells"
+chsh -s /opt/homebrew/bin/fish
 
 # Fisher のインストール
 # Fisher は fish のパッケージマネージャーで、様々なプラグインを簡単にインストールできます。
@@ -41,4 +45,8 @@ fish -c fisher
 fisher add jethrokuan/z
 fisher add jethrokuan/fzf
 fisher add decors/fish-ghq
+
+# フォントをインストール
+# https://www.nerdfonts.com/font-downloads
+bash bin/install_font.sh
 
