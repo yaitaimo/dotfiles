@@ -1,6 +1,36 @@
-source ~/.vimrc
+" IdeaVim configuration
+nnoremap .e :edit ~/.ideavimrc<CR>
+nnoremap .r :action IdeaVim.ReloadVimRc.reload<CR>
 
-nnoremap ;r :action ReformatCode<cr>
-nnoremap ;b :action Annotate<cr>
-nnoremap ;t :action ActivateTerminalToolWindow<cr>
 set clipboard^=ideaput
+
+" Plugins
+" https://github.com/JetBrains/ideavim/blob/master/doc/IdeaVim%20Plugins.md#nerdtree
+" set sneak
+set NERDTree
+set easymotion
+" set surround
+" set multiple-cursors
+" set commentary
+" set ReplaceWithRegister
+" set argtextobj
+" set exchange
+" set textobj-entire
+" set highlightedyank
+" set vim-paragraph-motion
+" set textobj-indent
+" set matchit
+" set quickscope
+" set which-key
+
+" Leader key
+let mapleader = " "
+
+nnoremap <leader>a :action ShowIntentionActions<CR>
+nnoremap <leader>b :action Annotate<CR>
+nnoremap <leader>c :action ActivateGitHubCopilotChatToolWindow<CR>
+nnoremap <leader>d :action Compare.SameVersion<CR>
+nnoremap <leader>je :action GotoNextError<CR>
+nnoremap <leader>l :action Edit.GotoLastEditLocation<CR>
+nnoremap <leader>r :action ReformatCode<CR>
+nnoremap <leader>t :action ActivateTerminalToolWindow<CR>
