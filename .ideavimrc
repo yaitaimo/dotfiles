@@ -1,8 +1,8 @@
 " IdeaVim configuration
-nnoremap .e :edit ~/.ideavimrc<CR>
+nnoremap .e :vsp ~/.ideavimrc<CR>
 nnoremap .r :action IdeaVim.ReloadVimRc.reload<CR>
 
-set clipboard^=ideaput
+set clipboard+=unnamed
 
 " Plugins
 " https://github.com/JetBrains/ideavim/blob/master/doc/IdeaVim%20Plugins.md#nerdtree
@@ -24,13 +24,27 @@ set easymotion
 " set which-key
 
 " Leader key
-let mapleader = " "
+let mapleader = ";"
 
 nnoremap <leader>a :action ShowIntentionActions<CR>
 nnoremap <leader>b :action Annotate<CR>
 nnoremap <leader>c :action ActivateGitHubCopilotChatToolWindow<CR>
+nnoremap <leader>gb :action Git.Branches<CR>
+nnoremap <Leader>gh :action Vcs.ShowHistoryForBlock<CR>
 nnoremap <leader>d :action Compare.SameVersion<CR>
 nnoremap <leader>je :action GotoNextError<CR>
-nnoremap <leader>l :action Edit.GotoLastEditLocation<CR>
+nnoremap <leader>l :action JumpToLastChange<CR>
+nnoremap <leader>o :action SelectInProjectView<CR>
 nnoremap <leader>r :action ReformatCode<CR>
 nnoremap <leader>t :action ActivateTerminalToolWindow<CR>
+
+nnoremap ;gd :action Github.Pull.Request.Review.In.Editor.Toggle<CR>
+nnoremap ;gp :action Github.Pull.Request.Show.In.Toolwindow<CR>
+
+inoremap <C-d> <Delete>
+inoremap <C-e> <End>
+inoremap <C-f> <Right>
+inoremap <C-h> <BS>
+inoremap <C-l> <Right>
+inoremap <C-n> <Down>
+inoremap <C-p> <Up>
