@@ -60,3 +60,7 @@ hook_add = '''
 colorscheme NeoSolarized
 set background=light
 '''
+
+[[plugins]]
+repo = 'lambdalisue/fern.vim'
+

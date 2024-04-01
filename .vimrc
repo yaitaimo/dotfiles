@@ -293,7 +293,7 @@ endfunction
 
 
 " カレントディレクトリ
-nnoremap <silent> [start]o :<C-u>DeniteBufferDir file file:new<CR>
+" nnoremap <silent> [start]o :<C-u>DeniteBufferDir file file:new<CR>
 
 " プロジェクト
 nnoremap <silent> <C-p> :<C-u>DeniteProjectDir file/rec<CR>
@@ -321,6 +321,10 @@ nnoremap <silent> [start]gs :<C-u>Gstats<CR>
 " Deoplete {{{
 " let g:deoplete#enable_at_startup = 1
 " autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+" }}}
+
+" Filer {{{
+nnoremap <silent> [start]o :<C-u>Fern . -reveal=% -drawer<CR>
 " }}}
 
 " open-browser {{{
