@@ -1,15 +1,14 @@
 function workspace_manage -d 'Manage workspaces with search or create functionality'
     # fzf でワークスペースを選択または新規作成用の名前を入力
-    set -l query (ls ~/Workspace | fzf +m --print-query | head -n 2)
+    set -l results (ls ~/Workspace | fzf +m --print-query)
+    set -l lines (string split "\n" -- $results)
+    set -l workspace_name (echo $lines[2..-1])
 
     # 入力がない場合は終了
-    if test -z "$query"
+    if test -z "$workspace_name"
         commandline -f repaint
         return 1
     end
-
-    # ワークスペース名を決定
-    set -l workspace_name (string trim "$query")
 
     # ワークスペースのフルパスを設定
     set -l workspace_path ~/Workspace/"$workspace_name"
