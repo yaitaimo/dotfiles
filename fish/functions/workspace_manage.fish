@@ -1,8 +1,9 @@
 function workspace_manage -d 'Manage workspaces with search or create functionality'
     # fzf でワークスペースを選択または新規作成用の名前を入力
-    set -l results (ls ~/Workspace | fzf +m --print-query)
-    set -l lines (string split "\n" -- $results)
-    set -l workspace_name (echo $lines[2..-1])
+    set current_date (date +%Y%m%d)
+
+    set workspace_name (ls ~/Workspace | fzf +m --print-query --query $current_date)
+    set workspace_name (echo $workspace_name | awk '{print $NF}')
 
     # 入力がない場合は終了
     if test -z "$workspace_name"
