@@ -6,6 +6,38 @@ repo = 'vim-airline/vim-airline'
 
 [[plugins]]
 repo = 'Shougo/denite.nvim'
+hook_add = '''
+
+nnoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
+nnoremap <silent><buffer><expr> d denite#do_map('do_action', 'delete')
+nnoremap <silent><buffer><expr> p denite#do_map('do_action', 'preview')
+nnoremap <silent><buffer><expr> q denite#do_map('quit')
+nnoremap <silent><buffer><expr> i denite#do_map('open_filter_buffer')
+nnoremap <silent><buffer><expr> <Space> denite#do_map('toggle_select').'j'
+nnoremap <silent><buffer><expr> s denite#do_map('do_action', 'split')
+nnoremap <silent><buffer><expr> v denite#do_map('do_action', 'vsplit')
+nnoremap <silent><buffer><expr> <C-n> denite#do_map('move_to_next_line')
+
+" カレントディレクトリ
+" nnoremap <silent> [start]o :<C-u>DeniteBufferDir file file:new<CR>
+
+" プロジェクト
+nnoremap <silent> <C-p> :<C-u>DeniteProjectDir file/rec<CR>
+
+" バッファ
+nnoremap <silent> [start]b :<C-u>Denite buffer<CR>
+
+" ヒストリ
+nnoremap <silent> [start]h :<C-u>Denite file_mru<CR>
+
+" ヤンクヒストリ
+nnoremap <silent> [start]y :<C-u>Denite neoyank<CR>
+
+" 全文検索
+" nnoremap <silent> [start]g :<C-u>Denite -buffer-name=search -mode=normal grep<CR>
+" 全文検索（カーソル下単語）
+" nnoremap <silent> [start]gw :<C-u>DeniteCursorWord grep -buffer-name=search line<CR><C-R><C-W><CR>
+'''
 
 [[plugins]]
 repo = 'Shougo/neomru.vim'
@@ -15,6 +47,11 @@ repo = 'Shougo/neoyank.vim'
 
 [[plugins]]
 repo = 'tpope/vim-fugitive'
+hook_add = '''
+nnoremap <silent> [start]gd :<C-u>Gdiff<CR>
+nnoremap <silent> [start]gb :<C-u>Gblame<CR>
+nnoremap <silent> [start]gs :<C-u>Gstats<CR>
+'''
 
 [[plugins]]
 repo = 'majutsushi/tagbar'
@@ -59,6 +96,12 @@ repo = 'lambdalisue/fern.vim'
 hook_add = '''
 let g:fern#default_hidden=1 " 隠しファイルを表示する
 nnoremap <silent> [start]o :<C-u>Fern . -reveal=% -drawer<CR>
+'''
+
+[[plugins]]
+repo = 'prettier/vim-prettier'
+hook_post_update = '''
+let g:dein#plugin.build = 'npm install'
 '''
 
 [[plugins]]
