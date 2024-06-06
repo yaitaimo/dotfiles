@@ -57,8 +57,8 @@ repo = 'terryma/vim-multiple-cursors'
 [[plugins]]
 repo = 'iCyMind/NeoSolarized'
 hook_add = '''
-colorscheme NeoSolarized
 set background=light
+au MyAutoCmd VimEnter * nested colorscheme NeoSolarized
 '''
 
 [[plugins]]
