@@ -1,18 +1,3 @@
-" Detect platform {{{
-" let os = ""
-" if has("win32") || has("win64")
-"     let os="win"
-"     exit
-" elseif has("unix")
-"     let s:uname = system("uname")
-"     if s:uname == "Darwin\n"
-"         let os="mac"
-"     else
-"         let os="unix"
-"     endif
-" endif
-" }}}
-
 if &compatible
   set nocompatible
 endif
@@ -42,14 +27,6 @@ if dein#load_state(s:dein_dir)
     call dein#load_toml(s:toml, {'lazy': 0})
     call dein#load_toml(s:tomllazy, {'lazy': 1})
      
-    " if os=="mac"
-    "     " QuickRun
-    "     call dein#add('mattn/webapi-vim')
-    "     call dein#add('tyru/open-browser.vim')
-    "     call dein#add('tyru/open-browser-github.vim')
-    "     call dein#add('superbrothers/vim-quickrun-markdown-gfm')
-    " endif    
-
     call dein#add('Shougo/deoplete.nvim')
     if !has('nvim')
         call dein#add('roxma/nvim-yarp')
@@ -274,100 +251,6 @@ cnoremap <C-p>  <Up>
 cnoremap <C-n>  <Down>
 cnoremap <C-k> <C-\>e getcmdpos() == 1 ?
             \ '' : getcmdline()[:getcmdpos()-2]<CR>
-" }}}
-
-" Denite {{{
-autocmd FileType denite call s:denite_my_settings()
-function! s:denite_my_settings() abort
-  nnoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
-  nnoremap <silent><buffer><expr> d denite#do_map('do_action', 'delete')
-  nnoremap <silent><buffer><expr> p denite#do_map('do_action', 'preview')
-  nnoremap <silent><buffer><expr> q denite#do_map('quit')
-  nnoremap <silent><buffer><expr> i denite#do_map('open_filter_buffer')
-  nnoremap <silent><buffer><expr> <Space> denite#do_map('toggle_select').'j'
-  nnoremap <silent><buffer><expr> s denite#do_map('do_action', 'split')
-  nnoremap <silent><buffer><expr> v denite#do_map('do_action', 'vsplit')
-  nnoremap <silent><buffer><expr> <C-n> denite#do_map('move_to_next_line')
-endfunction
-
-
-
-" カレントディレクトリ
-" nnoremap <silent> [start]o :<C-u>DeniteBufferDir file file:new<CR>
-
-" プロジェクト
-nnoremap <silent> <C-p> :<C-u>DeniteProjectDir file/rec<CR>
-
-" バッファ
-nnoremap <silent> [start]b :<C-u>Denite buffer<CR>
-
-" ヒストリ
-nnoremap <silent> [start]h :<C-u>Denite file_mru<CR>
-
-" ヤンクヒストリ
-nnoremap <silent> [start]y :<C-u>Denite neoyank<CR>
-
-" 全文検索
-" nnoremap <silent> [start]g :<C-u>Denite -buffer-name=search -mode=normal grep<CR>
-" 全文検索（カーソル下単語）
-" nnoremap <silent> [start]gw :<C-u>DeniteCursorWord grep -buffer-name=search line<CR><C-R><C-W><CR>
-
-nnoremap <silent> [start]gd :<C-u>Gdiff<CR>
-nnoremap <silent> [start]gb :<C-u>Gblame<CR>
-nnoremap <silent> [start]gs :<C-u>Gstats<CR>
-
-" }}}
-
-" Deoplete {{{
-" let g:deoplete#enable_at_startup = 1
-" autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-" }}}
-
-" Filer {{{
-nnoremap <silent> [start]o :<C-u>Fern . -reveal=% -drawer<CR>
-" }}}
-
-" open-browser {{{
-" let g:netrw_nogx = 1 " disable netrw's gx mapping.
-" nmap gx <Plug>(openbrowser-smart-search)
-" vmap gx <Plug>(openbrowser-smart-search)
-" }}}
-
-" open-browser-github.vim{{{
-" nnoremap <silent> [start]go :<C-u>OpenGithubProject<CR>
-" }}}
-
-" Align {{{
-" let g:Align_xstrlen = 3
-" }}}
-
-" jedi-vim {{{
-" if neobundle#is_sourced('jedi-vim')
-" "    g:jedi#popup_select_first = 0
-" autocmd FileType python setlocal completeopt-=preview
-" autocmd FileType python setlocal omnifunc=jedi#completions
-" let g:jedi#completions_enabled = 0
-" let g:jedi#auto_vim_configuration = 0
-" 
-" if !exists('g:neocomplete#force_omni_input_patterns')
-"     let g:neocomplete#force_omni_input_patterns = {}
-" endif
-"
-" let g:neocomplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
-" let g:neocomplete#force_omni_input_patterns.python = '\h\w*\|[^. \t]\.\w*'
-" endif
-" }}}
-
-" Vim-LaTeX {{{
-" if dein#util#_is_mac()
-"     nnoremap <silent> [start]ll :<C-u>call Tex_StartTex()<CR>
-"     function! Tex_StartTex()
-"         call Tex_RunLaTeX()
-"         call Tex_ViewLaTeX()
-"     endfunction
-"     nnoremap <silent> [start]lr :<C-u>call Tex_RunLaTeX()<CR>
-"     nnoremap <silent> [start]lv :<C-u>call Tex_ViewLaTeX()<CR>
-" endif
 " }}}
 
 " Copy File name & path {{{
