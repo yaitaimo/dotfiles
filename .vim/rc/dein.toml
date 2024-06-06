@@ -55,12 +55,15 @@ nmap ;gg :<C-u>Denite git-grep:
 repo = 'terryma/vim-multiple-cursors'
 
 [[plugins]]
+repo = 'lambdalisue/fern.vim'
+hook_add = '''
+let g:fern#default_hidden=1 " 隠しファイルを表示する
+nnoremap <silent> [start]o :<C-u>Fern . -reveal=% -drawer<CR>
+'''
+
+[[plugins]]
 repo = 'iCyMind/NeoSolarized'
 hook_add = '''
 set background=light
 au MyAutoCmd VimEnter * nested colorscheme NeoSolarized
 '''
-
-[[plugins]]
-repo = 'lambdalisue/fern.vim'
-
