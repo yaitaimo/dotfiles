@@ -49,4 +49,3 @@ fisher add decors/fish-ghq
 # フォントをインストール
 # https://www.nerdfonts.com/font-downloads
 bash bin/install_font.sh
-
