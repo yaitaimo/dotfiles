@@ -105,6 +105,9 @@ let g:dein#plugin.build = 'npm install'
 '''
 
 [[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter' 
+
+[[plugins]]
 repo = 'iCyMind/NeoSolarized'
 hook_add = '''
 set background=light
