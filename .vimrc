@@ -170,8 +170,9 @@ nnoremap k gk
 
 nnoremap <Space>d :<C-u>r! LC_ALL=en_US.UTF-8 date '+\%Y/\%m/\%d (\%a) \%H:\%M'<CR>kdd
 nnoremap <Space>l O<ESC>78i-<ESC>
-nnoremap .r :<C-u>source ~/dotfiles/.vimrc<CR>
-nnoremap <silent> .e :<C-u>edit ~/dotfiles/.vimrc<CR><CR>
+let config_path = "$HOME/.config/nvim/init.vim"
+nnoremap <silent> .r :execute 'source' . config_path<CR>
+nnoremap <silent> .e :execute 'edit' . config_path<CR>
 " あまりに押し間違いが多いので．
 nnoremap [start]n :<C-u>set nonumber!<CR>
 
@@ -284,8 +285,8 @@ nnoremap [start]cdp :<C-u>CopyDirectoryPath<CR>
 " }}}
 
 " Local config {{{
-if filereadable($HOME."/.vimrc.local")
-    so $HOME/.vimrc.local"
+if filereadable($HOME."/.config/nvim/local.vim")
+    so $HOME/.config/nvim/local.vim
 endif
 " }}}
 
