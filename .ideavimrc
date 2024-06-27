@@ -29,6 +29,7 @@ let mapleader = ";"
 nnoremap <leader>a :action ShowIntentionActions<CR>
 nnoremap <leader>b :action Annotate<CR>
 nnoremap <leader>c :action ActivateGitHubCopilotChatToolWindow<CR>
+nnoremap <leader>efn :action RenameFile<CR>
 nnoremap <leader>gb :action Git.Branches<CR>
 nnoremap <Leader>gh :action Vcs.ShowHistoryForBlock<CR>
 nnoremap <leader>d :action Compare.SameVersion<CR>
