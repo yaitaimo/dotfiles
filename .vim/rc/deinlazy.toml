@@ -11,20 +11,8 @@ repo = 'vim-scripts/python_fold'
 on_ft = ['python', 'djangohtml']
 
 [[plugins]]
-repo = 'zchee/deoplete-jedi'
-on_ft = ['python', 'djangohtml']
-
-[[plugins]]
 repo = 'Vimjas/vim-python-pep8-indent'
 on_ft = ['python', 'djangohtml']
-
-[[plugins]]
-repo = 'davidhalter/jedi-vim'
-on_ft = ['python', 'djangohtml']
-hook_source = '''
-let g:jedi#completions_enabled = 0
-let g:jedi#goto_command = ";d"
-'''
 
 [[plugins]]
 repo = 'joonty/vdebug'
