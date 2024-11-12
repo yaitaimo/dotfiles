@@ -5,6 +5,8 @@ function switch_aws_profile
     # プロファイルが見つからなければエラーメッセージを表示
     if test (count $profiles) -eq 0
         echo "No AWS profiles found in ~/.aws/config"
+        commandline -f execute
+        commandline -f repaint
         return 1
     end
 
@@ -17,6 +19,12 @@ function switch_aws_profile
         set -gx AWS_PROFILE $selected_profile
     else
         echo "No profile selected"
+        commandline -f execute
+        commandline -f repaint
         return 1
     end
+
+    # プロンプトを再描画
+    commandline -f execute
+    commandline -f repaint
 end
