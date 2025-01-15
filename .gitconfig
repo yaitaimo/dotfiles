@@ -28,6 +28,7 @@
     ci = commit
     amend = commit --amend
     s = status
+    sweep = "!fish -c git-sweep"
     br = branch
     ba = branch -a
     ft = fetch
