@@ -8,11 +8,27 @@ current_dir=$(pwd)
 # Homebrew のインストールと設定
 # 公式サイト: https://brew.sh/
 # Homebrew は macOS 用のパッケージマネージャーで、コマンドラインツールやアプリケーションのインストールを簡単に行えます。
-brew install fish fzf ghq git git-extras jq neovim nkf reattach-to-user-namespace starship tmux tree
+brew install \
+  fish \
+  fzf \
+  ghq \
+  git \
+  git-extras \
+  jq \
+  neovim \
+  nkf \
+  reattach-to-user-namespace \
+  starship \
+  tmux \
+  tree \
+  luarocks
 
 # GUIアプリケーションのインストール
+brew install \
+  wezterm
+
 # 以下のアプリは手動でインストールする必要があります。App Storeや各公式サイトからダウンロードしてください。
-# 例: 1Password, Better Touch Tool, Discord, Notion, Raycast, Spotify, AppCleaner, Bear, Docker for Desktop, Google Chrome, Google Japanese IME, IntelliJ IDEA, iTerm2, Karabiner, Numi, SiteSucker, Slack
+# 例: 1Password, Better Touch Tool, Discord, Notion, Raycast, Spotify, AppCleaner, Bear, Docker for Desktop, Google Chrome, Google Japanese IME, IntelliJ IDEA, Numi, SiteSucker, Slack
 
 # dotfiles の設定
 # dotfiles は、開発環境の設定ファイル群です。これらをリンクすることで、新しいマシンでも独自の環境を素早く構築できます。
@@ -25,6 +41,7 @@ ln -sf "$current_dir/.tmux.conf" ~/
 ln -sf "$current_dir/.gitconfig" ~/
 ln -sf "$current_dir/.gitignore_global" ~/.gitignore_global
 ln -sf "$current_dir/.globalrc" ~/
+ln -sf "$current_dir/.wezterm.lua" ~/
 
 # NeoVim の設定
 # NeoVim は Vim の改良版で、拡張性とカスタマイズ性に優れたテキストエディタです。
