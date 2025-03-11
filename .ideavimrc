@@ -26,26 +26,31 @@ set easymotion
 " Leader key
 let mapleader = ";"
 
-nnoremap <leader>a :action ShowIntentionActions<CR>
-nnoremap <leader>b :action Annotate<CR>
-nnoremap <leader>c :action ActivateGitHubCopilotChatToolWindow<CR>
+nnoremap <leader>a   :action ShowIntentionActions<CR>
+nnoremap <leader>b   :action Annotate<CR>
+nnoremap <leader>c   :action ActivateGitHubCopilotChatToolWindow<CR>
+vnoremap <leader>c   :action OpenInlineChatAction<CR>
+nnoremap <leader>d   :action Compare.SameVersion<CR>
 nnoremap <leader>efn :action RenameFile<CR>
-nnoremap <leader>gb :action Git.Branches<CR>
-nnoremap <Leader>gh :action Vcs.ShowHistoryForBlock<CR>
-nnoremap <leader>d :action Compare.SameVersion<CR>
-nnoremap <leader>je :action GotoNextError<CR>
-nnoremap <leader>l :action JumpToLastChange<CR>
-nnoremap <leader>o :action SelectInProjectView<CR>
-nnoremap <leader>r :action ReformatCode<CR>
-nnoremap <leader>t :action ActivateTerminalToolWindow<CR>
+nnoremap <leader>er  :action RefactoringMenu<CR>
+nnoremap <leader>fu  :action FindUsages<CR>
+nnoremap <leader>gb  :action Git.Branches<CR>
+nnoremap <leader>gd  :action Github.Pull.Request.Review.In.Editor.Toggle<CR>
+nnoremap <leader>gh  :action Vcs.ShowTabbedFileHistory<CR>
+nnoremap <leader>glh :action Vcs.ShowHistoryForBlock<CR>
+nnoremap <leader>gr  :action Github.Pull.Request.Show.In.Toolwindow<CR>
+nnoremap <leader>je  :action GotoNextError<CR>
+nnoremap <leader>jts :action XDebugger.JumpToSource<CR>
+nnoremap <leader>l   :action JumpToLastChange<CR>
+nnoremap <leader>o   :action SelectInProjectView<CR>
+nnoremap <leader>r   :action ReformatCode<CR>
+nnoremap <leader>t   :action ActivateTerminalToolWindow<CR>
 
-nnoremap ;gd :action Github.Pull.Request.Review.In.Editor.Toggle<CR>
-nnoremap ;gp :action Github.Pull.Request.Show.In.Toolwindow<CR>
-
-inoremap <C-d> <Delete>
+inoremap <C-a> <Home>
 inoremap <C-e> <End>
 inoremap <C-f> <Right>
-inoremap <C-h> <BS>
-inoremap <C-l> <Right>
+inoremap <C-b> <Left>
 inoremap <C-n> <Down>
 inoremap <C-p> <Up>
+inoremap <C-d> <Delete>
+inoremap <C-h> <BS>

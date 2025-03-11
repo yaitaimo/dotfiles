@@ -73,10 +73,16 @@ require("lazy").setup({
       },
       -- See Commands section for default commands if you want to lazy load on them
     },
+    {
+      "ishan9299/nvim-solarized-lua", -- Lua版の Solarized
+      lazy = false, -- すぐに読み込む
+      priority = 1000, -- 高優先度で適用
+      config = function()
+        solarized_bkg = "light"
+        vim.cmd("colorscheme solarized") -- Solarized Light を適用
+      end,
+    },
   },
-  -- Configure any other settings here. See the documentation for more details.
-  -- colorscheme that will be used when installing plugins.
-  install = { colorscheme = { "habamax" } },
   -- automatically check for plugin updates
   checker = { enabled = true },
 })
@@ -89,3 +95,15 @@ vim.api.nvim_set_keymap("n", "<Space>l", [[O<ESC>78i-<ESC>]], { noremap = true }
 vim.api.nvim_set_keymap("n", "<silent> <C-b>D", ":bd!<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<silent> <C-b>d", ":bd<CR>", { noremap = true, silent = true })
 
+vim.api.nvim_set_keymap("i", "<C-a>", "<Home>", { noremap = true })
+vim.api.nvim_set_keymap("i", "<C-e>", "<End>", { noremap = true })
+vim.api.nvim_set_keymap("i", "<C-b>", "<Left>", { noremap = true })
+vim.api.nvim_set_keymap("i", "<C-f>", "<Right>", { noremap = true })
+vim.api.nvim_set_keymap("i", "<C-n>", "<Down>", { noremap = true })
+vim.api.nvim_set_keymap("i", "<C-p>", "<Up>", { noremap = true })
+vim.api.nvim_set_keymap("i", "<C-k>", "<C-o>d$", { noremap = true })
+vim.api.nvim_set_keymap("i", "<Nul>", "<C-n>", { noremap = true })
+
+-- 消去
+vim.api.nvim_set_keymap("i", "<C-h>", "<BS>", { noremap = true })
+vim.api.nvim_set_keymap("i", "<C-d>", "<Del>", { noremap = true })
