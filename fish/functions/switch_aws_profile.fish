@@ -17,14 +17,10 @@ function switch_aws_profile
     if test -n "$selected_profile"
         echo "Selected profile: $selected_profile"
         set -gx AWS_PROFILE $selected_profile
-    else
-        echo "No profile selected"
         commandline -f execute
+        commandline -f repaint
+    else
         commandline -f repaint
         return 1
     end
-
-    # プロンプトを再描画
-    commandline -f execute
-    commandline -f repaint
 end

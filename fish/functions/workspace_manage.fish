@@ -7,8 +7,6 @@ function workspace_manage -d 'Manage workspaces with search or create functional
 
     # 入力がない場合は終了
     if test -z "$workspace_name"
-        echo "No workspace selected or created."
-        commandline -f execute
         commandline -f repaint
         return 1
     end
