@@ -8,8 +8,14 @@ config.font = wezterm.font_with_fallback({
 })
 config.font_size = 17
 
+config.window_background_opacity = 0.95
+
 config.hide_tab_bar_if_only_one_tab = true
 config.show_new_tab_button_in_tab_bar = false
+--nightly版のみ
+--config.show_close_tab_button_in_tabs = false
+config.window_decorations = "RESIZE"
+
 
 local function scheme_for_appearance(appearance)
   if appearance:find 'Dark' then
@@ -109,5 +115,11 @@ wezterm.on('window-config-reloaded', function(window)
 
   window:set_config_overrides(overrides)
 end)
+
+config.keys = ({
+  { key = "f", mods = "CMD|CTRL", action = wezterm.action.ToggleFullScreen },
+})
+
+
 
 return config
