@@ -4,7 +4,6 @@ local config = wezterm.config_builder()
 
 config.font = wezterm.font_with_fallback({
     { family = 'RobotoMono Nerd Font' },
-    { family = 'RobotoMono Nerd Font', assume_emoji_presentation = true },
     { family = 'ヒラギノ角ゴシック' },
 })
 config.font_size = 17
