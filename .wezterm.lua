@@ -117,9 +117,52 @@ wezterm.on('window-config-reloaded', function(window)
 end)
 
 config.keys = ({
-  { key = "f", mods = "CMD|CTRL", action = wezterm.action.ToggleFullScreen },
+  {
+    key = "f",
+    mods = "CMD|CTRL",
+    action = wezterm.action.ToggleFullScreen
+  },
+  -- 横（上下）に分割
+  {
+    key = "s",
+    mods = "LEADER",
+    action = wezterm.action.SplitVertical { domain = "CurrentPaneDomain" },
+  },
+  -- 縦（左右）に分割
+  {
+    key = "v",
+    mods = "LEADER",
+    action = wezterm.action.SplitHorizontal { domain = "CurrentPaneDomain" },
+  },
+  -- ペインを閉じる
+  {
+    key = "x",
+    mods = "LEADER|CTRL",
+    action = wezterm.action.CloseCurrentPane { confirm = true },
+  },
+  -- ペインの移動（方向キー風）
+  {
+    key = "h",
+    mods = "LEADER",
+    action = wezterm.action.ActivatePaneDirection "Left",
+  },
+  {
+    key = "l",
+    mods = "LEADER",
+    action = wezterm.action.ActivatePaneDirection "Right",
+  },
+  {
+    key = "k",
+    mods = "LEADER",
+    action = wezterm.action.ActivatePaneDirection "Up",
+  },
+  {
+    key = "j",
+    mods = "LEADER",
+    action = wezterm.action.ActivatePaneDirection "Down",
+  },
 })
 
-
+config.leader = { key = "t", mods = "CTRL", timeout_milliseconds = 1000 }
 
 return config
