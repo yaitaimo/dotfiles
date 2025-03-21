@@ -21,7 +21,7 @@ vim.opt.rtp:prepend(lazypath)
 -- Make sure to setup `mapleader` and `maplocalleader` before
 -- loading lazy.nvim so that mappings are correct.
 -- This is also a good place to setup other settings (vim.opt)
-vim.g.mapleader = " "
+vim.g.mapleader = ";"
 vim.g.maplocalleader = "\\"
 
 -- 基本設定
@@ -82,10 +82,19 @@ require("lazy").setup({
         vim.cmd("colorscheme solarized") -- Solarized Light を適用
       end,
     },
+    {
+      'nvim-lualine/lualine.nvim',
+      lazy = false,
+      dependencies = { 'nvim-tree/nvim-web-devicons' },
+      config = function()
+        require('lualine').setup()
+      end,
+    }
   },
   -- automatically check for plugin updates
   checker = { enabled = true },
 })
+
 
 -- キーマッピング
 vim.api.nvim_set_keymap("n", "j", "gj", { noremap = true })
@@ -107,3 +116,13 @@ vim.api.nvim_set_keymap("i", "<Nul>", "<C-n>", { noremap = true })
 -- 消去
 vim.api.nvim_set_keymap("i", "<C-h>", "<BS>", { noremap = true })
 vim.api.nvim_set_keymap("i", "<C-d>", "<Del>", { noremap = true })
+
+-- ファイル編集
+vim.opt.fileencodings = "utf-8,sjis,cp932,iso-2022-jp,euc-jp"
+
+-- Netrw 表示スタイル（ツリー風）
+vim.g.netrw_liststyle = 3
+vim.g.netrw_winsize = 25
+
+-- current directory をファイラーで開く（:o）
+vim.keymap.set("n", "<Leader>o", ":Ex<CR>", { desc = "Open file explorer in current directory" })
