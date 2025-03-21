@@ -9,6 +9,7 @@ current_dir=$(pwd)
 # 公式サイト: https://brew.sh/
 # Homebrew は macOS 用のパッケージマネージャーで、コマンドラインツールやアプリケーションのインストールを簡単に行えます。
 brew install \
+  asdf \
   fish \
   fzf \
   ghq \
@@ -42,6 +43,8 @@ ln -sf "$current_dir/.gitconfig" ~/
 ln -sf "$current_dir/.gitignore_global" ~/.gitignore_global
 ln -sf "$current_dir/.globalrc" ~/
 ln -sf "$current_dir/.wezterm.lua" ~/
+ln -sf "$current_dir/starship.toml" ~/.config
+ln -sf "$current_dir/starship" ~/.config
 
 # NeoVim の設定
 # NeoVim は Vim の改良版で、拡張性とカスタマイズ性に優れたテキストエディタです。

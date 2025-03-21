@@ -1,0 +1,6 @@
+command_timeout = 2000
+
+[custom.asdf_missing]
+command = "~/.config/starship/asdf-check-missing.sh"
+when = true
+style = "bold red"
