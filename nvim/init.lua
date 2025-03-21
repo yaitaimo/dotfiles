@@ -59,7 +59,6 @@ require("lazy").setup({
     -- import your plugins
     {
       "github/copilot.vim",
-      lazy=false,
     },
     {
       "CopilotC-Nvim/CopilotChat.nvim",
@@ -75,8 +74,6 @@ require("lazy").setup({
     },
     {
       "ishan9299/nvim-solarized-lua", -- Lua版の Solarized
-      lazy = false, -- すぐに読み込む
-      priority = 1000, -- 高優先度で適用
       config = function()
         solarized_bkg = "light"
         vim.cmd("colorscheme solarized") -- Solarized Light を適用
@@ -84,10 +81,31 @@ require("lazy").setup({
     },
     {
       'nvim-lualine/lualine.nvim',
-      lazy = false,
       dependencies = { 'nvim-tree/nvim-web-devicons' },
       config = function()
         require('lualine').setup()
+      end,
+    },
+    {
+      "nvim-telescope/telescope.nvim",
+      dependencies = { "nvim-lua/plenary.nvim" },
+      config = function()
+        require("telescope").setup({
+          defaults = {
+            sorting_strategy = "ascending",
+            prompt_prefix = "🔍 ",
+            selection_caret = "➤ ",
+          },
+          pickers = {
+            buffers = {
+              sort_mru = true,
+              theme = "dropdown",
+            },
+            oldfiles = {
+              theme = "dropdown",
+            },
+          },
+        })
       end,
     }
   },
@@ -124,5 +142,60 @@ vim.opt.fileencodings = "utf-8,sjis,cp932,iso-2022-jp,euc-jp"
 vim.g.netrw_liststyle = 3
 vim.g.netrw_winsize = 25
 
+local builtin = require("telescope.builtin")
+local map = vim.keymap.set
+local utils = require("telescope.utils")
+
+
+-- Git ルート or カレントディレクトリを返す関数
+local function get_git_root()
+  -- 現在のファイルのパスを取得
+  local filepath = vim.fn.expand('%:p:h')
+  -- Git root を取得するために systemlist で git rev-parse を実行
+  local git_root = vim.fn.systemlist('git -C ' .. filepath .. ' rev-parse --show-toplevel')[1]
+
+  -- 結果が空でなければそれを返す、失敗時はカレントディレクトリ
+  if vim.v.shell_error == 0 then
+    return git_root
+  else
+    return vim.loop.cwd()
+  end
+end
+
 -- current directory をファイラーで開く（:o）
-vim.keymap.set("n", "<Leader>o", ":Ex<CR>", { desc = "Open file explorer in current directory" })
+map("n", "<Leader>o", builtin.find_files, { desc = "Find files (cwd)" })
+
+-- 🔍 Git プロジェクトのルートから検索（あれば）
+map("n", "<leader>p", function()
+  builtin.find_files({ cwd = get_git_root() })
+end, { desc = "Find files (git root or cwd)" })
+
+-- 📂 最近開いたファイル（oldfiles）
+map("n", "<leader>h", builtin.oldfiles, { desc = "Recent files" })
+
+-- 📑 バッファ一覧（開いているファイル）
+map("n", "<leader>b", builtin.buffers, { desc = "List buffers" })
+
+-- 🔍 live grep（ripgrep が必要）
+map("n", "<leader>g", builtin.live_grep, { desc = "Live grep" })
+
+-- 不要なスペースを削除
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*",
+  callback = function()
+    local save_cursor = vim.fn.getpos(".")
+    vim.cmd([[%s/\s\+$//e]])
+    vim.fn.setpos(".", save_cursor)
+  end,
+})
+
+-- .e で init.lua を開く
+vim.keymap.set("n", ".e", function()
+  vim.cmd("edit ~/.config/nvim/init.lua")
+end, { desc = "Edit init.lua" })
+
+-- .r で init.lua をリロード
+vim.keymap.set("n", ".r", function()
+  vim.cmd("source ~/.config/nvim/init.lua")
+  print("✅ init.lua reloaded!")
+end, { desc = "Reload init.lua" })
