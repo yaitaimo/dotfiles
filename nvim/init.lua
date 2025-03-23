@@ -88,7 +88,16 @@ require("lazy").setup({
     },
     {
       "nvim-telescope/telescope.nvim",
-      dependencies = { "nvim-lua/plenary.nvim" },
+      dependencies = {
+        { "nvim-lua/plenary.nvim" },
+        {
+          "nvim-telescope/telescope-fzf-native.nvim",
+          build = "make",
+          config = function()
+            require("telescope").load_extension("fzf")
+          end,
+        },
+      },
       config = function()
         require("telescope").setup({
           defaults = {
@@ -106,6 +115,42 @@ require("lazy").setup({
             },
           },
         })
+      end,
+    },
+    {
+      'akinsho/toggleterm.nvim',
+      version = "*",
+      config = function()
+        require("toggleterm").setup({
+          direction = "float",
+          open_mapping = nil,
+          float_opts = {
+            border = "curved",
+          }
+        })
+
+        vim.keymap.set("n", "<Leader>t", function()
+          require("toggleterm").toggle(1)
+        end, { noremap = true, silent = true, desc = "🖥️ ターミナルをトグル" })
+
+        local Terminal = require("toggleterm.terminal").Terminal
+
+        local lazygit = Terminal:new({
+          cmd = "lazygit",
+          hidden = true,
+          direction = "float",
+          on_open = function(term)
+            vim.cmd("startinsert!")
+          end,
+          on_close = function(term)
+            vim.cmd("startinsert!")
+          end,
+          count = 99, -- 他と被らない番号
+        })
+
+        vim.keymap.set("n", "<Leader>g", function()
+          lazygit:toggle()
+        end, { desc = "🌀 Lazygit をトグル" })
       end,
     }
   },
@@ -177,7 +222,28 @@ map("n", "<leader>h", builtin.oldfiles, { desc = "Recent files" })
 map("n", "<leader>b", builtin.buffers, { desc = "List buffers" })
 
 -- 🔍 live grep（ripgrep が必要）
-map("n", "<leader>g", builtin.live_grep, { desc = "Live grep" })
+map("n", "<leader>lg", builtin.live_grep, { desc = "Live grep" })
+
+-- 不要なスペースを削除
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*",
+  callback = function()
+    local save_cursor = vim.fn.getpos(".")
+    vim.cmd([[%s/\s\+$//e]])
+    vim.fn.setpos(".", save_cursor)
+  end,
+})
+
+-- .e で init.lua を開く
+vim.keymap.set("n", ".e", function()
+  vim.cmd("edit ~/.config/nvim/init.lua")
+end, { desc = "Edit init.lua" })
+
+-- .r で init.lua をリロード
+vim.keymap.set("n", ".r", function()
+  vim.cmd("source ~/.config/nvim/init.lua")
+  print("✅ init.lua reloaded!")
+end, { desc = "Reload init.lua" })
 
 -- 不要なスペースを削除
 vim.api.nvim_create_autocmd("BufWritePre", {
