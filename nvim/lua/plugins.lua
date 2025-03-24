@@ -65,18 +65,43 @@ require("lazy").setup({
       end,
     },
     {
-      "github/copilot.vim",
+      "zbirenbaum/copilot.lua",
+      cmd = "Copilot",
+      event = "InsertEnter",
+      config = function()
+        require("copilot").setup({
+          suggestion = {
+            enabled = true,      -- 👈 インライン補完を有効化
+            auto_trigger = true, -- 自動的に補完候補を表示
+            keymap = {
+              accept = "<Tab>",  -- 候補の確定
+              dismiss = "<Esc>", -- 候補の破棄
+            },
+          },
+          filetypes = {
+            markdown = true,
+          },
+          panel = {
+
+            enabled = false -- CopilotのサイドパネルUIはオフ（必要に応じて）
+          },
+        })
+      end,
     },
     {
       "CopilotC-Nvim/CopilotChat.nvim",
       dependencies = {
-        { "github/copilot.vim" }, -- or zbirenbaum/copilot.lua
+        { "zbirenbaum/copilot.lua" },
+        { "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
       },
-      build = "make tiktoken", -- Only on MacOS or Linux
+      build = "make tiktoken",                          -- Only on MacOS or Linux
+      opts = {},
       config = function()
         require("CopilotChat").setup({
+          on_open = function()
             vim.cmd("startinsert!")
           end,
+          on_close = function()
             vim.cmd("startinsert!")
           end,
         })
@@ -99,7 +124,9 @@ require("lazy").setup({
       end,
     },
     {
+      "ishan9299/nvim-solarized-lua",
       config = function()
+        vim.cmd("colorscheme solarized")
       end,
     },
     {
@@ -256,6 +283,7 @@ require("lazy").setup({
           on_open = function()
             vim.cmd("startinsert!")
           end,
+          on_close = function()
             vim.cmd("startinsert!")
           end,
           count = 99, -- 他と被らない番号
@@ -265,6 +293,10 @@ require("lazy").setup({
           lazygit:toggle()
         end, { desc = "🌀 Lazygit をトグル" })
       end,
-    }
+    },
+    {
+      "numToStr/Comment.nvim",
+      opts = {},
+    },
   },
 })
