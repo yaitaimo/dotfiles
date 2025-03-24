@@ -1,5 +1,7 @@
+local M = {}
+
 -- Git ルート or カレントパスを返す関数
-function get_git_root()
+function M.get_git_root()
   -- 現在のファイルのパスを取得
   local filepath = vim.fn.expand('%:p:h')
   -- Git root を取得するために systemlist で git rev-parse を実行
@@ -12,3 +14,5 @@ function get_git_root()
     return vim.loop.cwd()
   end
 end
+
+return M
