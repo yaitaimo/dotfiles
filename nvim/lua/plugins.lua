@@ -1,7 +1,48 @@
 -- Setup lazy.nvim
 require("lazy").setup({
   spec = {
-    -- import your plugins
+    {
+      "williamboman/mason.nvim",
+      config = true,
+    },
+    {
+      "williamboman/mason-lspconfig.nvim",
+      dependencies = { "neovim/nvim-lspconfig", "williamboman/mason.nvim" },
+      config = function()
+        require("mason-lspconfig").setup({
+          ensure_installed = {
+            "lua_ls",   -- Lua
+            "pyright",  -- Python
+            "ts_ls",    -- TypeScript, JavaScript
+            "marksman", -- Markdown
+            "html",     -- HTML
+            "cssls",    -- CSS
+            "jsonls",   -- JSON
+            "yamlls",   -- YAML
+            "bashls",   -- Bash
+            "vimls",    -- Vim
+            "dockerls", -- Docker
+            "gopls",    -- Go
+            "graphql",  -- GraphQL
+          },
+        })
+      end,
+    },
+    {
+      "neovim/nvim-lspconfig",
+      config = function()
+        local lspconfig = require("lspconfig")
+        lspconfig.lua_ls.setup({
+          settings = {
+            Lua = {
+              diagnostics = {
+                globals = { "vim" },
+              },
+            },
+          },
+        })
+      end,
+    },
     {
       "github/copilot.vim",
     },
@@ -13,10 +54,8 @@ require("lazy").setup({
       build = "make tiktoken", -- Only on MacOS or Linux
       config = function()
         require("CopilotChat").setup({
-          on_open = function(term)
             vim.cmd("startinsert!")
           end,
-          on_close = function(term)
             vim.cmd("startinsert!")
           end,
         })
@@ -39,10 +78,7 @@ require("lazy").setup({
       end,
     },
     {
-      "ishan9299/nvim-solarized-lua", -- Lua版の Solarized
       config = function()
-        solarized_bkg = "light"
-        vim.cmd("colorscheme solarized") -- Solarized Light を適用
       end,
     },
     {
