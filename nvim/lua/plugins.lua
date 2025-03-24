@@ -100,6 +100,66 @@ require("lazy").setup({
           end,
         },
       },
+      keys = {
+        {
+          "<leader>h",
+          function()
+            require("telescope.builtin").help_tags()
+          end,
+          desc = "Help tags",
+        },
+        -- current directory をファイラーで開く（:o）
+        {
+          "<Leader>o",
+          function()
+            require("telescope").extensions.file_browser.file_browser({
+              cwd = vim.fn.expand("%:p:h"),
+              initial_mode = "normal",
+              hidden = true,
+            })
+          end, { desc = "FileBrowser (cwd)" }
+        },
+        -- 🔍 Git プロジェクトのルートから検索（あれば）
+        {
+          "<leader>p",
+          function()
+            local utils = require("utils")
+            require("telescope").extensions.file_browser.file_browser({
+              cwd = utils.get_git_root(),
+              initial_mode = "normal",
+              hidden = true,
+            })
+          end, { desc = "FileBrowser (git root or cwd)" }
+        },
+        -- 📂 最近開いたファイル（oldfiles）
+        {
+          "<leader>fh",
+          function()
+            require("telescope.builtin").oldfiles()
+          end, { desc = "Recent files" }
+        },
+        -- 📑 バッファ一覧（開いているファイル）
+        {
+          "<leader>b",
+          function()
+            require("telescope.builtin").buffers()
+          end, { desc = "List buffers" }
+        },
+        -- 🔍 live grep（ripgrep が必要）
+        {
+          "<leader>lg",
+          function()
+            require("telescope.builtin").live_grep()
+          end, { desc = "Live grep" }
+        },
+        -- Diagnostic list
+        {
+          "<leader>e",
+          function()
+            require("telescope.builtin").diagnostics()
+          end, { desc = "Telescope diagnostics" }
+        },
+      },
       config = function()
         require("telescope").setup({
           defaults = {
@@ -152,7 +212,7 @@ require("lazy").setup({
           }
         })
 
-        vim.keymap.set("n", "<Leader>tt", function()
+        vim.keymap.set("n", "<leader>tt", function()
           require("toggleterm").toggle(1)
         end, { noremap = true, silent = true, desc = "🖥️ ターミナルをトグル" })
 
@@ -172,10 +232,9 @@ require("lazy").setup({
           cmd = "lazygit",
           hidden = true,
           direction = "float",
-          on_open = function(term)
+          on_open = function()
             vim.cmd("startinsert!")
           end,
-          on_close = function(term)
             vim.cmd("startinsert!")
           end,
           count = 99, -- 他と被らない番号
@@ -187,6 +246,4 @@ require("lazy").setup({
       end,
     }
   },
-  -- automatically check for plugin updates
-  checker = { enabled = true },
 })
