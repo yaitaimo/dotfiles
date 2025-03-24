@@ -15,14 +15,17 @@ brew install \
   ghq \
   git \
   git-extras \
+  gpg \
   jq \
   neovim \
   nkf \
   reattach-to-user-namespace \
   starship \
+  tar \
   tmux \
   tree \
   luarocks
+
 
 # GUIアプリケーションのインストール
 brew install \
@@ -45,11 +48,7 @@ ln -sf "$current_dir/.globalrc" ~/
 ln -sf "$current_dir/.wezterm.lua" ~/
 ln -sf "$current_dir/starship.toml" ~/.config
 ln -sf "$current_dir/starship" ~/.config
-
-# NeoVim の設定
-# NeoVim は Vim の改良版で、拡張性とカスタマイズ性に優れたテキストエディタです。
-mkdir -p ~/.config/nvim
-ln -sf "$current_dir/.vimrc" ~/.config/nvim/init.vim
+ln -sf "$current_dir/nvim" ~/.config/
 
 # fish シェルをデフォルトに設定
 # fish は使いやすさを重視したコマンドラインシェルです。
@@ -68,4 +67,3 @@ fisher add decors/fish-ghq
 
 # フォントをインストール
 # https://www.nerdfonts.com/font-downloads
-bash bin/install_font.sh
