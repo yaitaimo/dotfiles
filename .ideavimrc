@@ -46,6 +46,9 @@ nnoremap <leader>o   :action SelectInProjectView<CR>
 nnoremap <leader>r   :action ReformatCode<CR>
 nnoremap <leader>t   :action ActivateTerminalToolWindow<CR>
 
+nnoremap <leader>c :action copilot.chat.show<CR>
+vnoremap <leader>c :action copilot.chat.inline<CR>
+
 inoremap <C-a> <Home>
 inoremap <C-e> <End>
 inoremap <C-f> <Right>
