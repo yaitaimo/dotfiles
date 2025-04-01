@@ -31,6 +31,7 @@ nnoremap <leader>b   :action Annotate<CR>
 nnoremap <leader>c   :action ActivateGitHubCopilotChatToolWindow<CR>
 vnoremap <leader>c   :action OpenInlineChatAction<CR>
 nnoremap <leader>d   :action Compare.SameVersion<CR>
+nnoremap <leader>e   :action GotoNextError<CR>
 nnoremap <leader>efn :action RenameFile<CR>
 nnoremap <leader>er  :action RefactoringMenu<CR>
 nnoremap <leader>fu  :action FindUsages<CR>
@@ -39,11 +40,15 @@ nnoremap <leader>gd  :action Github.Pull.Request.Review.In.Editor.Toggle<CR>
 nnoremap <leader>gh  :action Vcs.ShowTabbedFileHistory<CR>
 nnoremap <leader>glh :action Vcs.ShowHistoryForBlock<CR>
 nnoremap <leader>gr  :action Github.Pull.Request.Show.In.Toolwindow<CR>
-nnoremap <leader>je  :action GotoNextError<CR>
+nnoremap <leader>h   :action RecentFiles<CR>
 nnoremap <leader>jts :action XDebugger.JumpToSource<CR>
 nnoremap <leader>l   :action JumpToLastChange<CR>
+nnoremap <leader>m   :action ToggleBookmark<CR>
+nnoremap <leader>M   :action ToggleBookmark<CR>
 nnoremap <leader>o   :action SelectInProjectView<CR>
 nnoremap <leader>r   :action ReformatCode<CR>
+nnoremap <leader>re  :action RenameElement<CR>
+nnoremap <leader>s   :action Switcher<CR>
 nnoremap <leader>t   :action ActivateTerminalToolWindow<CR>
 
 nnoremap <leader>c :action copilot.chat.show<CR>
