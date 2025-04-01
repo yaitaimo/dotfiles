@@ -18,6 +18,7 @@ alias la 'ls -lahG'
 alias ll 'ls -lhG'
 alias ls 'ls -hG'
 alias v 'nvim'
+alias lg 'lazygit'
 
 # ローカル設定
 set local_config_path ~/.config/fish/local.fish
