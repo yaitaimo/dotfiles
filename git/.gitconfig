@@ -20,7 +20,7 @@
     lsd = diff --name-only
     ls = ls-files
     co = checkout
-    cob = checkout -b
+    cob = "!fish --no-config -c new-branch"
     # commit
     c = commit -m
     cm = commit -m

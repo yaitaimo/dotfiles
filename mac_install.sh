@@ -42,8 +42,8 @@ ln -sf "$current_dir/fish/fishfile" ~/.config/fish/fishfile
 ln -sf "$current_dir/.vimrc" ~/
 ln -sf "$current_dir/.vim" ~/
 ln -sf "$current_dir/.tmux.conf" ~/
-ln -sf "$current_dir/.gitconfig" ~/
-ln -sf "$current_dir/.gitignore_global" ~/.gitignore_global
+ln -sf "$current_dir/git/.gitconfig" ~/
+ln -sf "$current_dir/git/.gitignore_global" ~/.gitignore_global
 ln -sf "$current_dir/.globalrc" ~/
 ln -sf "$current_dir/.wezterm.lua" ~/
 ln -sf "$current_dir/starship.toml" ~/.config
