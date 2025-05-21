@@ -3,8 +3,8 @@ local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
 
 config.font = wezterm.font_with_fallback({
-    { family = 'RobotoMono Nerd Font' },
-    { family = 'ヒラギノ角ゴシック' },
+  { family = 'RobotoMono Nerd Font' },
+  { family = 'ヒラギノ角ゴシック' },
 })
 config.font_size = 17
 
@@ -125,13 +125,13 @@ config.keys = ({
   -- 横（上下）に分割
   {
     key = "s",
-    mods = "LEADER",
+    mods = "LEADER|CTRL",
     action = wezterm.action.SplitVertical { domain = "CurrentPaneDomain" },
   },
   -- 縦（左右）に分割
   {
     key = "v",
-    mods = "LEADER",
+    mods = "LEADER|CTRL",
     action = wezterm.action.SplitHorizontal { domain = "CurrentPaneDomain" },
   },
   -- ペインを閉じる
@@ -143,22 +143,22 @@ config.keys = ({
   -- ペインの移動（方向キー風）
   {
     key = "h",
-    mods = "LEADER",
+    mods = "LEADER|CTRL",
     action = wezterm.action.ActivatePaneDirection "Left",
   },
   {
     key = "l",
-    mods = "LEADER",
+    mods = "LEADER|CTRL",
     action = wezterm.action.ActivatePaneDirection "Right",
   },
   {
     key = "k",
-    mods = "LEADER",
+    mods = "LEADER|CTRL",
     action = wezterm.action.ActivatePaneDirection "Up",
   },
   {
     key = "j",
-    mods = "LEADER",
+    mods = "LEADER|CTRL",
     action = wezterm.action.ActivatePaneDirection "Down",
   },
 })
