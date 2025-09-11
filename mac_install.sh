@@ -9,7 +9,6 @@ current_dir=$(pwd)
 # 公式サイト: https://brew.sh/
 # Homebrew は macOS 用のパッケージマネージャーで、コマンドラインツールやアプリケーションのインストールを簡単に行えます。
 brew install \
-  asdf \
   fish \
   fzf \
   ghq \
@@ -17,6 +16,7 @@ brew install \
   git-extras \
   gpg \
   jq \
+  mise \
   neovim \
   nkf \
   reattach-to-user-namespace \
