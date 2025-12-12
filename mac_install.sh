@@ -50,6 +50,9 @@ ln -sf "$current_dir/starship.toml" ~/.config
 ln -sf "$current_dir/starship" ~/.config
 ln -sf "$current_dir/nvim" ~/.config/
 
+midkr -p ~/bin
+ln -sf "$current_dir/git/scripts/new-branch.sh" ~/bin/git-new-branch
+
 # fish シェルをデフォルトに設定
 # fish は使いやすさを重視したコマンドラインシェルです。
 sudo sh -c "echo '/opt/homebrew/bin/fish' >> /etc/shells"

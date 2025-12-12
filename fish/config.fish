@@ -28,3 +28,8 @@ set local_config_path ~/.config/fish/local.fish
 if test -e $local_config_path
     source $local_config_path
 end
+
+# ~/bin を PATH に追加
+if test -e ~/bin
+    set -x PATH $PATH ~/bin
+end
