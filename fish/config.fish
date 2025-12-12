@@ -13,12 +13,15 @@ set -x FZF_DEFAULT_COMMAND 'ag -g ""'
 # エイリアス設定
 alias dc 'docker compose'
 alias g 'git'
+alias gs 'git status'
+alias gsc 'git switch --create'
 alias grep 'grep --color=auto'
 alias la 'ls -lahG'
 alias ll 'ls -lhG'
 alias ls 'ls -hG'
 alias v 'nvim'
 alias lg 'lazygit'
+alias we 'wezterm cli spawn --cwd "$(pwd)" --new-window'
 
 # ローカル設定
 set local_config_path ~/.config/fish/local.fish
