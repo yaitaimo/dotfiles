@@ -57,4 +57,29 @@ return {
       end, { desc = "💬 このコードを修正" })
     end,
   },
+  -- codex.nvim: OpenAI Codex CLI integration (trial)
+  {
+    "johnseth97/codex.nvim",
+    -- Lazy-load on its user commands; falls back nicely if not used
+    cmd = { "Codex", "CodexChat", "CodexAgent" },
+    -- Minimal opts – let the CLI handle most configuration
+    opts = {
+      bin = "codex", -- assumes Homebrew-installed codex in PATH
+    },
+    keys = {
+      { "<leader>ac", function()
+          -- Prefer plugin command if available
+          local ok = pcall(vim.cmd, "CodexChat")
+          if not ok then
+            vim.notify("codex.nvim is not ready. Use <leader>atc (ToggleTerm fallback)", vim.log.levels.WARN)
+          end
+        end, desc = "Codex Chat" },
+      { "<leader>ag", function()
+          local ok = pcall(vim.cmd, "CodexAgent")
+          if not ok then
+            vim.notify("codex.nvim is not ready. Use <leader>atg (ToggleTerm fallback)", vim.log.levels.WARN)
+          end
+        end, desc = "Codex Agent" },
+    },
+  },
 }

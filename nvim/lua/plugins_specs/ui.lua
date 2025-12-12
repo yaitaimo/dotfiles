@@ -63,6 +63,51 @@ return {
       vim.keymap.set("n", "<Leader>g", function()
         lazygit:toggle()
       end, { desc = "🌀 Lazygit をトグル" })
+
+      -- codex CLI fallback launchers (Chat / Agent) via ToggleTerm
+      local function git_root_or_cwd()
+        local ok, utils = pcall(require, "utils")
+        if ok and utils and utils.get_git_root then
+          return utils.get_git_root()
+        end
+        return vim.loop.cwd()
+      end
+
+      local codex_chat = Terminal:new({
+        cmd = "codex chat",
+        hidden = true,
+        direction = "float",
+        dir = git_root_or_cwd(),
+        count = 21, -- reserved slot
+        on_open = function()
+          vim.cmd("startinsert!")
+        end,
+        on_close = function()
+          vim.cmd("startinsert!")
+        end,
+      })
+
+      local codex_agent = Terminal:new({
+        cmd = "codex agent",
+        hidden = true,
+        direction = "float",
+        dir = git_root_or_cwd(),
+        count = 22, -- reserved slot
+        on_open = function()
+          vim.cmd("startinsert!")
+        end,
+        on_close = function()
+          vim.cmd("startinsert!")
+        end,
+      })
+
+      -- AI group (ToggleTerm fallbacks)
+      vim.keymap.set("n", "<leader>atc", function()
+        codex_chat:toggle()
+      end, { desc = "🤖 Codex Chat (ToggleTerm)" })
+      vim.keymap.set("n", "<leader>atg", function()
+        codex_agent:toggle()
+      end, { desc = "🤖 Codex Agent (ToggleTerm)" })
     end,
   },
 
