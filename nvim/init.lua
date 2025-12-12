@@ -39,7 +39,9 @@ vim.opt.cursorline = true
 vim.opt.termguicolors = true
 
 -- 折り畳み設定
-vim.opt.foldmethod = "marker"
+-- Treesitter 連携に切り替え
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 
 -- タブ・インデント設定
 vim.opt.expandtab = true

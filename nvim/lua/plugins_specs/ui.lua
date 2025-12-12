@@ -71,4 +71,10 @@ return {
     "numToStr/Comment.nvim",
     opts = {},
   },
+
+  -- Which-key: show available keybindings and their descriptions
+  {
+    "folke/which-key.nvim",
+    opts = {},
+  },
 }
