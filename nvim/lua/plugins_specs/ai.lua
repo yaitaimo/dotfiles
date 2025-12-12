@@ -74,7 +74,7 @@ return {
       model       = nil,        -- Optional: pass a string to use a specific model (e.g., 'o3-mini')
       autoinstall = false,       -- Automatically install the Codex CLI if not found
       panel       = false,      -- Open Codex in a side-panel (vertical split) instead of floating window
-      use_buffer  = true,      -- Capture Codex stdout into a normal buffer instead of a terminal buffer
+      use_buffer  = false,
     },
     keys = {
       {
