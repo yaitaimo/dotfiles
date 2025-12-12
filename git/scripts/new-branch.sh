@@ -15,14 +15,26 @@ NEW_BRANCH="$1"
 echo "🔒 ステージ済・未ステージ変更をstash中..."
 git stash push -u -m "auto-stash-for-new-branch"
 
-# ベースブランチ候補の探索（ローカル）
+# ベースブランチ候補の探索（リモート優先）
 BASE_BRANCH=""
-for b in develop master main; do
-  if git show-ref --verify --quiet refs/heads/"$b"; then
-    BASE_BRANCH="$b"
-    break
-  fi
-done
+
+# origin のデフォルトブランチ (GitHub 側) を取得
+BASE_BRANCH="$(git symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null | sed 's|^origin/||')"
+
+# init.defaultBranch が設定されていれば使用
+if [ -z "$BASE_BRANCH" ]; then
+  BASE_BRANCH="$(git config --get init.defaultBranch || true)"
+fi
+
+# それでも決まらなければローカルの候補順に探索
+if [ -z "$BASE_BRANCH" ]; then
+  for b in develop master main; do
+    if git show-ref --verify --quiet refs/heads/"$b"; then
+      BASE_BRANCH="$b"
+      break
+    fi
+  done
+fi
 
 if [ -z "$BASE_BRANCH" ]; then
   echo "⚠️ develop / master / main のいずれのブランチも見つかりませんでした。"
