@@ -7,24 +7,8 @@ return {
     },
     config = function()
       require("mason").setup({})
-      require("mason-lspconfig").setup({
-        ensure_installed = {
-          "lua_ls",   -- Lua
-          "pyright",  -- Python
-          "ts_ls",    -- TypeScript, JavaScript
-          "marksman", -- Markdown
-          "html",     -- HTML
-          "cssls",    -- CSS
-          "jsonls",   -- JSON
-          "yamlls",   -- YAML
-          "bashls",   -- Bash
-          "vimls",    -- Vim
-          "dockerls", -- Docker
-          "gopls",    -- Go
-          "graphql",  -- GraphQL
-        },
-      })
 
+      -- Define on_attach before using it in handlers
       local on_attach = function(_, _)
         local map = function(mode, lhs, rhs, desc)
           vim.keymap.set(mode, lhs, rhs, { noremap = true, silent = true, desc = desc })
@@ -41,25 +25,44 @@ return {
       end
 
       local lspconfig = require("lspconfig")
+      local mason_lspconfig = require("mason-lspconfig")
 
-      require("mason-lspconfig").setup_handlers({
-        function(server_name)
-          lspconfig[server_name].setup({
-            on_attach = on_attach,
-          })
-        end,
-        ["lua_ls"] = function()
-          lspconfig.lua_ls.setup({
-            on_attach = on_attach,
-            settings = {
-              Lua = {
-                diagnostics = {
-                  globals = { "vim" },
+      mason_lspconfig.setup({
+        ensure_installed = {
+          "lua_ls",    -- Lua
+          "pyright",   -- Python
+          "ts_ls",     -- TypeScript, JavaScript (new name in lspconfig)
+          "marksman",  -- Markdown
+          "html",      -- HTML
+          "cssls",     -- CSS
+          "jsonls",    -- JSON
+          "yamlls",    -- YAML
+          "bashls",    -- Bash
+          "vimls",     -- Vim
+          "dockerls",  -- Docker
+          "gopls",     -- Go
+          "graphql",   -- GraphQL
+        },
+        -- Use handlers within setup (works across mason-lspconfig versions)
+        handlers = {
+          function(server_name)
+            if lspconfig[server_name] then
+              lspconfig[server_name].setup({ on_attach = on_attach })
+            end
+          end,
+          ["lua_ls"] = function()
+            lspconfig.lua_ls.setup({
+              on_attach = on_attach,
+              settings = {
+                Lua = {
+                  diagnostics = {
+                    globals = { "vim" },
+                  },
                 },
               },
-            },
-          })
-        end,
+            })
+          end,
+        },
       })
     end,
   },
