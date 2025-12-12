@@ -41,7 +41,7 @@
     lg3 = log --oneline --graph --decorate -3
     last = log -1 HEAD
     new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
-    nb = "!bash -c git-new-branch"
+    nb = "!f() { git-new-branch $1; }; f"
     openpr = "!f() { hub browse -- `git log --merges --oneline --reverse --ancestry-path $1...master | grep 'Merge pull request #' | head -n 1 | cut -f5 -d' ' | sed -e 's%#%pull/%'`; }; f"
     showpr = "!f() { git log --merges --oneline --reverse --ancestry-path $1...master | grep 'Merge pull request #' | head -n 1; }; f"
     gr = grep -n
