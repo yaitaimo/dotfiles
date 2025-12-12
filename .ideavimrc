@@ -10,7 +10,7 @@ set clipboard+=unnamed
 set NERDTree
 set easymotion
 " set surround
-" set multiple-cursors
+set multiple-cursors
 " set commentary
 " set ReplaceWithRegister
 " set argtextobj
