@@ -61,9 +61,10 @@ curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fi
 fish -c fisher
 
 # fish のプラグインをインストール
-fisher add jethrokuan/z
-fisher add jethrokuan/fzf
-fisher add decors/fish-ghq
+fisher install jethrokuan/z
+fisher install jethrokuan/fzf
+fisher install decors/fish-ghq
+fisher install wfxr/forgit
 
 # フォントをインストール
 # https://www.nerdfonts.com/font-downloads
