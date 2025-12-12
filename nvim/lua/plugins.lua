@@ -37,7 +37,7 @@ require("lazy").setup({
           map("n", "<leader>rn", vim.lsp.buf.rename, "Rename Symbol")
           map("n", "<leader>ca", vim.lsp.buf.code_action, "Code Action")
           map("n", "<leader>f", function()
-            vim.lsp.buf.bormat({ async = true })
+            vim.lsp.buf.format({ async = true })
           end, "Format")
         end
 
@@ -71,7 +71,7 @@ require("lazy").setup({
       config = function()
         require("copilot").setup({
           suggestion = {
-            enabled = true,      -- 👈 インライン補完を有効化
+            enabled = true,      -- インライン補完を有効化
             auto_trigger = true, -- 自動的に補完候補を表示
             keymap = {
               accept = "<Tab>",  -- 候補の確定
@@ -82,8 +82,7 @@ require("lazy").setup({
             markdown = true,
           },
           panel = {
-
-            enabled = false -- CopilotのサイドパネルUIはオフ（必要に応じて）
+            enabled = false, -- CopilotのサイドパネルUIはオフ（必要に応じて）
           },
         })
       end,
@@ -242,6 +241,8 @@ require("lazy").setup({
             },
           },
         })
+        -- Load extensions
+        pcall(require("telescope").load_extension, "file_browser")
       end,
     },
     {
