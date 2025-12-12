@@ -20,7 +20,7 @@
     lsd = diff --name-only
     ls = ls-files
     co = checkout
-    cob = "!fish --no-config -c new-branch"
+    cob = "!f() { git stash | git checkout $1 | git stash pop; }; f"
     # commit
     c = commit -m
     cm = commit -m
@@ -54,3 +54,5 @@
     quotepath = false
 [pull]
 	ff = only
+[maintenance]
+	repo = /Users/hokan_134/ghq/github.com/hokan-inc/hokan-suitou-v3
