@@ -21,7 +21,6 @@ brew install \
   nkf \
   reattach-to-user-namespace \
   starship \
-  tar \
   tmux \
   tree \
   luarocks
@@ -50,7 +49,7 @@ ln -sf "$current_dir/starship.toml" ~/.config
 ln -sf "$current_dir/starship" ~/.config
 ln -sf "$current_dir/nvim" ~/.config/
 
-midkr -p ~/bin
+mkdir -p ~/bin
 ln -sf "$current_dir/git/scripts/new-branch.sh" ~/bin/git-new-branch
 
 # fish シェルをデフォルトに設定
