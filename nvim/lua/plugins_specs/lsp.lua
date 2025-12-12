@@ -36,8 +36,8 @@ return {
         map("n", "<leader>rn", vim.lsp.buf.rename, "Rename Symbol")
         map("n", "<leader>ca", vim.lsp.buf.code_action, "Code Action")
         map("n", "<leader>f", function()
-          vim.lsp.buf.format({ async = true })
-        end, "Format")
+          require("conform").format({ lsp_fallback = true, async = true })
+        end, "Format (Conform)")
       end
 
       local lspconfig = require("lspconfig")
