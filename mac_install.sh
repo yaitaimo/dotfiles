@@ -56,7 +56,6 @@ ensure_brew_cask() {
   brew install --cask "$pkg"
 }
 
-ensure_brew_formula codex
 ensure_brew_formula fish
 ensure_brew_formula fzf
 ensure_brew_formula ghq
@@ -74,6 +73,7 @@ ensure_brew_formula tree
 ensure_brew_formula luarocks
 
 # GUIアプリケーションのインストール
+ensure_brew_cask codex
 ensure_brew_cask wezterm
 
 # 以下のアプリは手動でインストールする必要があります。App Storeや各公式サイトからダウンロードしてください。
