@@ -29,7 +29,7 @@ brew install \
 
 # GUIアプリケーションのインストール
 brew install \
-  wezterm
+  wezterm@nightly
 
 # 以下のアプリは手動でインストールする必要があります。App Storeや各公式サイトからダウンロードしてください。
 # 例: 1Password, Better Touch Tool, Discord, Notion, Raycast, Spotify, AppCleaner, Bear, Docker for Desktop, Google Chrome, Google Japanese IME, IntelliJ IDEA, Numi, SiteSucker, Slack
