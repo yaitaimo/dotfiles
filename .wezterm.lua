@@ -12,47 +12,12 @@ config.command_palette_font_size = 18
 config.use_ime = true
 config.macos_forward_to_ime_modifier_mask = "SHIFT|CTRL"
 config.window_background_opacity = 1
-config.hide_tab_bar_if_only_one_tab = true
+config.hide_tab_bar_if_only_one_tab = false
+config.enable_tab_bar = true
 config.show_new_tab_button_in_tab_bar = false
 config.show_close_tab_button_in_tabs = false
 config.window_decorations = "RESIZE"
-
-local function run_git(cwd, args)
-  return wezterm.run_child_process({ "git", "-C", cwd, table.unpack(args) })
-end
-
-local function git_repo_slug(pane)
-  local cwd_uri = pane:get_current_working_dir()
-  if not cwd_uri then
-    return nil
-  end
-  local cwd = type(cwd_uri) == "string" and cwd_uri or (cwd_uri.file_path or tostring(cwd_uri))
-  if not cwd or cwd == "" then
-    return nil
-  end
-  cwd = cwd:gsub("^file://", "")
-
-  local workspace_match = cwd:match("^/Users/[^/]+/Workspace/([^/]+)")
-  if workspace_match and workspace_match ~= "" then
-    return workspace_match
-  end
-
-  local ok, out = run_git(cwd, { "config", "--get", "remote.origin.url" })
-  if ok and out then
-    local url = out:gsub("%s+$", "")
-    local slug = url:match("github.com[:/](.-)%.git$") or url:match("github.com[:/](.+)$")
-    if slug and slug ~= "" then
-      return slug
-    end
-  end
-
-  local ok_top, out_top = run_git(cwd, { "rev-parse", "--show-toplevel" })
-  if not ok_top or not out_top then
-    return nil
-  end
-  local path = out_top:gsub("%s+$", "")
-  return path:match("([^/]+)$")
-end
+config.status_update_interval = 1000
 
 local function scheme_for_appearance(appearance)
   if appearance:find 'Dark' then
@@ -101,6 +66,13 @@ local function tab_colors_for_appearance(appearance)
   return tab_colors.light
 end
 
+local workspace_state = wezterm.GLOBAL.workspace_state or {
+  current = nil,
+  last = nil,
+  last_toast = nil,
+}
+wezterm.GLOBAL.workspace_state = workspace_state
+
 -- macOSの外観に応じたテーマとタブ色を設定
 do
   local appearance = wezterm.gui.get_appearance()
@@ -142,13 +114,31 @@ config.keys = {
     action = wezterm.action.ShowLauncherArgs { flags = "FUZZY|WORKSPACES" }
   },
   {
-    key = "o",
-    mods = "CMD|SHIFT",
+    key = "s",
+    mods = "LEADER",
+    action = wezterm.action.ShowLauncherArgs { flags = "FUZZY|WORKSPACES" }
+  },
+  {
+    key = "t",
+    mods = "LEADER",
+    action = wezterm.action_callback(function(window, pane)
+      local last = workspace_state.last
+      if last and last ~= "" then
+        window:perform_action(
+          wezterm.action.SwitchToWorkspace { name = last },
+          pane
+        )
+      end
+    end)
+  },
+  {
+    key = "n",
+    mods = "LEADER",
     action = wezterm.action_callback(function(window, pane)
       window:perform_action(
         wezterm.action.PromptInputLine {
           description = "Workspace name",
-          initial_value = git_repo_slug(pane) or "",
+          initial_value = "",
           action = wezterm.action_callback(function(window, pane, line)
             local name = line
             if name and name ~= "" then
@@ -210,26 +200,51 @@ config.keys = {
 }
 
 wezterm.on('update-right-status', function(window, pane)
+  local current = window:active_workspace()
+  local prev_current = workspace_state.current
+  if current and current ~= "" and current ~= prev_current then
+    if prev_current and prev_current ~= "" then
+      workspace_state.last = prev_current
+    end
+    workspace_state.current = current
+    if window.toast_notification and workspace_state.last_toast ~= current then
+      window:toast_notification("Workspace", current, nil, 1500)
+      workspace_state.last_toast = current
+    end
+  end
+
+  local bg = "#073642"
+  local fg = "#839496"
   local colors = window:effective_config().colors
-  local inactive_tab = colors.tab_bar.inactive_tab
-  local bg = inactive_tab.bg_color
-  local fg = inactive_tab.fg_color
+  if colors and colors.tab_bar and colors.tab_bar.inactive_tab then
+    local inactive_tab = colors.tab_bar.inactive_tab
+    if inactive_tab.bg_color and inactive_tab.fg_color then
+      bg = inactive_tab.bg_color
+      fg = inactive_tab.fg_color
+    end
+  end
+
   local items = {}
   local workspace = window:active_workspace()
   if workspace and workspace ~= "" then
     table.insert(items, workspace)
   end
+
   local key_table = window:active_key_table()
   if key_table and key_table ~= "" then
     table.insert(items, 'TABLE: ' .. key_table)
   end
-  local text = table.concat(items, ' | ')
-  local padded = text ~= "" and (text .. "  ") or ""
-  window:set_right_status(wezterm.format({
-    { Background = { Color = bg } },
-    { Foreground = { Color = fg } },
-    { Text = padded },
-  }))
+
+  local text = table.concat(items, " | ")
+  if text ~= "" then
+    window:set_right_status(wezterm.format({
+      { Background = { Color = bg } },
+      { Foreground = { Color = fg } },
+      { Text = " " .. text .. " " },
+    }))
+  else
+    window:set_right_status("")
+  end
 end)
 
 config.key_tables = {
