@@ -240,7 +240,7 @@ wezterm.on('update-right-status', function(window, pane)
     window:set_right_status(wezterm.format({
       { Background = { Color = bg } },
       { Foreground = { Color = fg } },
-      { Text = " " .. text .. " " },
+      { Text = " " .. text .. "  " },
     }))
   else
     window:set_right_status("")
