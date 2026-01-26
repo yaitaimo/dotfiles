@@ -73,6 +73,8 @@ ensure_brew_formula tree
 ensure_brew_formula luarocks
 
 # GUIアプリケーションのインストール
+
+ensure_brew_cask wezterm@nightly
 ensure_brew_cask codex
 ensure_brew_cask wezterm
 

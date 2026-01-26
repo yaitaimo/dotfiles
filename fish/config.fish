@@ -11,6 +11,7 @@ set -x FZF_DEFAULT_OPTS "--reverse --height 40%"
 set -x FZF_DEFAULT_COMMAND 'ag -g ""'
 
 # エイリアス設定
+alias bup 'brew update; brew upgrade'
 alias dc 'docker compose'
 alias g 'git'
 alias gp 'git pull'

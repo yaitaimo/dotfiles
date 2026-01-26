@@ -15,6 +15,7 @@ vim.opt.termguicolors = true
 -- 折り畳み（Treesitter 連携）
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldlevelstart = 99
 
 -- タブ・インデント
 vim.opt.expandtab = true
