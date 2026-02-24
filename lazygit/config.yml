@@ -1,0 +1,42 @@
+customCommands:
+  - key: 'C'
+    context: 'files'
+    description: 'AI: Generate commit message (Codex)'
+    subprocess: true
+    command: |
+      set -e
+
+      BRANCH=$(git branch --show-current)
+      DIFF=$(git diff --staged)
+
+      if [ -z "$DIFF" ]; then
+        echo "No staged changes"
+        exit 1
+      fi
+
+      PROMPT=$(cat << 'EOF'
+あなたはSREチームのエンジニアです。
+
+入力として以下を受け取ります：
+- 現在の git ブランチ名
+- git diff --staged の内容
+
+ルール：
+- 日本語
+- 1行
+- 形式は「{TICKET}: {要約}」
+- TICKET はブランチ名に含まれるものを必ず使う（例: SRE-123）
+- ブランチの prefix に応じて文言を変える
+  - feature: 「〜を追加」「〜を実装」
+  - fix: 「〜を修正」
+  - chore: 「〜を整理」「〜を更新」
+- 実装詳細（Terraform resource 名、変数名など）は書かない
+- なぜ必要か／何を変えたかが分かる要約にする
+
+commit message だけを出力してください。
+EOF
+)
+
+      MSG=$(printf "branch: %s\n\n%s\n\n%s\n" "$BRANCH" "$DIFF" "$PROMPT" | codex exec)
+      echo "$MSG"
+      echo "$MSG" | /usr/bin/pbcopy
