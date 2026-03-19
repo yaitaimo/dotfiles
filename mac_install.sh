@@ -93,7 +93,7 @@ ensure_symlink "$current_dir/git/.gitconfig" ~/.gitconfig
 ensure_symlink "$current_dir/git/.gitignore_global" ~/.gitignore_global
 ensure_symlink "$current_dir/.globalrc" ~/.globalrc
 ensure_symlink "$current_dir/.wezterm.lua" ~/.wezterm.lua
-ensure_symlink "$current_dir/starship.toml" ~/.config/starship.toml
+ensure_symlink "$current_dir/starship/starship.toml" ~/.config/starship.toml
 ensure_symlink "$current_dir/starship" ~/.config/starship
 ensure_symlink "$current_dir/nvim" ~/.config/nvim
 
