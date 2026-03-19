@@ -14,7 +14,7 @@ return {
     },
     keys = {
       {
-        "<leader>h",
+        "<leader>fh",
         function()
           require("telescope.builtin").help_tags()
         end,
@@ -47,7 +47,14 @@ return {
       },
       -- 📂 最近開いたファイル（oldfiles）
       {
-        "<leader>fh",
+        "<leader>h",
+        function()
+          require("telescope.builtin").oldfiles()
+        end,
+        desc = "Recent files",
+      },
+      {
+        "<leader>H",
         function()
           require("telescope.builtin").oldfiles()
         end,
@@ -55,7 +62,7 @@ return {
       },
       -- 📑 バッファ一覧（開いているファイル）
       {
-        "<leader>b",
+        "<leader>fb",
         function()
           require("telescope.builtin").buffers()
         end,
