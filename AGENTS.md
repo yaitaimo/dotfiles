@@ -1,32 +1,41 @@
-# Repository Guidelines
+# AGENTS Guide
 
-## プロジェクト構成とモジュール整理
-このリポジトリは、個人用の dotfiles とセットアップ用スクリプトを管理します。
-- `fish/` は Fish の設定・補完・関数を配置します。
-- `nvim/` は Neovim 設定を配置します（Lua は `nvim/lua/`）。
-- `git/` は Git 設定と補助スクリプトを配置します（例: `git/scripts/new-branch.sh`）。
-- `bin/` は `~/bin` 向けの小さなユーティリティを配置します。
-- `starship/` と `starship.toml` は Starship の設定です。
-- `mac_install.sh` は macOS の初期セットアップとシンボリックリンク作成を行います。
+このファイルは、Codex などのエージェントがこのリポジトリで作業する際の最小運用ルールです。
 
-## ビルド・テスト・開発コマンド
-- `bash mac_install.sh` は Homebrew パッケージを導入し、設定ファイルをリンクします。
-- `fish -c fisher` は `fisher` 導入後に Fish プラグインを入れます。
-- `nvim` は `~/.config/nvim` にリンク済みの設定で起動します。
+## 利用言語
+- 作業報告・PR 説明・コメントは日本語で簡潔かつ丁寧に記述する。
 
-## コーディングスタイルと命名規則
-- 既存の言語慣習に合わせます。Fish は `set`/`alias` のパターン、Lua は `nvim/lua/` にモジュール分割します。
-- Neovim 設定は `expandtab`、`shiftwidth=2`、`tabstop=4` なので、Lua の編集はこの方針に揃えます。
-- スクリプト名は用途が分かる小文字名を推奨します（例: `git-sweep.fish`）。
+## グローバル設定変更の共有
+- 端末やツールのグローバル設定を変更した場合は、作業報告で必ず明示する。
+- 対象例: `mise use -g`, `git config --global`, `aws configure`, `gh auth login`。
+- 共有の最小セット:
+  - 変更内容（何をどう変更したか）
+  - 反映先ファイル/場所（例: `~/.config/mise/config.toml`）
+  - 必要なら戻し方
 
-## テスト方針
-- 自動テストはありません。
-- スクリプト変更時は簡易確認を行います（例: `fish -n fish/config.fish` で構文チェック、または一度実行）。
+## Git 運用
+- Git 管理下の作業は、原則として開始時に専用 `worktree` を作成する。
+- ブランチは必ず新規作成し、`codex/<task-id>` 形式を使う。
+- `main` / `develop` など共有ブランチへ直接コミットしない。
+- 既存の未コミット変更は勝手に破棄しない。
 
-## コミットとプルリクエスト
-- 既存履歴は日本語の短い説明文が中心です。相似の文体に揃えてください（例: “config.fishでgit pullのエイリアスを追加”）。
-- PR には変更内容の要約と手動確認の結果を記載します。UI 設定が変わる場合のみスクリーンショットを添えます。
+## リポジトリ構成
+- `fish/`: Fish 設定・補完・関数。
+- `nvim/`: Neovim 設定（`nvim/lua/` に Lua モジュール）。
+- `git/`: Git 設定と補助スクリプト。
+- `bin/`: `~/bin` にリンクするユーティリティ。
+- `starship/`: Starship 設定。
+- `mac_install.sh`: macOS 初期セットアップとシンボリックリンク作成。
 
-## セキュリティと設定の注意
-- マシン固有の設定は `~/.config/fish/local.fish` に置きます（`fish/config.fish` から読み込み）。
-- `mac_install.sh` はパッケージ導入とシェル変更を行うため、実行前に内容を確認してください。
+## 変更時の方針
+- 既存スタイルを維持する（Fish は `set`/`alias`、Lua はモジュール分割）。
+- Neovim の Lua 編集は `expandtab` / `shiftwidth=2` / `tabstop=4` に合わせる。
+- マシン固有値は `~/.config/fish/local.fish` へ分離し、リポジトリへ直書きしない。
+
+## 動作確認
+- 自動テストはないため、変更箇所に応じて最小限の検証を行う。
+- 例: `fish -n fish/config.fish`, `bash -n mac_install.sh`。
+
+## コミット/PR
+- コミットメッセージは日本語の短い説明を基本にする。
+- PR には「変更要約」と「手動確認結果」を含める。
