@@ -11,6 +11,8 @@ ensure_symlink() {
   local src="$1"
   local dest="$2"
 
+  mkdir -p "$(dirname "$dest")"
+
   if [ -L "$dest" ]; then
     if [ "$(readlink "$dest")" = "$src" ]; then
       return 0
@@ -37,9 +39,6 @@ ensure_line_in_file() {
   sudo sh -c "echo '$line' >> '$file'"
 }
 
-# Homebrew のインストールと設定
-# 公式サイト: https://brew.sh/
-# Homebrew は macOS 用のパッケージマネージャーで、コマンドラインツールやアプリケーションのインストールを簡単に行えます。
 ensure_brew_formula() {
   local pkg="$1"
   if brew list --formula "$pkg" >/dev/null 2>&1; then
@@ -56,49 +55,79 @@ ensure_brew_cask() {
   brew install --cask "$pkg"
 }
 
-ensure_brew_formula fish
-ensure_brew_formula fzf
-ensure_brew_formula ghq
-ensure_brew_formula git
-ensure_brew_formula git-extras
-ensure_brew_formula gpg
-ensure_brew_formula jq
-ensure_brew_formula mise
-ensure_brew_formula neovim
-ensure_brew_formula nkf
-ensure_brew_formula reattach-to-user-namespace
-ensure_brew_formula starship
-ensure_brew_formula tmux
-ensure_brew_formula tree
-ensure_brew_formula luarocks
+# Homebrew 自体はこのスクリプトではインストールせず、事前導入を前提にします。
+if ! command -v brew >/dev/null 2>&1; then
+  echo "Homebrew が見つかりません。先に https://brew.sh/ からインストールしてください。"
+  exit 1
+fi
+
+brew_formulas=(
+  fish
+  fzf
+  gh
+  ghq
+  git
+  git-extras
+  gpg
+  jq
+  luarocks
+  mise
+  neovim
+  nkf
+  reattach-to-user-namespace
+  starship
+  tmux
+  tree
+)
+
+brew_casks=(
+  codex
+  wezterm@nightly
+)
+
+for formula in "${brew_formulas[@]}"; do
+  ensure_brew_formula "$formula"
+done
 
 # GUIアプリケーションのインストール
-
-ensure_brew_cask wezterm@nightly
-ensure_brew_cask codex
-ensure_brew_cask wezterm
+for cask in "${brew_casks[@]}"; do
+  ensure_brew_cask "$cask"
+done
 
 # 以下のアプリは手動でインストールする必要があります。App Storeや各公式サイトからダウンロードしてください。
 # 例: 1Password, Better Touch Tool, Discord, Notion, Raycast, Spotify, AppCleaner, Bear, Docker for Desktop, Google Chrome, Google Japanese IME, IntelliJ IDEA, Numi, SiteSucker, Slack
 
 # dotfiles の設定
 # dotfiles は、開発環境の設定ファイル群です。これらをリンクすることで、新しいマシンでも独自の環境を素早く構築できます。
-mkdir -p ~/.config/fish
-ensure_symlink "$current_dir/fish/config.fish" ~/.config/fish/config.fish
-ensure_symlink "$current_dir/fish/fishfile" ~/.config/fish/fishfile
-ensure_symlink "$current_dir/.vimrc" ~/.vimrc
-ensure_symlink "$current_dir/.vim" ~/.vim
-ensure_symlink "$current_dir/.tmux.conf" ~/.tmux.conf
-ensure_symlink "$current_dir/git/.gitconfig" ~/.gitconfig
-ensure_symlink "$current_dir/git/.gitignore_global" ~/.gitignore_global
-ensure_symlink "$current_dir/.globalrc" ~/.globalrc
-ensure_symlink "$current_dir/.wezterm.lua" ~/.wezterm.lua
-ensure_symlink "$current_dir/starship/starship.toml" ~/.config/starship.toml
-ensure_symlink "$current_dir/starship" ~/.config/starship
-ensure_symlink "$current_dir/nvim" ~/.config/nvim
+symlink_pairs=(
+  "$current_dir/fish/config.fish:$HOME/.config/fish/config.fish"
+  "$current_dir/fish/fishfile:$HOME/.config/fish/fishfile"
+  "$current_dir/fish/conf.d:$HOME/.config/fish/conf.d"
+  "$current_dir/fish/functions:$HOME/.config/fish/functions"
+  "$current_dir/fish/completions:$HOME/.config/fish/completions"
+  "$current_dir/.vimrc:$HOME/.vimrc"
+  "$current_dir/.vim:$HOME/.vim"
+  "$current_dir/.tmux.conf:$HOME/.tmux.conf"
+  "$current_dir/git/.gitconfig:$HOME/.gitconfig"
+  "$current_dir/git/.gitignore_global:$HOME/.gitignore_global"
+  "$current_dir/.globalrc:$HOME/.globalrc"
+  "$current_dir/.wezterm.lua:$HOME/.wezterm.lua"
+  "$current_dir/starship/starship.toml:$HOME/.config/starship.toml"
+  "$current_dir/starship:$HOME/.config/starship"
+  "$current_dir/lazygit/config.yml:$HOME/.config/lazygit/config.yml"
+  "$current_dir/nvim:$HOME/.config/nvim"
+  "$current_dir/bin/install_font.sh:$HOME/bin/install_font.sh"
+  "$current_dir/bin/loadaverage:$HOME/bin/loadaverage"
+  "$current_dir/bin/used-mem:$HOME/bin/used-mem"
+  "$current_dir/git/scripts/new-branch.sh:$HOME/bin/git-new-branch"
+  "$current_dir/git/scripts/switch-to-base.sh:$HOME/bin/git-switch-to-base"
+)
 
-mkdir -p ~/bin
-ensure_symlink "$current_dir/git/scripts/new-branch.sh" ~/bin/git-new-branch
+for pair in "${symlink_pairs[@]}"; do
+  src="${pair%%:*}"
+  dest="${pair#*:}"
+  ensure_symlink "$src" "$dest"
+done
 
 # fish シェルをデフォルトに設定
 # fish は使いやすさを重視したコマンドラインシェルです。
