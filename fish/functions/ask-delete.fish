@@ -10,6 +10,7 @@ function ask-delete
     end
 
     set -l branches ""
+    set -l current_pwd (pwd)
 
     # 対象ブランチのリスト取得
     if test $target_remote -eq 1
@@ -43,6 +44,21 @@ function ask-delete
                     git push origin --delete $clean_branch
                     echo -e "✅ \033[32mDeleted remote branch:\033[0m origin/$clean_branch"
                 else
+                    set -l worktree_path (git worktree list --porcelain | awk -v target="refs/heads/$clean_branch" '
+                        $1 == "worktree" { path = $2 }
+                        $1 == "branch" && $2 == target { print path }
+                    ')
+
+                    if test -n "$worktree_path"
+                        if test "$worktree_path" = "$current_pwd"
+                            echo -e "⏭️  \033[33mSkipped active worktree:\033[0m $worktree_path"
+                            continue
+                        end
+
+                        git worktree remove "$worktree_path"
+                        echo -e "🧹 \033[32mRemoved worktree:\033[0m $worktree_path"
+                    end
+
                     # ローカルブランチを削除
                     git branch -D $clean_branch
                     echo -e "✅ \033[32mDeleted local branch:\033[0m $clean_branch"
