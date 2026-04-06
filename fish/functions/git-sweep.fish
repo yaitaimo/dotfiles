@@ -21,6 +21,10 @@ function __git_sweep_worktree_path_for_branch --argument-names branch
     '
 end
 
+function __git_sweep_worktree_is_dirty --argument-names worktree_path
+    test -n "(git -C "$worktree_path" status --porcelain --untracked-files=normal 2>/dev/null)"
+end
+
 function __git_sweep_remove_worktrees_for_branches
     set -l current_pwd (pwd)
 
@@ -34,10 +38,15 @@ function __git_sweep_remove_worktrees_for_branches
             continue
         end
 
+        if __git_sweep_worktree_is_dirty "$worktree_path"
+            echo "Skipped dirty worktree for $branch: $worktree_path"
+            continue
+        end
+
         if git worktree remove "$worktree_path"
             echo "Removed worktree for $branch: $worktree_path"
         else
-            echo "Skipped worktree for $branch: $worktree_path"
+            echo "Skipped worktree for $branch after remove failed: $worktree_path"
         end
     end
 end
