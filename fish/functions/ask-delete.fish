@@ -1,4 +1,15 @@
 function ask-delete
+    function __ask_delete_worktree_path_for_branch --argument-names branch
+        git worktree list --porcelain | awk -v target="refs/heads/$branch" '
+            $1 == "worktree" { path = $2 }
+            $1 == "branch" && $2 == target { print path }
+        '
+    end
+
+    function __ask_delete_worktree_is_dirty --argument-names worktree_path
+        test -n "(git -C "$worktree_path" status --porcelain --untracked-files=normal 2>/dev/null)"
+    end
+
     # リモートモードフラグの初期化
     set -l target_remote 0
 
@@ -11,14 +22,15 @@ function ask-delete
 
     set -l branches ""
     set -l current_pwd (pwd)
+    set -l current_branch (git rev-parse --abbrev-ref HEAD)
 
     # 対象ブランチのリスト取得
     if test $target_remote -eq 1
         echo -e "🔍 \033[1mTarget: Remote branches\033[0m"
-        set branches (git branch -r | grep -v 'origin/HEAD' | string trim)
+        set branches (git branch -r --format='%(refname:short)' | string match -rv '^origin/HEAD$')
     else
         echo -e "🔍 \033[1mTarget: Local branches\033[0m"
-        set branches (git branch | string trim)
+        set branches (git branch --format='%(refname:short)')
     end
 
     # ブランチの削除確認ループ
@@ -27,7 +39,12 @@ function ask-delete
         set -l clean_branch (echo $branch | sed 's#^origin/##')
 
         # main, master, develop, 現在のブランチをスキップ
-        if string match -q -r 'main|master|develop|^\*' -- $clean_branch
+        if contains -- $clean_branch main master develop
+            echo -e "⏭️  \033[33mSkipped branch:\033[0m $clean_branch"
+            continue
+        end
+
+        if test "$clean_branch" = "$current_branch"
             echo -e "⏭️  \033[33mSkipped branch:\033[0m $clean_branch"
             continue
         end
@@ -44,10 +61,7 @@ function ask-delete
                     git push origin --delete $clean_branch
                     echo -e "✅ \033[32mDeleted remote branch:\033[0m origin/$clean_branch"
                 else
-                    set -l worktree_path (git worktree list --porcelain | awk -v target="refs/heads/$clean_branch" '
-                        $1 == "worktree" { path = $2 }
-                        $1 == "branch" && $2 == target { print path }
-                    ')
+                    set -l worktree_path (__ask_delete_worktree_path_for_branch $clean_branch)
 
                     if test -n "$worktree_path"
                         if test "$worktree_path" = "$current_pwd"
@@ -55,13 +69,25 @@ function ask-delete
                             continue
                         end
 
-                        git worktree remove "$worktree_path"
-                        echo -e "🧹 \033[32mRemoved worktree:\033[0m $worktree_path"
+                        if __ask_delete_worktree_is_dirty "$worktree_path"
+                            echo -e "⏭️  \033[33mSkipped dirty worktree:\033[0m $worktree_path"
+                            continue
+                        end
+
+                        if git worktree remove "$worktree_path"
+                            echo -e "🧹 \033[32mRemoved worktree:\033[0m $worktree_path"
+                        else
+                            echo -e "⚠️  \033[33mFailed to remove worktree:\033[0m $worktree_path"
+                            continue
+                        end
                     end
 
                     # ローカルブランチを削除
-                    git branch -D $clean_branch
-                    echo -e "✅ \033[32mDeleted local branch:\033[0m $clean_branch"
+                    if git branch -D $clean_branch
+                        echo -e "✅ \033[32mDeleted local branch:\033[0m $clean_branch"
+                    else
+                        echo -e "⚠️  \033[33mFailed to delete local branch:\033[0m $clean_branch"
+                    end
                 end
             case '*'
                 echo -e "⏭️  \033[33mSkipped branch:\033[0m $clean_branch"
