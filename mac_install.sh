@@ -28,6 +28,31 @@ ensure_symlink() {
   ln -s "$src" "$dest"
 }
 
+ensure_real_directory() {
+  local dir="$1"
+
+  if [ -L "$dir" ]; then
+    rm -f "$dir"
+  elif [ -f "$dir" ]; then
+    rm -f "$dir"
+  fi
+
+  mkdir -p "$dir"
+}
+
+link_directory_entries() {
+  local src_dir="$1"
+  local dest_dir="$2"
+  local src
+
+  ensure_real_directory "$dest_dir"
+
+  for src in "$src_dir"/*; do
+    [ -e "$src" ] || continue
+    ensure_symlink "$src" "$dest_dir/$(basename "$src")"
+  done
+}
+
 ensure_line_in_file() {
   local line="$1"
   local file="$2"
@@ -102,9 +127,6 @@ done
 symlink_pairs=(
   "$current_dir/fish/config.fish:$HOME/.config/fish/config.fish"
   "$current_dir/fish/fishfile:$HOME/.config/fish/fishfile"
-  "$current_dir/fish/conf.d:$HOME/.config/fish/conf.d"
-  "$current_dir/fish/functions:$HOME/.config/fish/functions"
-  "$current_dir/fish/completions:$HOME/.config/fish/completions"
   "$current_dir/.vimrc:$HOME/.vimrc"
   "$current_dir/.vim:$HOME/.vim"
   "$current_dir/.tmux.conf:$HOME/.tmux.conf"
@@ -128,6 +150,10 @@ for pair in "${symlink_pairs[@]}"; do
   dest="${pair#*:}"
   ensure_symlink "$src" "$dest"
 done
+
+link_directory_entries "$current_dir/fish/conf.d" "$HOME/.config/fish/conf.d"
+link_directory_entries "$current_dir/fish/functions" "$HOME/.config/fish/functions"
+link_directory_entries "$current_dir/fish/completions" "$HOME/.config/fish/completions"
 
 # fish シェルをデフォルトに設定
 # fish は使いやすさを重視したコマンドラインシェルです。
