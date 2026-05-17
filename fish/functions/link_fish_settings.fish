@@ -10,6 +10,12 @@ function link_fish_settings
 
     # 各ディレクトリに対して処理を実行します。
     for dir in completions conf.d functions
+        if test -L $fish_global_config/$dir
+            rm $fish_global_config/$dir
+        else if test -f $fish_global_config/$dir
+            rm $fish_global_config/$dir
+        end
+
         # グローバル設定の対応するディレクトリを確認します。
         if not test -d $fish_global_config/$dir
             # 存在しない場合はディレクトリを作成します。
