@@ -1,1 +1,7 @@
 command_timeout = 2000
+
+[time]
+disabled = false
+format = "[$time]($style) "
+style = "bold white"
+time_format = "%H:%M:%S"

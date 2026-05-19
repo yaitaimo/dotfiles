@@ -135,8 +135,6 @@ symlink_pairs=(
   "$current_dir/.globalrc:$HOME/.globalrc"
   "$current_dir/.wezterm.lua:$HOME/.wezterm.lua"
   "$current_dir/starship/starship.toml:$HOME/.config/starship.toml"
-  "$current_dir/starship:$HOME/.config/starship"
-  "$current_dir/lazygit/config.yml:$HOME/.config/lazygit/config.yml"
   "$current_dir/nvim:$HOME/.config/nvim"
   "$current_dir/bin/install_font.sh:$HOME/bin/install_font.sh"
   "$current_dir/bin/loadaverage:$HOME/bin/loadaverage"
