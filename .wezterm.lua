@@ -104,6 +104,11 @@ config.keys = {
     action = wezterm.action.ToggleFullScreen
   },
   {
+    key = "k",
+    mods = "CMD",
+    action = wezterm.action.ActivateCommandPalette
+  },
+  {
     key = "p",
     mods = "CMD|SHIFT",
     action = wezterm.action.ActivateCommandPalette
@@ -114,7 +119,7 @@ config.keys = {
     action = wezterm.action.ShowLauncherArgs { flags = "FUZZY|WORKSPACES" }
   },
   {
-    key = "s",
+    key = "w",
     mods = "LEADER",
     action = wezterm.action.ShowLauncherArgs { flags = "FUZZY|WORKSPACES" }
   },
@@ -161,40 +166,40 @@ config.keys = {
   -- 横（上下）に分割
   {
     key = "s",
-    mods = "LEADER|CTRL",
+    mods = "LEADER",
     action = wezterm.action.SplitVertical { domain = "CurrentPaneDomain" },
   },
   -- 縦（左右）に分割
   {
     key = "v",
-    mods = "LEADER|CTRL",
+    mods = "LEADER",
     action = wezterm.action.SplitHorizontal { domain = "CurrentPaneDomain" },
   },
   -- ペインを閉じる
   {
     key = "x",
-    mods = "LEADER|CTRL",
+    mods = "LEADER",
     action = wezterm.action.CloseCurrentPane { confirm = true },
   },
   -- ペインの移動（方向キー風）
   {
     key = "h",
-    mods = "LEADER|CTRL",
+    mods = "LEADER",
     action = wezterm.action.ActivatePaneDirection "Left",
   },
   {
     key = "l",
-    mods = "LEADER|CTRL",
+    mods = "LEADER",
     action = wezterm.action.ActivatePaneDirection "Right",
   },
   {
     key = "k",
-    mods = "LEADER|CTRL",
+    mods = "LEADER",
     action = wezterm.action.ActivatePaneDirection "Up",
   },
   {
     key = "j",
-    mods = "LEADER|CTRL",
+    mods = "LEADER",
     action = wezterm.action.ActivatePaneDirection "Down",
   },
 }
@@ -259,7 +264,7 @@ config.key_tables = {
   },
 }
 
-config.leader = { key = "t", mods = "CTRL", timeout_milliseconds = 1000 }
+config.leader = { key = ";", mods = "CMD", timeout_milliseconds = 1000 }
 config.scrollback_lines = 100000
 
 return config
