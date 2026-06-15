@@ -160,9 +160,11 @@ def resolve_output(args: argparse.Namespace) -> Path | None:
     if args.remote_path:
         default_name = Path(args.remote_path).name or default_name
 
-    output = args.output or inquirer.text(
+    output = args.output or inquirer.filepath(
         message="保存先 local file path:",
-        default=default_name,
+        default=f"~/{default_name}",
+        instruction="Tab で補完",
+        multicolumn_complete=True,
         mandatory=True,
     ).execute()
 
