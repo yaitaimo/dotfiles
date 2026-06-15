@@ -103,6 +103,7 @@ brew_formulas=(
   starship
   tmux
   tree
+  uv
 )
 
 brew_casks=(
@@ -137,6 +138,7 @@ symlink_pairs=(
   "$current_dir/starship/starship.toml:$HOME/.config/starship.toml"
   "$current_dir/nvim:$HOME/.config/nvim"
   "$current_dir/bin/install_font.sh:$HOME/bin/install_font.sh"
+  "$current_dir/bin/ecs-fetch-file.py:$HOME/bin/ecs-fetch-file.py"
   "$current_dir/bin/loadaverage:$HOME/bin/loadaverage"
   "$current_dir/bin/used-mem:$HOME/bin/used-mem"
   "$current_dir/git/scripts/new-branch.sh:$HOME/bin/git-new-branch"
