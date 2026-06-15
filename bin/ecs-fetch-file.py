@@ -104,11 +104,11 @@ def choose_task(ecs: Any, cluster: str, task_arg: str | None) -> str:
             }
         )
 
-    return inquirer.select(
+    return inquirer.fuzzy(
         message="ECS task を選択してください:",
         choices=choices,
         mandatory=True,
-        height=min(20, max(5, len(choices))),
+        max_height=min(20, max(5, len(choices))),
     ).execute()
 
 
