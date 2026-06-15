@@ -31,16 +31,6 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--task", help="ECS task ARN or ID.")
     parser.add_argument("--container", help="Container name.")
     parser.add_argument("--remote-path", help="Remote file path to fetch with cat.")
-    parser.add_argument(
-        "--remote-start",
-        default="/tmp",
-        help="Initial remote directory for interactive path selection.",
-    )
-    parser.add_argument(
-        "--no-remote-browser",
-        action="store_true",
-        help="Disable interactive remote path browser and use text input.",
-    )
     parser.add_argument("--command", help="Command to run instead of cat <remote-path>.")
     parser.add_argument(
         "--output",
@@ -149,149 +139,15 @@ def choose_container(
     ).execute()
 
 
-def shell_command(script: str, *script_args: str) -> str:
-    command = ["sh", "-lc", script, "sh", *script_args]
-    return " ".join(shlex.quote(part) for part in command)
-
-
-def remote_join(directory: str, name: str) -> str:
-    if directory == "/":
-        return f"/{name}"
-    return f"{directory.rstrip('/')}/{name}"
-
-
-def parent_dir(directory: str) -> str:
-    if directory == "/":
-        return "/"
-    parent = directory.rstrip("/").rsplit("/", 1)[0]
-    return parent or "/"
-
-
-def list_remote_entries(
-    args: argparse.Namespace,
-    cluster: str,
-    task: str,
-    container: str,
-    directory: str,
-) -> list[dict[str, str]]:
-    script = r'''
-dir=$1
-for p in "$dir"/* "$dir"/.[!.]* "$dir"/..?*; do
-  [ -e "$p" ] || continue
-  name=${p##*/}
-  if [ -d "$p" ]; then
-    printf 'd\t%s\n' "$name"
-  elif [ -f "$p" ]; then
-    printf 'f\t%s\n' "$name"
-  else
-    printf 'o\t%s\n' "$name"
-  fi
-done
-'''
-    cli = build_aws_cli(
-        args,
-        cluster,
-        task,
-        container,
-        shell_command(script, directory),
-    )
-    result = subprocess.run(cli, capture_output=True, text=True)
-    if result.returncode != 0:
-        detail = result.stderr.strip() or result.stdout.strip()
-        raise RuntimeError(f"remote directory を取得できませんでした: {detail}")
-
-    entries = []
-    for line in result.stdout.splitlines():
-        kind, separator, name = line.partition("\t")
-        if separator and kind in {"d", "f", "o"} and name not in {".", ".."}:
-            entries.append({"kind": kind, "name": name})
-    entries.sort(key=lambda item: (item["kind"] != "d", item["name"]))
-    return entries
-
-
-def browse_remote_path(
-    args: argparse.Namespace,
-    cluster: str,
-    task: str,
-    container: str,
-) -> str:
-    current_dir = args.remote_start
-
-    while True:
-        entries = list_remote_entries(args, cluster, task, container, current_dir)
-        choices: list[dict[str, Any]] = [
-            {"name": "[manual] path を手入力", "value": {"action": "manual"}},
-        ]
-        if current_dir != "/":
-            choices.append(
-                {
-                    "name": f"[dir] .. -> {parent_dir(current_dir)}",
-                    "value": {"action": "cd", "path": parent_dir(current_dir)},
-                }
-            )
-
-        for entry in entries:
-            path = remote_join(current_dir, entry["name"])
-            if entry["kind"] == "d":
-                choices.append(
-                    {
-                        "name": f"[dir]  {entry['name']}/",
-                        "value": {"action": "cd", "path": path},
-                    }
-                )
-            elif entry["kind"] == "f":
-                choices.append(
-                    {
-                        "name": f"[file] {entry['name']}",
-                        "value": {"action": "file", "path": path},
-                    }
-                )
-            else:
-                choices.append(
-                    {
-                        "name": f"[other] {entry['name']}",
-                        "value": {"action": "file", "path": path},
-                    }
-                )
-
-        selected = inquirer.fuzzy(
-            message=f"取得する remote file path: {current_dir}",
-            choices=choices,
-            mandatory=True,
-            max_height=20,
-        ).execute()
-
-        if selected["action"] == "manual":
-            return inquirer.text(
-                message="取得する remote file path:",
-                default=current_dir,
-                mandatory=True,
-            ).execute()
-        if selected["action"] == "cd":
-            current_dir = selected["path"]
-            continue
-        return selected["path"]
-
-
-def resolve_command(
-    args: argparse.Namespace,
-    cluster: str,
-    task: str,
-    container: str,
-) -> str:
+def resolve_command(args: argparse.Namespace) -> str:
     if args.command:
         return args.command
 
-    if args.remote_path:
-        remote_path = args.remote_path
-    elif args.no_remote_browser:
-        remote_path = inquirer.text(
-            message="取得する remote file path:",
-            default="/tmp/old.csv",
-            mandatory=True,
-        ).execute()
-    else:
-        remote_path = browse_remote_path(args, cluster, task, container)
+    remote_path = args.remote_path or inquirer.text(
+        message="取得する remote file path:",
+        default="/tmp/old.csv",
+        mandatory=True,
+    ).execute()
     args.remote_path = remote_path
     return f"cat {shlex.quote(remote_path)}"
 
@@ -362,7 +218,7 @@ def main() -> int:
     cluster = choose_cluster(ecs, args.cluster)
     task = choose_task(ecs, cluster, args.task)
     container = choose_container(ecs, cluster, task, args.container)
-    command = resolve_command(args, cluster, task, container)
+    command = resolve_command(args)
     output_path = resolve_output(args)
     cli = build_aws_cli(args, cluster, task, container, command)
 
