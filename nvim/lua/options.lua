@@ -30,5 +30,10 @@ vim.opt.wrapscan = true
 -- クリップボード（macOS）
 vim.opt.clipboard = "unnamedplus"
 
+-- SSH 先では Neovim の yank を OSC52 経由で手元の端末 clipboard へ送る
+if vim.env.SSH_TTY ~= nil then
+  vim.g.clipboard = "osc52"
+end
+
 -- エンコーディング（読み込み優先順）
 vim.opt.fileencodings = "utf-8,sjis,cp932,iso-2022-jp,euc-jp"
