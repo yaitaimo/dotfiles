@@ -1,24 +1,21 @@
 -- Git-related plugins
+local function toggle_git_blame()
+  for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+    local buf = vim.api.nvim_win_get_buf(win)
+    if vim.bo[buf].filetype == "fugitiveblame" then
+      vim.api.nvim_win_close(win, true)
+      return
+    end
+  end
+  vim.cmd("Git blame")
+end
+
 return {
   -- Fugitive: git integration including full-file blame view
   {
     "tpope/vim-fugitive",
-    config = function()
-      local function toggle_git_blame()
-        for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
-          local buf = vim.api.nvim_win_get_buf(win)
-          if vim.bo[buf].filetype == "fugitiveblame" then
-            vim.api.nvim_win_close(win, true)
-            return
-          end
-        end
-        vim.cmd("Git blame")
-      end
-
-      vim.keymap.set("n", "<leader>b", toggle_git_blame, { desc = "Git blame toggle (full file)" })
-    end,
     keys = {
-      { "<leader>b", desc = "Git blame toggle (full file)" },
+      { "<leader>b", toggle_git_blame, desc = "Git blame toggle (full file)" },
     },
   },
 
