@@ -1,15 +1,17 @@
 local lazygit
+local ai_terminals = {}
 -- 既存セッションは再利用し、新規作成時だけプロジェクトを解決する。
 local function toggle_ai_terminal(cmd, id)
   local terminal = require("toggleterm.terminal")
-  local term = terminal.get(id, true)
-  if not term then
+  local term = ai_terminals[id]
+  if not term or terminal.get(term.id, true) ~= term then
     term = terminal.Terminal:new({
       cmd = cmd,
       hidden = true,
       direction = "float",
       dir = require("util.project").get_git_root(),
-      count = id,
+      -- 希望番号を他の端末が使用中なら ToggleTerm に空き番号を選ばせる。
+      count = not terminal.get(id, true) and id or nil,
       on_open = function()
         vim.cmd("startinsert!")
       end,
@@ -17,6 +19,7 @@ local function toggle_ai_terminal(cmd, id)
         vim.cmd("startinsert!")
       end,
     })
+    ai_terminals[id] = term
   end
   term:toggle()
 end
