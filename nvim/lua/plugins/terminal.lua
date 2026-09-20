@@ -1,6 +1,28 @@
 local lazygit
-local codex_chat
-local codex_agent
+local ai_terminals = {}
+-- 既存セッションは再利用し、新規作成時だけプロジェクトを解決する。
+local function toggle_ai_terminal(cmd, id)
+  local terminal = require("toggleterm.terminal")
+  local term = ai_terminals[id]
+  if not term or terminal.get(term.id, true) ~= term then
+    term = terminal.Terminal:new({
+      cmd = cmd,
+      hidden = true,
+      direction = "float",
+      dir = require("util.project").get_git_root(),
+      -- 希望番号を他の端末が使用中なら ToggleTerm に空き番号を選ばせる。
+      count = not terminal.get(id, true) and id or nil,
+      on_open = function()
+        vim.cmd("startinsert!")
+      end,
+      on_close = function()
+        vim.cmd("startinsert!")
+      end,
+    })
+    ai_terminals[id] = term
+  end
+  term:toggle()
+end
 
 return {
   -- Toggleable terminal + Lazygit helper
@@ -29,43 +51,6 @@ return {
           vim.cmd("startinsert!")
         end,
         count = 99,
-      })
-
-      -- codex CLI fallback launchers (Chat / Agent) via ToggleTerm
-      local function git_root_or_cwd()
-        local ok, utils = pcall(require, "util.project")
-        if ok and utils and utils.get_git_root then
-          return utils.get_git_root()
-        end
-        return vim.loop.cwd()
-      end
-
-      codex_chat = Terminal:new({
-        cmd = "codex chat",
-        hidden = true,
-        direction = "float",
-        dir = git_root_or_cwd(),
-        count = 21, -- reserved slot
-        on_open = function()
-          vim.cmd("startinsert!")
-        end,
-        on_close = function()
-          vim.cmd("startinsert!")
-        end,
-      })
-
-      codex_agent = Terminal:new({
-        cmd = "codex agent",
-        hidden = true,
-        direction = "float",
-        dir = git_root_or_cwd(),
-        count = 22, -- reserved slot
-        on_open = function()
-          vim.cmd("startinsert!")
-        end,
-        on_close = function()
-          vim.cmd("startinsert!")
-        end,
       })
 
     end,
@@ -100,13 +85,13 @@ return {
       },
       {
         "<leader>atc",
-        function() codex_chat:toggle() end,
+        function() toggle_ai_terminal("codex chat", 21) end,
         silent = false,
         desc = "🤖 Codex Chat (ToggleTerm)",
       },
       {
         "<leader>atg",
-        function() codex_agent:toggle() end,
+        function() toggle_ai_terminal("codex agent", 22) end,
         silent = false,
         desc = "🤖 Codex Agent (ToggleTerm)",
       },

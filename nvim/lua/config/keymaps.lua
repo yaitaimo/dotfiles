@@ -31,8 +31,7 @@ map("n", ".e", function()
   vim.cmd("edit ~/.config/nvim/init.lua")
 end, { desc = "Edit init.lua" })
 
--- .r で init.lua をリロード
+-- .r は設定の反映方法を案内する
 map("n", ".r", function()
-  vim.cmd("source ~/.config/nvim/init.lua")
-  print("✅ init.lua reloaded!")
-end, { desc = "Reload init.lua" })
+  vim.notify("設定反映には Neovim を再起動してください", vim.log.levels.INFO)
+end, { desc = "Show config restart guidance" })

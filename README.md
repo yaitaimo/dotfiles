@@ -36,7 +36,7 @@ macOS 向けの個人用セットアップ。Homebrew でツールを入れ、�
 - Git: Fugitive（`<leader>b`）、Gitsigns、Diffview（`<leader>gd` など）
 - ターミナル: ToggleTerm（`<leader>tt`, `<leader>tc`）、Lazygit（`<leader>g`）
 - AI: codex.nvim（`<leader>j`）。ToggleTerm 経由の起動設定もあり（`<leader>atc`, `<leader>atg`）
-- 保存時処理: 全ファイルの末尾空白を削除
+- 保存時処理: Markdown（`filetype=markdown`）を除いて末尾空白を削除
 - LSP・formatter のプラグイン設定は未導入
 
 - Terminal / Multiplexer
@@ -68,6 +68,7 @@ macOS 向けの個人用セットアップ。Homebrew でツールを入れ、�
   - `editor.lua`: コメント操作。
   - `telescope.lua`, `git.lua`, `terminal.lua`, `ai.lua`: 各機能の設定。
   - ToggleTerm 経由の Lazygit・AI 起動は `terminal.lua` が管理する。
+  - AI ターミナルは新規作成時に現在のファイルの Git ルートを使う（Git 管理外では作業ディレクトリ）。既存セッションの再表示では変更しない。
 - `nvim/lua/util/project.lua`: Git ルート取得。取得失敗時は作業ディレクトリを使う。
 
 プラグイン固有のキーは各 spec の `keys` に、設定値は `opts` に置き、
@@ -78,4 +79,4 @@ autocmd は名前付き augroup に登録し、再登録時の重複を防ぐ。
 
 LSP・formatter は導入時に spec を追加する。プラグイン更新は構成変更と分けて行い、
 `lazy-lock.json` の変更内容を確認する。設定変更の反映は Neovim の再起動で確認する。
-既存の `.r` は残しているが、モジュールの再読み込みには対応していない。
+`.r` は再読み込みを行わず、Neovim の再起動が必要であることを通知する。
