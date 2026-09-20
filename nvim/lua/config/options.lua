@@ -1,4 +1,6 @@
--- 基本設定（init.lua から分離）
+-- プラグインのキーマップ登録より先に設定する
+vim.g.mapleader = ";"
+vim.g.maplocalleader = "\\"
 
 -- UI/表示
 vim.opt.title = true

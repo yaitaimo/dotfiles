@@ -36,7 +36,7 @@ return {
       {
         "<leader>p",
         function()
-          local utils = require("utils")
+          local utils = require("util.project")
           require("telescope").extensions.file_browser.file_browser({
             cwd = utils.get_git_root(),
             initial_mode = "normal",
@@ -85,36 +85,37 @@ return {
         desc = "Telescope diagnostics",
       },
     },
-    config = function()
-      require("telescope").setup({
-        defaults = {
-          sorting_strategy = "ascending",
-          prompt_prefix = "🔍 ",
-          selection_caret = "➤ ",
+    opts = {
+      defaults = {
+        sorting_strategy = "ascending",
+        prompt_prefix = "🔍 ",
+        selection_caret = "➤ ",
+      },
+      pickers = {
+        buffers = {
+          sort_mru = true,
+          theme = "dropdown",
         },
-        pickers = {
-          buffers = {
-            sort_mru = true,
-            theme = "dropdown",
-          },
-          oldfiles = {
-            theme = "dropdown",
-          },
+        oldfiles = {
+          theme = "dropdown",
         },
-        extensions = {
-          fzf = {
-            fuzzy = true,
-          },
-          file_browser = {
-            theme = "dropdown",
-            hijack_netrw = true,
-            mappings = {
-              ["i"] = {},
-              ["n"] = {},
-            },
+      },
+      extensions = {
+        fzf = {
+          fuzzy = true,
+        },
+        file_browser = {
+          theme = "dropdown",
+          hijack_netrw = true,
+          mappings = {
+            ["i"] = {},
+            ["n"] = {},
           },
         },
-      })
+      },
+    },
+    config = function(_, opts)
+      require("telescope").setup(opts)
       -- Load extensions
       pcall(require("telescope").load_extension, "file_browser")
     end,
